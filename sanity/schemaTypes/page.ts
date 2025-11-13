@@ -3,7 +3,7 @@ import { SlugPreviewInput } from "./components/SlugPreviewInput";
 
 export const pageType = defineType({
   name: "page",
-  title: "Page",
+  title: "Pages",
   type: "document",
   fields: [
     defineField({
@@ -20,20 +20,4 @@ export const pageType = defineType({
       readOnly: true,
     }),
   ],
-  preview: {
-    select: {
-      title: 'name',
-      language: 'language'
-    },
-    prepare({title, language}) {
-      const languageFlag = language === 'en' ? '🇺🇸' : language === 'fr' ? '🇫🇷' : '🌐';
-      const languageName = language === 'en' ? 'EN' : language === 'fr' ? 'FR' : language || 'Unknown';
-      
-      return {
-        title: title || 'Untitled',
-        subtitle: `${languageFlag} ${languageName}`,
-        media: undefined
-      }
-    }
-  }
 });

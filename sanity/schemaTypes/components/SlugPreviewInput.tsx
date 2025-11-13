@@ -4,11 +4,6 @@ import { useFormValue } from "sanity";
 
 const FRONTEND_BASE_URL = process.env.NEXT_PUBLIC_FRONTEND_BASE_URL;
 
-type SlugValue = {
-  current?: string;
-  _type?: string;
-};
-
 type ExtendedInputProps = InputProps & {
   document?: {
     _type?: string;
@@ -17,26 +12,29 @@ type ExtendedInputProps = InputProps & {
 };
 
 export function SlugPreviewInput(props: ExtendedInputProps) {
-  const { value, renderDefault } = props;
+  const { renderDefault } = props;
 
   const language = useFormValue(["language"]) as string | undefined;
   const name = useFormValue(["name"]) as string | undefined;
+  const documentType = useFormValue(["_type"]) as string | undefined;
 
-  const slugValue = (value as SlugValue)?.current || "";
-
-  // Debug logs
-  console.log("Debug info:", {
-    slugValue,
-    FRONTEND_BASE_URL,
-    language,
-    name,
-    hasSlugValue: !!slugValue,
-    hasFrontendUrl: !!FRONTEND_BASE_URL,
-  });
-
-  const previewUrl = (() => {
+  const previewUrls = (() => {
     if (name?.toLowerCase() === "home") {
-      return `${FRONTEND_BASE_URL}/${language}`;
+      return [`${FRONTEND_BASE_URL}/${language}`];
+    }
+
+    console.log("Generating preview URLs for document type:", documentType);
+
+    if (documentType === "project") {
+      const nameSlug =
+        name
+          ?.toLowerCase()
+          .replace(/\s+/g, "-")
+          .replace(/[^a-z0-9-]/g, "") || "";
+      return [
+        `${FRONTEND_BASE_URL}/en/projects/${nameSlug}`,
+        `${FRONTEND_BASE_URL}/fr/projects/${nameSlug}`,
+      ];
     }
 
     // Create a slug from the name
@@ -45,7 +43,7 @@ export function SlugPreviewInput(props: ExtendedInputProps) {
         ?.toLowerCase()
         .replace(/\s+/g, "-")
         .replace(/[^a-z0-9-]/g, "") || "";
-    return `${FRONTEND_BASE_URL}/${language}/${nameSlug}`;
+    return [`${FRONTEND_BASE_URL}/${language}/${nameSlug}`];
   })();
 
   return (
@@ -53,21 +51,30 @@ export function SlugPreviewInput(props: ExtendedInputProps) {
       {renderDefault(props)}
 
       {name && FRONTEND_BASE_URL && (
-        <Inline space={2}>
+        <Stack space={2}>
           <Text size={1} muted>
-            Permalink:
+            {previewUrls.length > 1 ? "Permalinks:" : "Permalink:"}
           </Text>
-          <Text
-            as="a"
-            href={previewUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            size={1}
-            style={{ textDecoration: "underline", color: "#2271b1" }}
-          >
-            {previewUrl}
-          </Text>
-        </Inline>
+          {previewUrls.map((url, index) => (
+            <Inline key={index} space={2}>
+              {documentType === "project" && (
+                <Text size={1} muted>
+                  {index === 0 ? "🇺🇸 EN:" : "🇫🇷 FR:"}
+                </Text>
+              )}
+              <Text
+                as="a"
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                size={1}
+                style={{ textDecoration: "underline", color: "#2271b1" }}
+              >
+                {url}
+              </Text>
+            </Inline>
+          ))}
+        </Stack>
       )}
     </Stack>
   );
