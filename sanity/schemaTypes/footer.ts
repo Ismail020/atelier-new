@@ -8,10 +8,20 @@ export const footerType = defineType({
   icon: MasterDetailIcon,
   fields: [
     defineField({
-      name: "logo",
-      title: "Logo",
+      name: "logoDesktop",
+      title: "Logo Desktop",
       type: "image",
       options: { hotspot: true },
+      description: "Logo for desktop view",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "logoMobile",
+      title: "Logo Mobile",
+      type: "image", 
+      options: { hotspot: true },
+      description: "Logo for mobile view",
+      validation: (rule) => rule.required(),
     }),
 
     // Column 1: Language switch and terms page

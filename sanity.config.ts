@@ -15,6 +15,7 @@ import { schema } from "./sanity/schemaTypes";
 import { structure } from "./sanity/structure";
 import { documentInternationalization } from "@sanity/document-internationalization";
 import { internationalizedArray } from "sanity-plugin-internationalized-array";
+import { media } from "sanity-plugin-media";
 
 export default defineConfig({
   basePath: "/studio",
@@ -59,6 +60,7 @@ export default defineConfig({
       // define schema types using document level localization
       schemaTypes: ["page"],
     }),
+    media(),
     internationalizedArray({
       // Use client to fetch locales or import from local locale file
       languages: (client) =>

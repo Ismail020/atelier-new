@@ -7,6 +7,7 @@ import {
   CogIcon,
   TranslateIcon,
   ProjectsIcon,
+  DocumentTextIcon,
 } from "@sanity/icons";
 
 // https://www.sanity.io/docs/structure-builder-cheat-sheet
@@ -57,6 +58,12 @@ export const structure: StructureResolver = (S) =>
         .title("Projects")
         .icon(ProjectsIcon)
         .child(S.documentTypeList("project").title("Projects")),
+
+      // Press Coverage
+      S.listItem()
+        .title("Press Coverage")
+        .icon(DocumentTextIcon)
+        .child(S.documentTypeList("press").title("Press")),
 
       // Divider
       S.divider(),

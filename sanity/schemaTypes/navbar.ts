@@ -13,10 +13,18 @@ export const navbarType = defineType({
       type: "object",
       fields: [
         defineField({
+          name: "brandText",
+          title: "Brand Text",
+          type: "string",
+          description: "Text shown before logo, will be replaced by logo on scroll",
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
           name: "logo",
           title: "Logo",
           type: "image",
           options: { hotspot: true },
+          description: "Logo shown after scroll",
         }),
         menuItems,
       ],

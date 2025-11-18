@@ -23,28 +23,27 @@ export const createMenuItemsForLanguage = (language: "en" | "fr") =>
             validation: (rule) => rule.required(),
           }),
           defineField({
-            name: "linkText",
-            type: "string",
-            title: "Link Text",
-            description:
-              "Custom text for this menu item. If not provided, the page name will be used.",
+            name: "mobileImage",
+            type: "image",
+            title: "Mobile Menu Image",
+            description: `Mobile menu image for ${language.toUpperCase()} version`,
+            options: { hotspot: true },
+            validation: (rule) => rule.required(),
           }),
         ],
         preview: {
           select: {
-            linkText: "linkText",
             pageName: "page.name",
             pageLanguage: "page.language",
           },
           prepare(selection: {
-            linkText?: string;
             pageName?: string;
             pageLanguage?: string;
+            mobileImage?: { asset: { url: string } };
           }) {
-            const { linkText, pageName, pageLanguage } = selection;
+            const { pageName, pageLanguage } = selection;
 
-            // Use custom link text if available, otherwise fall back to page name
-            const displayText = linkText || pageName || "No page selected";
+            const displayText = pageName || "No page selected";
 
             const languageFlag =
               pageLanguage === "en"

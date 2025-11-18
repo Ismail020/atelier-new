@@ -88,6 +88,63 @@ export const settingsType = defineType({
         },
       ],
     }),
+    defineField({
+      name: "contactUsButton",
+      title: "Contact Us Button",
+      type: "object",
+      description: "Global configuration for the Contact Us button on project pages",
+      fields: [
+        defineField({
+          name: "text",
+          title: "Button Text",
+          type: "internationalizedArrayString",
+          description: "Button text in multiple languages",
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: "contactPages",
+          title: "Contact Pages",
+          type: "object",
+          description: "Select contact pages for each language",
+          fields: [
+            defineField({
+              name: "english",
+              title: "English Contact Page",
+              type: "reference",
+              to: [{ type: "page" }],
+              options: {
+                filter: 'language == "en"'
+              },
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "french",
+              title: "French Contact Page", 
+              type: "reference",
+              to: [{ type: "page" }],
+              options: {
+                filter: 'language == "fr"'
+              },
+              validation: (rule) => rule.required(),
+            }),
+          ],
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: "style",
+          title: "Button Style",
+          type: "string",
+          options: {
+            list: [
+              { title: "Primary", value: "primary" },
+              { title: "Secondary", value: "secondary" },
+              { title: "Outline", value: "outline" },
+            ],
+          },
+          initialValue: "primary",
+        }),
+      ],
+    }),
   ],
   preview: {
     prepare() {
