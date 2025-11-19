@@ -69,7 +69,10 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
     let tall075 = 0;
 
     for (const img of images || []) {
-      const asset = assetData[img?.asset?._ref];
+      const assetRef = img?.asset?._ref;
+      if (!assetRef) continue;
+      
+      const asset = assetData[assetRef];
       const dims = asset?.metadata?.dimensions;
       if (!dims) continue;
 

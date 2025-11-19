@@ -16,6 +16,7 @@ import { structure } from "./sanity/structure";
 import { documentInternationalization } from "@sanity/document-internationalization";
 import { internationalizedArray } from "sanity-plugin-internationalized-array";
 import { media } from "sanity-plugin-media";
+import { markdownSchema } from "sanity-plugin-markdown";
 
 export default defineConfig({
   basePath: "/studio",
@@ -68,5 +69,6 @@ export default defineConfig({
       // Define field types to localize as-needed
       fieldTypes: ["string"],
     }),
+    markdownSchema(),
   ],
 });

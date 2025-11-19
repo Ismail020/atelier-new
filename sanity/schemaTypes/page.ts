@@ -4,6 +4,10 @@ import { heroSection } from "./components/heroSection";
 import { headlineSection } from "./components/headlineSection";
 import { projectsSection } from "./components/projectsSection";
 import { allProjectsSection } from "./components/allProjectsSection";
+import { contentSection } from "./components/contentSection";
+import { contactSection } from "./components/contactSection";
+import { pressCoverageSection } from "./components/pressCoverageSection";
+import { termsConditionsSection } from "./components/termsConditionsSection";
 
 export const pageType = defineType({
   name: "page",
@@ -28,7 +32,7 @@ export const pageType = defineType({
       title: "Page Components",
       type: "array",
       description: "Add and arrange components for this page",
-      of: [heroSection, headlineSection, projectsSection, allProjectsSection] as any,
+      of: [heroSection, headlineSection, projectsSection, allProjectsSection, contentSection, contactSection, pressCoverageSection, termsConditionsSection],
     }),
   ],
   preview: {

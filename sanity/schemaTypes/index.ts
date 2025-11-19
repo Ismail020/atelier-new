@@ -9,6 +9,10 @@ import { pressType } from "./press";
 import { headlineSection } from "./components/headlineSection";
 import { projectsSection } from "./components/projectsSection";
 import { allProjectsSection } from "./components/allProjectsSection";
+import { contentSection } from "./components/contentSection";
+import { contactSection } from "./components/contactSection";
+import { pressCoverageSection } from "./components/pressCoverageSection";
+import { termsConditionsSection } from "./components/termsConditionsSection";
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -22,5 +26,9 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     headlineSection,
     projectsSection,
     allProjectsSection,
+    contentSection,
+    contactSection,
+    pressCoverageSection,
+    termsConditionsSection,
   ],
 };

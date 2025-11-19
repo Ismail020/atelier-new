@@ -35,6 +35,7 @@ export const footerType = defineType({
           title: "Show Language Switch",
           type: "boolean",
           initialValue: true,
+          readOnly: true,
         }),
         defineField({
           name: "termsPageEN",
@@ -71,6 +72,7 @@ export const footerType = defineType({
           type: "boolean",
           description: "Email and phone will be pulled from Site Settings",
           initialValue: true,
+          readOnly: true,
         }),
       ],
     }),
@@ -87,6 +89,7 @@ export const footerType = defineType({
           type: "boolean",
           description: "Social media links will be pulled from Site Settings",
           initialValue: true,
+          readOnly: true,
         }),
       ],
     }),

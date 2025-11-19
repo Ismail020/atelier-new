@@ -33,20 +33,9 @@ export const heroSection = {
     }),
   ],
   preview: {
-    select: {
-      logo: "logo",
-      image0: "images.0",
-    },
-    prepare({
-      logo,
-      image0,
-    }: {
-      logo?: object;
-      image0?: object;
-    }) {
+    prepare() {
       return {
         title: `Hero Section`,
-        media: logo || image0,
       };
     },
   },

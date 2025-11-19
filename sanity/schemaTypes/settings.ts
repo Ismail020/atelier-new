@@ -19,15 +19,42 @@ export const settingsType = defineType({
       type: "object",
       fields: [
         defineField({
-          name: "email",
-          title: "Email Address",
-          type: "email",
-          validation: (rule) => rule.required(),
+          name: "headOfDesign",
+          title: "Head of Design",
+          type: "object",
+          fields: [
+            defineField({
+              name: "name",
+              title: "Name",
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "phone",
+              title: "Phone Number", 
+              type: "string",
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "email",
+              title: "Email Address",
+              type: "email",
+              validation: (rule) => rule.required(),
+            }),
+          ],
         }),
         defineField({
-          name: "phone",
-          title: "Phone Number",
-          type: "string",
+          name: "generalInquiries",
+          title: "Other Related Questions",
+          type: "object",
+          fields: [
+            defineField({
+              name: "email",
+              title: "Email Address",
+              type: "email",
+              validation: (rule) => rule.required(),
+            }),
+          ],
         }),
       ],
     }),

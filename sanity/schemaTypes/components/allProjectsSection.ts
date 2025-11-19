@@ -57,10 +57,10 @@ export const allProjectsSection = {
     defineField({
       name: "projectsSource",
       title: "Projects Source",
-      type: "string",
+      type: "boolean",
       readOnly: true,
-      initialValue: "All projects from the 'project' content type will be displayed here",
-      description: "This section automatically displays all projects",
+      initialValue: true,
+      description: "All projects from the 'project' content type will be displayed here",
     }),
   ],
   preview: {
