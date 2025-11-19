@@ -4,11 +4,11 @@ import Navbar from "@/components/Navbar";
 import { getNavbarData } from "@/lib/navbar";
 
 export const metadata: Metadata = {
-  title: "Atelier Nextshift",
-  description: "Creative design studio",
+  title: "Atelier Nextshift - English",
+  description: "Creative design studio - English version",
 };
 
-export default async function FrontendLayout({
+export default async function EnglishLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ export default async function FrontendLayout({
 
   return (
     <div className="relative">
-      {navbarData && <Navbar data={navbarData} currentLanguage="fr" />}
+      {navbarData && <Navbar data={navbarData} currentLanguage="en" />}
       <main className="relative pt-16">{children}</main>
       <SanityLive />
     </div>

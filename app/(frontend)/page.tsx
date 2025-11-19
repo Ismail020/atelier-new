@@ -1,23 +1,25 @@
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 
-const HOME_QUERY = defineQuery(`*[
+const HOME_QUERY_FR = defineQuery(`*[
   _type == "page" 
   && name == "Home" 
   && language == "fr"
 ][0]{
   name,
-  slug,
   language,
   components
 }`);
 
 export default async function Home() {
-  const { data: page } = await sanityFetch({ query: HOME_QUERY });
+  const { data: page } = await sanityFetch({ 
+    query: HOME_QUERY_FR,
+    params: {}
+  });
 
   return (
     <main>
-      <h1>Homepage (French Default)</h1>
+      <h1>Homepage (French)</h1>
       {page ? (
         <div>
           <h2>{page.name}</h2>
@@ -26,8 +28,8 @@ export default async function Home() {
         </div>
       ) : (
         <p>
-          No French homepage found. Create one in Sanity Studio with slug
-          &quot;home&quot; and language &quot;fr&quot;.
+          No French homepage found. Create one in Sanity Studio with name
+          &quot;Home&quot; and language &quot;fr&quot;.
         </p>
       )}
     </main>

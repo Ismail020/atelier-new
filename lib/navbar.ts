@@ -9,18 +9,16 @@ const NAVBAR_QUERY = defineQuery(`*[_type == "navbar"][0]{
       menuItemsEN[] {
         page-> {
           name,
-          slug {
-            current
-          }
+          slug,
+          language
         },
         mobileImage
       },
       menuItemsFR[] {
         page-> {
           name,
-          slug {
-            current
-          }
+          slug,
+          language  
         },
         mobileImage
       }

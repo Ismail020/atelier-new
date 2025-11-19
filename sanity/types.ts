@@ -837,9 +837,833 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes = TermsConditionsSection | Markdown | PressCoverageSection | ContactSection | SanityImageCrop | SanityImageHotspot | ContentSection | AllProjectsSection | ProjectsSection | HeadlineSection | Press | InternationalizedArrayString | Project | Settings | Footer | Navbar | Locale | InternationalizedArrayStringValue | MediaTag | Slug | TranslationMetadata | InternationalizedArrayReference | InternationalizedArrayReferenceValue | Page | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
+// Source: app/(frontend)/[slug]/page.tsx
+// Variable: PAGE_QUERY_FR
+// Query: *[  _type == "page"   && name == $pageName   && language == "fr"][0]{  name,  language,  components}
+export type PAGE_QUERY_FRResult = {
+  name: string | null;
+  language: string | null;
+  components: Array<{
+    headline?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h1" | "h2" | "h3" | "normal";
+      listItem?: never;
+      markDefs?: Array<{
+        markForStyling?: boolean;
+        _type: "highlight";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    projectLinkText?: string;
+    projectsSource?: boolean;
+    _type: "allProjectsSection";
+    _key: string;
+  } | {
+    title?: string;
+    backgroundImage?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    contactUsImage?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    column1Title?: string;
+    column1Info?: boolean;
+    column2Title?: string;
+    column2Info?: boolean;
+    column3Title?: string;
+    column3Info?: boolean;
+    _type: "contactSection";
+    _key: string;
+  } | {
+    images?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }>;
+    section1?: {
+      title?: string;
+      body?: string;
+    };
+    section2?: {
+      title?: string;
+      items?: Array<{
+        title?: string;
+        body?: string;
+        _type: "item";
+        _key: string;
+      }>;
+    };
+    section3?: {
+      title?: string;
+      image?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
+      body?: string;
+      buttonText?: string;
+      buttonLink?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+    };
+    section4?: {
+      title?: string;
+      buttonText?: string;
+      reviews?: Array<{
+        body?: string;
+        person?: string;
+        _type: "review";
+        _key: string;
+      }>;
+    };
+    _type: "contentSection";
+    _key: string;
+  } | {
+    headline?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h1" | "h2" | "h3" | "normal";
+      listItem?: never;
+      markDefs?: Array<{
+        markForStyling?: boolean;
+        _type: "highlight";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    _type: "headlineSection";
+    _key: string;
+  } | {
+    images?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }>;
+    logo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    _type: "heroSection";
+    _key: string;
+  } | {
+    title?: string;
+    pressSource?: boolean;
+    _type: "pressCoverageSection";
+    _key: string;
+  } | {
+    title?: string;
+    projectsPageLink?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
+    projectLinkText?: string;
+    viewAllLinkText?: string;
+    selectedProjects?: Array<{
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      _key: string;
+      [internalGroqTypeReferenceTo]?: "project";
+    }>;
+    _type: "projectsSection";
+    _key: string;
+  } | {
+    title?: string;
+    content?: Markdown;
+    _type: "termsConditionsSection";
+    _key: string;
+  }> | null;
+} | null;
+
+// Source: app/(frontend)/en/[slug]/page.tsx
+// Variable: PAGE_QUERY_EN_SLUG
+// Query: *[  _type == "page"   && name == $pageName   && language == "en"][0]{  name,  language,  components}
+export type PAGE_QUERY_EN_SLUGResult = {
+  name: string | null;
+  language: string | null;
+  components: Array<{
+    headline?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h1" | "h2" | "h3" | "normal";
+      listItem?: never;
+      markDefs?: Array<{
+        markForStyling?: boolean;
+        _type: "highlight";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    projectLinkText?: string;
+    projectsSource?: boolean;
+    _type: "allProjectsSection";
+    _key: string;
+  } | {
+    title?: string;
+    backgroundImage?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    contactUsImage?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    column1Title?: string;
+    column1Info?: boolean;
+    column2Title?: string;
+    column2Info?: boolean;
+    column3Title?: string;
+    column3Info?: boolean;
+    _type: "contactSection";
+    _key: string;
+  } | {
+    images?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }>;
+    section1?: {
+      title?: string;
+      body?: string;
+    };
+    section2?: {
+      title?: string;
+      items?: Array<{
+        title?: string;
+        body?: string;
+        _type: "item";
+        _key: string;
+      }>;
+    };
+    section3?: {
+      title?: string;
+      image?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
+      body?: string;
+      buttonText?: string;
+      buttonLink?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+    };
+    section4?: {
+      title?: string;
+      buttonText?: string;
+      reviews?: Array<{
+        body?: string;
+        person?: string;
+        _type: "review";
+        _key: string;
+      }>;
+    };
+    _type: "contentSection";
+    _key: string;
+  } | {
+    headline?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h1" | "h2" | "h3" | "normal";
+      listItem?: never;
+      markDefs?: Array<{
+        markForStyling?: boolean;
+        _type: "highlight";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    _type: "headlineSection";
+    _key: string;
+  } | {
+    images?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }>;
+    logo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    _type: "heroSection";
+    _key: string;
+  } | {
+    title?: string;
+    pressSource?: boolean;
+    _type: "pressCoverageSection";
+    _key: string;
+  } | {
+    title?: string;
+    projectsPageLink?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
+    projectLinkText?: string;
+    viewAllLinkText?: string;
+    selectedProjects?: Array<{
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      _key: string;
+      [internalGroqTypeReferenceTo]?: "project";
+    }>;
+    _type: "projectsSection";
+    _key: string;
+  } | {
+    title?: string;
+    content?: Markdown;
+    _type: "termsConditionsSection";
+    _key: string;
+  }> | null;
+} | null;
+
+// Source: app/(frontend)/en/page.tsx
+// Variable: HOME_QUERY_EN_FRONTEND
+// Query: *[  _type == "page"   && name == "Home"   && language == "en"][0]{  name,  language,  components}
+export type HOME_QUERY_EN_FRONTENDResult = {
+  name: string | null;
+  language: string | null;
+  components: Array<{
+    headline?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h1" | "h2" | "h3" | "normal";
+      listItem?: never;
+      markDefs?: Array<{
+        markForStyling?: boolean;
+        _type: "highlight";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    projectLinkText?: string;
+    projectsSource?: boolean;
+    _type: "allProjectsSection";
+    _key: string;
+  } | {
+    title?: string;
+    backgroundImage?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    contactUsImage?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    column1Title?: string;
+    column1Info?: boolean;
+    column2Title?: string;
+    column2Info?: boolean;
+    column3Title?: string;
+    column3Info?: boolean;
+    _type: "contactSection";
+    _key: string;
+  } | {
+    images?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }>;
+    section1?: {
+      title?: string;
+      body?: string;
+    };
+    section2?: {
+      title?: string;
+      items?: Array<{
+        title?: string;
+        body?: string;
+        _type: "item";
+        _key: string;
+      }>;
+    };
+    section3?: {
+      title?: string;
+      image?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
+      body?: string;
+      buttonText?: string;
+      buttonLink?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+    };
+    section4?: {
+      title?: string;
+      buttonText?: string;
+      reviews?: Array<{
+        body?: string;
+        person?: string;
+        _type: "review";
+        _key: string;
+      }>;
+    };
+    _type: "contentSection";
+    _key: string;
+  } | {
+    headline?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h1" | "h2" | "h3" | "normal";
+      listItem?: never;
+      markDefs?: Array<{
+        markForStyling?: boolean;
+        _type: "highlight";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    _type: "headlineSection";
+    _key: string;
+  } | {
+    images?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }>;
+    logo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    _type: "heroSection";
+    _key: string;
+  } | {
+    title?: string;
+    pressSource?: boolean;
+    _type: "pressCoverageSection";
+    _key: string;
+  } | {
+    title?: string;
+    projectsPageLink?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
+    projectLinkText?: string;
+    viewAllLinkText?: string;
+    selectedProjects?: Array<{
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      _key: string;
+      [internalGroqTypeReferenceTo]?: "project";
+    }>;
+    _type: "projectsSection";
+    _key: string;
+  } | {
+    title?: string;
+    content?: Markdown;
+    _type: "termsConditionsSection";
+    _key: string;
+  }> | null;
+} | null;
+
+// Source: app/(frontend)/page.tsx
+// Variable: HOME_QUERY_FR
+// Query: *[  _type == "page"   && name == "Home"   && language == "fr"][0]{  name,  language,  components}
+export type HOME_QUERY_FRResult = {
+  name: string | null;
+  language: string | null;
+  components: Array<{
+    headline?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h1" | "h2" | "h3" | "normal";
+      listItem?: never;
+      markDefs?: Array<{
+        markForStyling?: boolean;
+        _type: "highlight";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    projectLinkText?: string;
+    projectsSource?: boolean;
+    _type: "allProjectsSection";
+    _key: string;
+  } | {
+    title?: string;
+    backgroundImage?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    contactUsImage?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    column1Title?: string;
+    column1Info?: boolean;
+    column2Title?: string;
+    column2Info?: boolean;
+    column3Title?: string;
+    column3Info?: boolean;
+    _type: "contactSection";
+    _key: string;
+  } | {
+    images?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }>;
+    section1?: {
+      title?: string;
+      body?: string;
+    };
+    section2?: {
+      title?: string;
+      items?: Array<{
+        title?: string;
+        body?: string;
+        _type: "item";
+        _key: string;
+      }>;
+    };
+    section3?: {
+      title?: string;
+      image?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
+      body?: string;
+      buttonText?: string;
+      buttonLink?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "page";
+      };
+    };
+    section4?: {
+      title?: string;
+      buttonText?: string;
+      reviews?: Array<{
+        body?: string;
+        person?: string;
+        _type: "review";
+        _key: string;
+      }>;
+    };
+    _type: "contentSection";
+    _key: string;
+  } | {
+    headline?: Array<{
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "h1" | "h2" | "h3" | "normal";
+      listItem?: never;
+      markDefs?: Array<{
+        markForStyling?: boolean;
+        _type: "highlight";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }>;
+    _type: "headlineSection";
+    _key: string;
+  } | {
+    images?: Array<{
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }>;
+    logo?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    _type: "heroSection";
+    _key: string;
+  } | {
+    title?: string;
+    pressSource?: boolean;
+    _type: "pressCoverageSection";
+    _key: string;
+  } | {
+    title?: string;
+    projectsPageLink?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
+    projectLinkText?: string;
+    viewAllLinkText?: string;
+    selectedProjects?: Array<{
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      _key: string;
+      [internalGroqTypeReferenceTo]?: "project";
+    }>;
+    _type: "projectsSection";
+    _key: string;
+  } | {
+    title?: string;
+    content?: Markdown;
+    _type: "termsConditionsSection";
+    _key: string;
+  }> | null;
+} | null;
+
 // Source: lib/navbar.ts
 // Variable: NAVBAR_QUERY
-// Query: *[_type == "navbar"][0]{  navbarStructure {    brandText,    logo,    menuItems {      menuItemsEN[] {        page-> {          name,          slug {            current          }        },        mobileImage      },      menuItemsFR[] {        page-> {          name,          slug {            current          }        },        mobileImage      }    }  }}
+// Query: *[_type == "navbar"][0]{  navbarStructure {    brandText,    logo,    menuItems {      menuItemsEN[] {        page-> {          name,          slug,          language        },        mobileImage      },      menuItemsFR[] {        page-> {          name,          slug,          language          },        mobileImage      }    }  }}
 export type NAVBAR_QUERYResult = {
   navbarStructure: {
     brandText: string | null;
@@ -860,6 +1684,7 @@ export type NAVBAR_QUERYResult = {
         page: {
           name: string | null;
           slug: null;
+          language: string | null;
         } | null;
         mobileImage: {
           asset?: {
@@ -878,6 +1703,7 @@ export type NAVBAR_QUERYResult = {
         page: {
           name: string | null;
           slug: null;
+          language: string | null;
         } | null;
         mobileImage: {
           asset?: {
@@ -900,6 +1726,10 @@ export type NAVBAR_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[_type == \"navbar\"][0]{\n  navbarStructure {\n    brandText,\n    logo,\n    menuItems {\n      menuItemsEN[] {\n        page-> {\n          name,\n          slug {\n            current\n          }\n        },\n        mobileImage\n      },\n      menuItemsFR[] {\n        page-> {\n          name,\n          slug {\n            current\n          }\n        },\n        mobileImage\n      }\n    }\n  }\n}": NAVBAR_QUERYResult;
+    "*[\n  _type == \"page\" \n  && name == $pageName \n  && language == \"fr\"\n][0]{\n  name,\n  language,\n  components\n}": PAGE_QUERY_FRResult;
+    "*[\n  _type == \"page\" \n  && name == $pageName \n  && language == \"en\"\n][0]{\n  name,\n  language,\n  components\n}": PAGE_QUERY_EN_SLUGResult;
+    "*[\n  _type == \"page\" \n  && name == \"Home\" \n  && language == \"en\"\n][0]{\n  name,\n  language,\n  components\n}": HOME_QUERY_EN_FRONTENDResult;
+    "*[\n  _type == \"page\" \n  && name == \"Home\" \n  && language == \"fr\"\n][0]{\n  name,\n  language,\n  components\n}": HOME_QUERY_FRResult;
+    "*[_type == \"navbar\"][0]{\n  navbarStructure {\n    brandText,\n    logo,\n    menuItems {\n      menuItemsEN[] {\n        page-> {\n          name,\n          slug,\n          language\n        },\n        mobileImage\n      },\n      menuItemsFR[] {\n        page-> {\n          name,\n          slug,\n          language  \n        },\n        mobileImage\n      }\n    }\n  }\n}": NAVBAR_QUERYResult;
   }
 }

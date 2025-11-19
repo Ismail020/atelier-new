@@ -4,36 +4,10 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { urlFor } from '@/sanity/lib/image';
-
-interface MenuItem {
-  page?: {
-    slug?: { current?: string };
-    name?: string;
-  };
-  mobileImage?: {
-    asset: {
-      _ref: string;
-    };
-  };
-}
-
-interface NavbarData {
-  navbarStructure: {
-    brandText: string;
-    logo?: {
-      asset: {
-        _ref: string;
-      };
-    };
-    menuItems: {
-      menuItemsEN: MenuItem[];
-      menuItemsFR: MenuItem[];
-    };
-  };
-}
+import type { NAVBAR_QUERYResult } from '@/sanity/types';
 
 interface NavbarProps {
-  data: NavbarData;
+  data: NAVBAR_QUERYResult;
   currentLanguage?: 'en' | 'fr';
 }
 
@@ -50,9 +24,13 @@ export default function Navbar({ data, currentLanguage = 'en' }: NavbarProps) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  if (!data?.navbarStructure) {
+    return null;
+  }
+
   const menuItems = currentLanguage === 'en' 
-    ? data.navbarStructure.menuItems.menuItemsEN 
-    : data.navbarStructure.menuItems.menuItemsFR;
+    ? data.navbarStructure.menuItems?.menuItemsEN 
+    : data.navbarStructure.menuItems?.menuItemsFR;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/90 backdrop-blur-sm border-b border-gray-200">
@@ -70,20 +48,20 @@ export default function Navbar({ data, currentLanguage = 'en' }: NavbarProps) {
               />
             ) : (
               <span className="text-xl font-bold text-gray-900">
-                {data.navbarStructure.brandText}
+                {data.navbarStructure.brandText || 'Brand'}
               </span>
             )}
           </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            {menuItems?.filter(item => item.page?.slug?.current).map((item, index) => (
+            {menuItems?.filter(item => item?.page?.slug).map((item, index) => (
               <Link
                 key={index}
-                href={`/${item.page.slug.current}`}
+                href={`/${currentLanguage === 'en' ? 'en/' : ''}${item.page?.name?.toLowerCase().replace(/\s+/g, '-') || 'page'}`}
                 className="text-gray-700 hover:text-gray-900 transition-colors duration-200 font-medium"
               >
-                {item.page.name || 'Page'}
+                {item.page?.name || 'Page'}
               </Link>
             ))}
           </div>
@@ -133,28 +111,27 @@ export default function Navbar({ data, currentLanguage = 'en' }: NavbarProps) {
         {isMobileMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200 bg-white">
             <div className="grid grid-cols-1 gap-4">
-              {menuItems?.filter(item => item.page?.slug?.current).map((item, index) => (
+              {menuItems?.filter(item => item?.page?.slug).map((item, index) => (
                 <Link
                   key={index}
-                  href={`/${item.page.slug.current}`}
+                  href={`/${currentLanguage === 'en' ? 'en/' : ''}${item.page?.name?.toLowerCase().replace(/\s+/g, '-') || 'page'}`}
                   className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.mobileImage && (
                     <Image
                       src={urlFor(item.mobileImage).width(48).height(48).url()}
-                      alt={item.page.name}
+                      alt={item.page?.name || 'Menu item'}
                       width={48}
                       height={48}
                       className="w-12 h-12 rounded-md object-cover"
                     />
                   )}
-                  <span className="text-gray-900 font-medium">{item.page.name || 'Page'}</span>
+                  <span className="text-gray-900 font-medium">{item.page?.name || 'Page'}</span>
                 </Link>
               ))}
             </div>
             
-            {/* Mobile Language Switcher */}
             <div className="flex space-x-2 mt-4 pt-4 border-t border-gray-200">
               <button
                 className={`flex-1 py-2 px-3 rounded ${
