@@ -1,37 +1,51 @@
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/live";
+import ComponentRenderer from "@/components/ComponentRenderer";
 
 const HOME_QUERY_EN_FRONTEND = defineQuery(`*[
   _type == "page" 
   && name == "Home" 
   && language == "en"
 ][0]{
-  name,
-  language,
-  components
+  ...,
+  components[]{
+    ...,
+    "images": images[]{..., asset->},
+    "logo": logo{..., asset->},
+    "backgroundImage": backgroundImage{..., asset->},
+    "contactUsImage": contactUsImage{..., asset->},
+    "mainImage": mainImage{..., asset->},
+    "previewImages": previewImages[]{..., asset->},
+    "gallery": gallery[]{..., asset->},
+    "section1": section1{...},
+    "section2": section2{..., items[]{...}},
+    "section3": section3{..., "image": image{..., asset->}},
+    "section4": section4{..., reviews[]{...}}
+  }
 }`);
 
 export default async function EnglishHome() {
-  const { data: page } = await sanityFetch({ 
+  const { data: page } = await sanityFetch({
     query: HOME_QUERY_EN_FRONTEND,
-    params: {}
+    params: {},
   });
 
-  return (
-    <main>
-      <h1>Homepage (English)</h1>
-      {page ? (
-        <div>
-          <h2>{page.name}</h2>
-          <p>Language: {page.language}</p>
-          {/* We'll add component rendering here */}
-        </div>
-      ) : (
-        <p>
+  if (!page) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p className="text-lg text-gray-600">
           No English homepage found. Create one in Sanity Studio with name
           &quot;Home&quot; and language &quot;en&quot;.
         </p>
-      )}
-    </main>
+      </div>
+    );
+  }
+
+  return (
+    <ComponentRenderer 
+      components={page.components || []} 
+      isHomePage={true}
+      currentLanguage="en"
+    />
   );
 }

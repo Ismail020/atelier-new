@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { SanityLive } from "@/sanity/lib/live";
-import Navbar from "@/components/Navbar";
+import ConditionalNavbar from "@/components/ConditionalNavbar";
+import { NavbarProvider } from "@/components/NavbarContext";
 import { getNavbarData } from "@/lib/navbar";
+import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 
 export const metadata: Metadata = {
   title: "Atelier Nextshift",
@@ -16,10 +18,13 @@ export default async function FrontendLayout({
   const navbarData = await getNavbarData();
 
   return (
-    <div className="relative">
-      {navbarData && <Navbar data={navbarData} currentLanguage="fr" />}
-      <main className="relative pt-16">{children}</main>
-      <SanityLive />
-    </div>
+    <NavbarProvider navbarData={navbarData}>
+      <SmoothScrollProvider />
+      <div className="relative">
+        <ConditionalNavbar navbarData={navbarData} />
+        <main className="relative">{children}</main>
+        <SanityLive />
+      </div>
+    </NavbarProvider>
   );
 }

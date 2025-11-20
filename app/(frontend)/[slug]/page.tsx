@@ -2,6 +2,7 @@ import { defineQuery } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/live";
 import { client } from "@/sanity/lib/client";
 import { notFound } from "next/navigation";
+import ComponentRenderer from "@/components/ComponentRenderer";
 
 const PAGE_QUERY_FR = defineQuery(`*[
   _type == "page" 
@@ -10,7 +11,15 @@ const PAGE_QUERY_FR = defineQuery(`*[
 ][0]{
   name,
   language,
-  components
+  components[]{
+    ...,
+    images[]{
+      ...
+    },
+    logo{
+      ...
+    }
+  }
 }`);
 
 interface PageProps {
@@ -23,34 +32,33 @@ export default async function Page({ params }: PageProps) {
   if (!slug) {
     notFound();
   }
-  
+
   // Use slug as-is since it matches the page name in Sanity
   const pageName = slug;
-  
-  const { data: page } = await sanityFetch({ 
+
+  const { data: page } = await sanityFetch({
     query: PAGE_QUERY_FR,
-    params: { pageName }
+    params: { pageName },
   });
 
   if (!page) {
     notFound();
   }
 
-  return (
-    <main>
-      <h1>{page.name}</h1>
-      <p>Language: {page.language}</p>
-      <p>Page Name: {page.name}</p>
-      {/* We'll add component rendering here */}
-    </main>
-  );
+  return <ComponentRenderer components={page.components || []} />;
 }
 
 export async function generateStaticParams() {
   // Fetch French pages only, excluding "Home" page (handled by root route)
-  const allPages = await client.fetch(`*[_type == "page" && defined(name) && name != "Home" && language == "fr"]{ name }`);
-  
-  return allPages?.filter((page: { name: string | null }) => page.name).map((page: { name: string }) => ({
-    slug: page.name
-  })) || [];
+  const allPages = await client.fetch(
+    `*[_type == "page" && defined(name) && name != "Home" && language == "fr"]{ name }`
+  );
+
+  return (
+    allPages
+      ?.filter((page: { name: string | null }) => page.name)
+      .map((page: { name: string }) => ({
+        slug: page.name,
+      })) || []
+  );
 }

@@ -839,7 +839,7 @@ export type AllSanitySchemaTypes = TermsConditionsSection | Markdown | PressCove
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: app/(frontend)/[slug]/page.tsx
 // Variable: PAGE_QUERY_FR
-// Query: *[  _type == "page"   && name == $pageName   && language == "fr"][0]{  name,  language,  components}
+// Query: *[  _type == "page"   && name == $pageName   && language == "fr"][0]{  name,  language,  components[]{    ...,    images[]{      ...    },    logo{      ...    }  }}
 export type PAGE_QUERY_FRResult = {
   name: string | null;
   language: string | null;
@@ -866,6 +866,8 @@ export type PAGE_QUERY_FRResult = {
     projectsSource?: boolean;
     _type: "allProjectsSection";
     _key: string;
+    images: null;
+    logo: null;
   } | {
     title?: string;
     backgroundImage?: {
@@ -900,8 +902,10 @@ export type PAGE_QUERY_FRResult = {
     column3Info?: boolean;
     _type: "contactSection";
     _key: string;
+    images: null;
+    logo: null;
   } | {
-    images?: Array<{
+    images: Array<{
       asset?: {
         _ref: string;
         _type: "reference";
@@ -913,7 +917,7 @@ export type PAGE_QUERY_FRResult = {
       crop?: SanityImageCrop;
       _type: "image";
       _key: string;
-    }>;
+    }> | null;
     section1?: {
       title?: string;
       body?: string;
@@ -962,6 +966,7 @@ export type PAGE_QUERY_FRResult = {
     };
     _type: "contentSection";
     _key: string;
+    logo: null;
   } | {
     headline?: Array<{
       children?: Array<{
@@ -983,8 +988,10 @@ export type PAGE_QUERY_FRResult = {
     }>;
     _type: "headlineSection";
     _key: string;
+    images: null;
+    logo: null;
   } | {
-    images?: Array<{
+    images: Array<{
       asset?: {
         _ref: string;
         _type: "reference";
@@ -996,8 +1003,8 @@ export type PAGE_QUERY_FRResult = {
       crop?: SanityImageCrop;
       _type: "image";
       _key: string;
-    }>;
-    logo?: {
+    }> | null;
+    logo: {
       asset?: {
         _ref: string;
         _type: "reference";
@@ -1008,7 +1015,7 @@ export type PAGE_QUERY_FRResult = {
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
-    };
+    } | null;
     _type: "heroSection";
     _key: string;
   } | {
@@ -1016,6 +1023,8 @@ export type PAGE_QUERY_FRResult = {
     pressSource?: boolean;
     _type: "pressCoverageSection";
     _key: string;
+    images: null;
+    logo: null;
   } | {
     title?: string;
     projectsPageLink?: {
@@ -1035,21 +1044,27 @@ export type PAGE_QUERY_FRResult = {
     }>;
     _type: "projectsSection";
     _key: string;
+    images: null;
+    logo: null;
   } | {
     title?: string;
     content?: Markdown;
     _type: "termsConditionsSection";
     _key: string;
+    images: null;
+    logo: null;
   }> | null;
 } | null;
 
 // Source: app/(frontend)/en/[slug]/page.tsx
 // Variable: PAGE_QUERY_EN_SLUG
-// Query: *[  _type == "page"   && name == $pageName   && language == "en"][0]{  name,  language,  components}
+// Query: *[  _type == "page"   && name == $pageName   && language == "en"][0]{  name,  language,  components[]{    _type,    _key,    ...  }}
 export type PAGE_QUERY_EN_SLUGResult = {
   name: string | null;
   language: string | null;
   components: Array<{
+    _type: "allProjectsSection";
+    _key: string;
     headline?: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -1070,9 +1085,9 @@ export type PAGE_QUERY_EN_SLUGResult = {
     }>;
     projectLinkText?: string;
     projectsSource?: boolean;
-    _type: "allProjectsSection";
-    _key: string;
   } | {
+    _type: "contactSection";
+    _key: string;
     title?: string;
     backgroundImage?: {
       asset?: {
@@ -1104,9 +1119,9 @@ export type PAGE_QUERY_EN_SLUGResult = {
     column2Info?: boolean;
     column3Title?: string;
     column3Info?: boolean;
-    _type: "contactSection";
-    _key: string;
   } | {
+    _type: "contentSection";
+    _key: string;
     images?: Array<{
       asset?: {
         _ref: string;
@@ -1166,9 +1181,9 @@ export type PAGE_QUERY_EN_SLUGResult = {
         _key: string;
       }>;
     };
-    _type: "contentSection";
-    _key: string;
   } | {
+    _type: "headlineSection";
+    _key: string;
     headline?: Array<{
       children?: Array<{
         marks?: Array<string>;
@@ -1187,9 +1202,9 @@ export type PAGE_QUERY_EN_SLUGResult = {
       _type: "block";
       _key: string;
     }>;
-    _type: "headlineSection";
-    _key: string;
   } | {
+    _type: "heroSection";
+    _key: string;
     images?: Array<{
       asset?: {
         _ref: string;
@@ -1215,14 +1230,14 @@ export type PAGE_QUERY_EN_SLUGResult = {
       crop?: SanityImageCrop;
       _type: "image";
     };
-    _type: "heroSection";
-    _key: string;
   } | {
-    title?: string;
-    pressSource?: boolean;
     _type: "pressCoverageSection";
     _key: string;
+    title?: string;
+    pressSource?: boolean;
   } | {
+    _type: "projectsSection";
+    _key: string;
     title?: string;
     projectsPageLink?: {
       _ref: string;
@@ -1239,22 +1254,25 @@ export type PAGE_QUERY_EN_SLUGResult = {
       _key: string;
       [internalGroqTypeReferenceTo]?: "project";
     }>;
-    _type: "projectsSection";
-    _key: string;
   } | {
-    title?: string;
-    content?: Markdown;
     _type: "termsConditionsSection";
     _key: string;
+    title?: string;
+    content?: Markdown;
   }> | null;
 } | null;
 
 // Source: app/(frontend)/en/page.tsx
 // Variable: HOME_QUERY_EN_FRONTEND
-// Query: *[  _type == "page"   && name == "Home"   && language == "en"][0]{  name,  language,  components}
+// Query: *[  _type == "page"   && name == "Home"   && language == "en"][0]{  ...,  components[]{    ...,    "images": images[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "section1": section1{...},    "section2": section2{..., items[]{...}},    "section3": section3{..., "image": image{..., asset->}},    "section4": section4{..., reviews[]{...}}  }}
 export type HOME_QUERY_EN_FRONTENDResult = {
-  name: string | null;
-  language: string | null;
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  language?: string;
   components: Array<{
     headline?: Array<{
       children?: Array<{
@@ -1278,32 +1296,75 @@ export type HOME_QUERY_EN_FRONTENDResult = {
     projectsSource?: boolean;
     _type: "allProjectsSection";
     _key: string;
+    images: null;
+    logo: null;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    section1: null;
+    section2: null;
+    section3: null;
+    section4: null;
   } | {
     title?: string;
-    backgroundImage?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+    backgroundImage: {
+      asset: {
+        _id: string;
+        _type: "sanity.imageAsset";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
-    };
-    contactUsImage?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+    } | null;
+    contactUsImage: {
+      asset: {
+        _id: string;
+        _type: "sanity.imageAsset";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
-    };
+    } | null;
     column1Title?: string;
     column1Info?: boolean;
     column2Title?: string;
@@ -1312,47 +1373,88 @@ export type HOME_QUERY_EN_FRONTENDResult = {
     column3Info?: boolean;
     _type: "contactSection";
     _key: string;
+    images: null;
+    logo: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    section1: null;
+    section2: null;
+    section3: null;
+    section4: null;
   } | {
-    images?: Array<{
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+    images: Array<{
+      asset: {
+        _id: string;
+        _type: "sanity.imageAsset";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
       _key: string;
-    }>;
-    section1?: {
+    }> | null;
+    section1: {
       title?: string;
       body?: string;
-    };
-    section2?: {
+    } | null;
+    section2: {
       title?: string;
-      items?: Array<{
+      items: Array<{
         title?: string;
         body?: string;
         _type: "item";
         _key: string;
-      }>;
-    };
-    section3?: {
+      }> | null;
+    } | null;
+    section3: {
       title?: string;
-      image?: {
-        asset?: {
-          _ref: string;
-          _type: "reference";
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-        };
+      image: {
+        asset: {
+          _id: string;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          originalFilename?: string;
+          label?: string;
+          title?: string;
+          description?: string;
+          altText?: string;
+          sha1hash?: string;
+          extension?: string;
+          mimeType?: string;
+          size?: number;
+          assetId?: string;
+          uploadId?: string;
+          path?: string;
+          url?: string;
+          metadata?: SanityImageMetadata;
+          source?: SanityAssetSourceData;
+        } | null;
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
         _type: "image";
-      };
+      } | null;
       body?: string;
       buttonText?: string;
       buttonLink?: {
@@ -1361,19 +1463,25 @@ export type HOME_QUERY_EN_FRONTENDResult = {
         _weak?: boolean;
         [internalGroqTypeReferenceTo]?: "page";
       };
-    };
-    section4?: {
+    } | null;
+    section4: {
       title?: string;
       buttonText?: string;
-      reviews?: Array<{
+      reviews: Array<{
         body?: string;
         person?: string;
         _type: "review";
         _key: string;
-      }>;
-    };
+      }> | null;
+    } | null;
     _type: "contentSection";
     _key: string;
+    logo: null;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
   } | {
     headline?: Array<{
       children?: Array<{
@@ -1395,39 +1503,102 @@ export type HOME_QUERY_EN_FRONTENDResult = {
     }>;
     _type: "headlineSection";
     _key: string;
+    images: null;
+    logo: null;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    section1: null;
+    section2: null;
+    section3: null;
+    section4: null;
   } | {
-    images?: Array<{
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+    images: Array<{
+      asset: {
+        _id: string;
+        _type: "sanity.imageAsset";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
       _key: string;
-    }>;
-    logo?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+    }> | null;
+    logo: {
+      asset: {
+        _id: string;
+        _type: "sanity.imageAsset";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
-    };
+    } | null;
     _type: "heroSection";
     _key: string;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    section1: null;
+    section2: null;
+    section3: null;
+    section4: null;
   } | {
     title?: string;
     pressSource?: boolean;
     _type: "pressCoverageSection";
     _key: string;
+    images: null;
+    logo: null;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    section1: null;
+    section2: null;
+    section3: null;
+    section4: null;
   } | {
     title?: string;
     projectsPageLink?: {
@@ -1447,17 +1618,39 @@ export type HOME_QUERY_EN_FRONTENDResult = {
     }>;
     _type: "projectsSection";
     _key: string;
+    images: null;
+    logo: null;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    section1: null;
+    section2: null;
+    section3: null;
+    section4: null;
   } | {
     title?: string;
     content?: Markdown;
     _type: "termsConditionsSection";
     _key: string;
+    images: null;
+    logo: null;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    section1: null;
+    section2: null;
+    section3: null;
+    section4: null;
   }> | null;
 } | null;
 
 // Source: app/(frontend)/page.tsx
 // Variable: HOME_QUERY_FR
-// Query: *[  _type == "page"   && name == "Home"   && language == "fr"][0]{  name,  language,  components}
+// Query: *[  _type == "page"   && name == "Home"   && language == "fr"][0]{  name,  language,  components[]{    ...,    images[]{      ...    },    logo{      ...    }  }}
 export type HOME_QUERY_FRResult = {
   name: string | null;
   language: string | null;
@@ -1484,6 +1677,8 @@ export type HOME_QUERY_FRResult = {
     projectsSource?: boolean;
     _type: "allProjectsSection";
     _key: string;
+    images: null;
+    logo: null;
   } | {
     title?: string;
     backgroundImage?: {
@@ -1518,8 +1713,10 @@ export type HOME_QUERY_FRResult = {
     column3Info?: boolean;
     _type: "contactSection";
     _key: string;
+    images: null;
+    logo: null;
   } | {
-    images?: Array<{
+    images: Array<{
       asset?: {
         _ref: string;
         _type: "reference";
@@ -1531,7 +1728,7 @@ export type HOME_QUERY_FRResult = {
       crop?: SanityImageCrop;
       _type: "image";
       _key: string;
-    }>;
+    }> | null;
     section1?: {
       title?: string;
       body?: string;
@@ -1580,6 +1777,7 @@ export type HOME_QUERY_FRResult = {
     };
     _type: "contentSection";
     _key: string;
+    logo: null;
   } | {
     headline?: Array<{
       children?: Array<{
@@ -1601,8 +1799,10 @@ export type HOME_QUERY_FRResult = {
     }>;
     _type: "headlineSection";
     _key: string;
+    images: null;
+    logo: null;
   } | {
-    images?: Array<{
+    images: Array<{
       asset?: {
         _ref: string;
         _type: "reference";
@@ -1614,8 +1814,8 @@ export type HOME_QUERY_FRResult = {
       crop?: SanityImageCrop;
       _type: "image";
       _key: string;
-    }>;
-    logo?: {
+    }> | null;
+    logo: {
       asset?: {
         _ref: string;
         _type: "reference";
@@ -1626,7 +1826,7 @@ export type HOME_QUERY_FRResult = {
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
-    };
+    } | null;
     _type: "heroSection";
     _key: string;
   } | {
@@ -1634,6 +1834,8 @@ export type HOME_QUERY_FRResult = {
     pressSource?: boolean;
     _type: "pressCoverageSection";
     _key: string;
+    images: null;
+    logo: null;
   } | {
     title?: string;
     projectsPageLink?: {
@@ -1653,11 +1855,15 @@ export type HOME_QUERY_FRResult = {
     }>;
     _type: "projectsSection";
     _key: string;
+    images: null;
+    logo: null;
   } | {
     title?: string;
     content?: Markdown;
     _type: "termsConditionsSection";
     _key: string;
+    images: null;
+    logo: null;
   }> | null;
 } | null;
 
@@ -1726,10 +1932,10 @@ export type NAVBAR_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "*[\n  _type == \"page\" \n  && name == $pageName \n  && language == \"fr\"\n][0]{\n  name,\n  language,\n  components\n}": PAGE_QUERY_FRResult;
-    "*[\n  _type == \"page\" \n  && name == $pageName \n  && language == \"en\"\n][0]{\n  name,\n  language,\n  components\n}": PAGE_QUERY_EN_SLUGResult;
-    "*[\n  _type == \"page\" \n  && name == \"Home\" \n  && language == \"en\"\n][0]{\n  name,\n  language,\n  components\n}": HOME_QUERY_EN_FRONTENDResult;
-    "*[\n  _type == \"page\" \n  && name == \"Home\" \n  && language == \"fr\"\n][0]{\n  name,\n  language,\n  components\n}": HOME_QUERY_FRResult;
+    "*[\n  _type == \"page\" \n  && name == $pageName \n  && language == \"fr\"\n][0]{\n  name,\n  language,\n  components[]{\n    ...,\n    images[]{\n      ...\n    },\n    logo{\n      ...\n    }\n  }\n}": PAGE_QUERY_FRResult;
+    "*[\n  _type == \"page\" \n  && name == $pageName \n  && language == \"en\"\n][0]{\n  name,\n  language,\n  components[]{\n    _type,\n    _key,\n    ...\n  }\n}": PAGE_QUERY_EN_SLUGResult;
+    "*[\n  _type == \"page\" \n  && name == \"Home\" \n  && language == \"en\"\n][0]{\n  ...,\n  components[]{\n    ...,\n    \"images\": images[]{..., asset->},\n    \"logo\": logo{..., asset->},\n    \"backgroundImage\": backgroundImage{..., asset->},\n    \"contactUsImage\": contactUsImage{..., asset->},\n    \"mainImage\": mainImage{..., asset->},\n    \"previewImages\": previewImages[]{..., asset->},\n    \"gallery\": gallery[]{..., asset->},\n    \"section1\": section1{...},\n    \"section2\": section2{..., items[]{...}},\n    \"section3\": section3{..., \"image\": image{..., asset->}},\n    \"section4\": section4{..., reviews[]{...}}\n  }\n}": HOME_QUERY_EN_FRONTENDResult;
+    "*[\n  _type == \"page\" \n  && name == \"Home\" \n  && language == \"fr\"\n][0]{\n  name,\n  language,\n  components[]{\n    ...,\n    images[]{\n      ...\n    },\n    logo{\n      ...\n    }\n  }\n}": HOME_QUERY_FRResult;
     "*[_type == \"navbar\"][0]{\n  navbarStructure {\n    brandText,\n    logo,\n    menuItems {\n      menuItemsEN[] {\n        page-> {\n          name,\n          slug,\n          language\n        },\n        mobileImage\n      },\n      menuItemsFR[] {\n        page-> {\n          name,\n          slug,\n          language  \n        },\n        mobileImage\n      }\n    }\n  }\n}": NAVBAR_QUERYResult;
   }
 }
