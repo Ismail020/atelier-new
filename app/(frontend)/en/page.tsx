@@ -17,10 +17,26 @@ const HOME_QUERY_EN_FRONTEND = defineQuery(`*[
     "mainImage": mainImage{..., asset->},
     "previewImages": previewImages[]{..., asset->},
     "gallery": gallery[]{..., asset->},
-    "section1": section1{...},
-    "section2": section2{..., items[]{...}},
-    "section3": section3{..., "image": image{..., asset->}},
-    "section4": section4{..., reviews[]{...}}
+    "selectedProjects": selectedProjects[]-> {
+      _id,
+      _type,
+      name,
+      slug,
+      date,
+      "previewImages": previewImages[]{
+        ..., 
+        asset->,
+        isFeatured,
+        showOnMobile,
+        isFeaturedMobile
+      },
+    },
+    "projectsPageLink": projectsPageLink->{
+      _id,
+      _type,
+      name,
+      slug
+    }
   }
 }`);
 
@@ -42,8 +58,8 @@ export default async function EnglishHome() {
   }
 
   return (
-    <ComponentRenderer 
-      components={page.components || []} 
+    <ComponentRenderer
+      components={page.components || []}
       isHomePage={true}
       currentLanguage="en"
     />

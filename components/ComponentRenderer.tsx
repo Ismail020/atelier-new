@@ -3,6 +3,10 @@
 import HeroSection from "./sections/HeroSection";
 import Navbar from "./Navbar";
 import { useNavbar } from "./NavbarContext";
+import HeadlineSection, {
+  HeadlineSectionData,
+} from "./sections/HeadlineSection";
+import ProjectsSection from "./sections/ProjectsSection";
 
 interface PageComponent {
   _type: string;
@@ -30,7 +34,6 @@ export default function ComponentRenderer({
     const elements: React.ReactElement[] = [];
 
     components.forEach((component: PageComponent, index: number) => {
-      // Render the component
       switch (component._type) {
         case "heroSection":
           elements.push(
@@ -41,17 +44,32 @@ export default function ComponentRenderer({
             />
           );
           break;
+        case "headlineSection":
+          elements.push(
+            <HeadlineSection
+              key={component._key || index}
+              data={component as HeadlineSectionData}
+            />
+          );
+          break;
+        case "projectsSection":
+          elements.push(
+            <ProjectsSection
+              key={component._key || index}
+              data={component}
+              currentLanguage={currentLanguage}
+            />
+          );
+          break;
         default:
           elements.push(
-            <div
-              key={component._key || index}
-              className="h-screen bg-red-600"
-            ></div>
+            <div key={component._key || index} className="h-screen bg-red-600">
+              {component._type} Component
+            </div>
           );
           break;
       }
 
-      // Insert navbar after first component on home pages
       if (isHomePage && index === 0 && navbarData) {
         elements.push(
           <Navbar

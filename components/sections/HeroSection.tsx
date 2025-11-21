@@ -32,7 +32,6 @@ export default function HeroSection({ images, logo }: HeroSectionProps) {
     const vw = window.innerWidth;
     const vh = window.innerHeight;
 
-    console.log("Viewport dimensions:", vw, vh);
     return {
       w: vw,
       h: vh,
@@ -65,6 +64,8 @@ export default function HeroSection({ images, logo }: HeroSectionProps) {
                 (max-width: 1200px) 100vw,
                 100vw
               "
+              placeholder="blur"
+              blurDataURL={image.asset?.metadata?.lqip}
             />
           </div>
         ))}

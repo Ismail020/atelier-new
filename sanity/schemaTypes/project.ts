@@ -2,6 +2,7 @@ import { defineField, defineType } from "sanity";
 import { SlugPreviewInput } from "./components/SlugPreviewInput";
 import { CaseIcon } from "@sanity/icons";
 import { GalleryInput } from "./components/galleryInput";
+import { PreviewImagesInput } from "./components/previewImagesInput";
 
 export const projectType = defineType({
   name: "project",
@@ -23,6 +24,17 @@ export const projectType = defineType({
       components: {
         input: SlugPreviewInput,
       },
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      group: "details",
+      options: {
+        source: "name",
+        maxLength: 96,
+      },
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "shortDescription",
@@ -71,15 +83,87 @@ export const projectType = defineType({
       title: "Preview Photos",
       type: "array",
       group: "media",
-      description: "4 photos to display on the projects overview page",
+      description:
+        "Upload 4+ photos. Select featured for desktop, and choose which ones to show on mobile.",
       validation: (rule) =>
         rule
           .required()
-          .length(4)
-          .error("Exactly 4 preview photos are required"),
+          .min(4)
+          .error("At least 4 preview photos are required")
+          .custom((images) => {
+            if (!images || !Array.isArray(images)) return true;
+
+            const featuredCount = images.filter(
+              (img) =>
+                img &&
+                typeof img === "object" &&
+                "isFeatured" in img &&
+                img.isFeatured === true
+            ).length;
+
+            const mobileCount = images.filter(
+              (img) =>
+                img &&
+                typeof img === "object" &&
+                "showOnMobile" in img &&
+                img.showOnMobile === true
+            ).length;
+
+            const featuredMobileCount = images.filter(
+              (img) =>
+                img &&
+                typeof img === "object" &&
+                "isFeaturedMobile" in img &&
+                img.isFeaturedMobile === true
+            ).length;
+
+            if (featuredCount === 0) {
+              return "At least 1 image must be marked as featured for desktop layout";
+            }
+            
+            if (featuredCount > 1) {
+              return "Only 1 image can be marked as featured for desktop";
+            }
+
+            if (mobileCount > 3) {
+              return "Maximum 3 images recommended for mobile";
+            }
+
+            if (featuredMobileCount > 1) {
+              return "Only 1 image can be featured on mobile";
+            }
+
+            return true;
+          }),
+      components: {
+        input: PreviewImagesInput,
+      },
       of: [
         {
           type: "image",
+          fields: [
+            {
+              name: "isFeatured",
+              title: "Featured (Desktop)",
+              type: "boolean",
+              description: "Spans 2 columns on desktop grid",
+              initialValue: false,
+            },
+            {
+              name: "showOnMobile",
+              title: "Show on Mobile",
+              type: "boolean",
+              description: "Include in mobile grid (max 3 recommended)",
+              initialValue: true,
+            },
+            {
+              name: "isFeaturedMobile",
+              title: "Featured (Mobile)",
+              type: "boolean",
+              description: "Spans 2 columns on mobile grid",
+              initialValue: false,
+            },
+          ],
           options: {
             hotspot: true,
           },

@@ -23,6 +23,16 @@ export const pageType = defineType({
       },
     }),
     defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: {
+        source: "name",
+        maxLength: 96,
+      },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "language",
       type: "string",
       readOnly: true,
@@ -32,7 +42,16 @@ export const pageType = defineType({
       title: "Page Components",
       type: "array",
       description: "Add and arrange components for this page",
-      of: [heroSection, headlineSection, projectsSection, allProjectsSection, contentSection, contactSection, pressCoverageSection, termsConditionsSection],
+      of: [
+        heroSection,
+        headlineSection,
+        projectsSection,
+        allProjectsSection,
+        contentSection,
+        contactSection,
+        pressCoverageSection,
+        termsConditionsSection,
+      ],
     }),
   ],
   preview: {
