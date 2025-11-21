@@ -23,8 +23,13 @@ const HOME_QUERY_FR = defineQuery(`*[
       name,
       slug,
       date,
-      "previewImages": previewImages[]{..., asset->},
-      "mobilePreviewImages": mobilePreviewImages[]{..., asset->}
+      "previewImages": previewImages[]{
+        ..., 
+        asset->,
+        isFeatured,
+        showOnMobile,
+        isFeaturedMobile
+      },
     },
     "projectsPageLink": projectsPageLink->{
       _id,

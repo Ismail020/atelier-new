@@ -56,7 +56,7 @@ export default function ComponentRenderer({
           elements.push(
             <ProjectsSection
               key={component._key || index}
-              data={component}
+              data={component as Extract<PageComponent, { _type: 'projectsSection' }>}
               currentLanguage={currentLanguage}
             />
           );

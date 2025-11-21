@@ -54,7 +54,8 @@ export default function ProjectImageGrid({
       const isFeatured = isMobile ? image.isFeaturedMobile : image.isFeatured;
       
       // Calculate dimensions based on whether image is featured and screen size
-      const baseWidth = isMobile ? (window.innerWidth - 40 - 12) / 3 : w;
+      const baseWidth = isMobile ? 
+        (typeof window !== "undefined" ? (window.innerWidth - 40 - 12) / 3 : 120) : w;
       const imageWidth = isFeatured ? baseWidth * 2 + 6 : baseWidth; // 2x width + gap for featured
       const imageHeight = isFeatured
         ? Math.round(imageWidth * 0.6)

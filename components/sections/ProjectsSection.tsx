@@ -1,6 +1,5 @@
 import ProjectsSectionHeader from "./projects/ProjectsSectionHeader";
 import ProjectCard from "./projects/ProjectCard";
-import { SanityImageArray } from "@/types/sanity";
 
 interface ProjectsSectionData {
   title: string;
@@ -14,7 +13,17 @@ interface ProjectsSectionData {
     name: string;
     date: string;
     slug: { current: string };
-    previewImages: SanityImageArray;
+    previewImages: Array<{
+      _key: string;
+      _type: "image";
+      asset?: {
+        _ref: string;
+        _type: "reference";
+      };
+      isFeatured?: boolean;
+      showOnMobile?: boolean;
+      isFeaturedMobile?: boolean;
+    }>;
   }>;
 }
 

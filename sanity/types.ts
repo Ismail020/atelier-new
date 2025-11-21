@@ -281,6 +281,9 @@ export type Project = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
+    isFeatured?: boolean;
+    showOnMobile?: boolean;
+    isFeaturedMobile?: boolean;
     _type: "image";
     _key: string;
   }>;
@@ -1266,7 +1269,7 @@ export type PAGE_QUERY_EN_SLUGResult = {
 
 // Source: app/(frontend)/en/page.tsx
 // Variable: HOME_QUERY_EN_FRONTEND
-// Query: *[  _type == "page"   && name == "Home"   && language == "en"][0]{  ...,  components[]{    ...,    "images": images[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      date,      "previewImages": previewImages[]{..., asset->}    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    }  }}
+// Query: *[  _type == "page"   && name == "Home"   && language == "en"][0]{  ...,  components[]{    ...,    "images": images[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      "previewImages": previewImages[]{        ...,         asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    }  }}
 export type HOME_QUERY_EN_FRONTENDResult = {
   _id: string;
   _type: "page";
@@ -1592,6 +1595,7 @@ export type HOME_QUERY_EN_FRONTENDResult = {
       _id: string;
       _type: "project";
       name: string | null;
+      slug: Slug | null;
       date: string | null;
       previewImages: Array<{
         asset: {
@@ -1619,6 +1623,9 @@ export type HOME_QUERY_EN_FRONTENDResult = {
         media?: unknown;
         hotspot?: SanityImageHotspot;
         crop?: SanityImageCrop;
+        isFeatured: boolean | null;
+        showOnMobile: boolean | null;
+        isFeaturedMobile: boolean | null;
         _type: "image";
         _key: string;
       }> | null;
@@ -1651,10 +1658,16 @@ export type HOME_QUERY_EN_FRONTENDResult = {
 
 // Source: app/(frontend)/page.tsx
 // Variable: HOME_QUERY_FR
-// Query: *[  _type == "page"   && name == "Home"   && language == "fr"][0]{  name,  language,  components[]{    ...,    images[]{      ...    },    logo{      ...    }  }}
+// Query: *[  _type == "page"   && name == "Home"   && language == "fr"][0]{  ...,  components[]{    ...,    "images": images[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      "previewImages": previewImages[]{        ...,         asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    }  }}
 export type HOME_QUERY_FRResult = {
-  name: string | null;
-  language: string | null;
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  language?: string;
   components: Array<{
     headline?: Array<{
       children?: Array<{
@@ -1680,32 +1693,71 @@ export type HOME_QUERY_FRResult = {
     _key: string;
     images: null;
     logo: null;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    selectedProjects: null;
+    projectsPageLink: null;
   } | {
     title?: string;
-    backgroundImage?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+    backgroundImage: {
+      asset: {
+        _id: string;
+        _type: "sanity.imageAsset";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
-    };
-    contactUsImage?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+    } | null;
+    contactUsImage: {
+      asset: {
+        _id: string;
+        _type: "sanity.imageAsset";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
       _type: "image";
-    };
+    } | null;
     column1Title?: string;
     column1Info?: boolean;
     column2Title?: string;
@@ -1716,14 +1768,35 @@ export type HOME_QUERY_FRResult = {
     _key: string;
     images: null;
     logo: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    selectedProjects: null;
+    projectsPageLink: null;
   } | {
     images: Array<{
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+      asset: {
+        _id: string;
+        _type: "sanity.imageAsset";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -1779,6 +1852,13 @@ export type HOME_QUERY_FRResult = {
     _type: "contentSection";
     _key: string;
     logo: null;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    selectedProjects: null;
+    projectsPageLink: null;
   } | {
     headline?: Array<{
       children?: Array<{
@@ -1802,14 +1882,37 @@ export type HOME_QUERY_FRResult = {
     _key: string;
     images: null;
     logo: null;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    selectedProjects: null;
+    projectsPageLink: null;
   } | {
     images: Array<{
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+      asset: {
+        _id: string;
+        _type: "sanity.imageAsset";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -1817,12 +1920,28 @@ export type HOME_QUERY_FRResult = {
       _key: string;
     }> | null;
     logo: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+      asset: {
+        _id: string;
+        _type: "sanity.imageAsset";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -1830,6 +1949,13 @@ export type HOME_QUERY_FRResult = {
     } | null;
     _type: "heroSection";
     _key: string;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    selectedProjects: null;
+    projectsPageLink: null;
   } | {
     title?: string;
     pressSource?: boolean;
@@ -1837,27 +1963,71 @@ export type HOME_QUERY_FRResult = {
     _key: string;
     images: null;
     logo: null;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    selectedProjects: null;
+    projectsPageLink: null;
   } | {
     title?: string;
-    projectsPageLink?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "page";
-    };
+    projectsPageLink: {
+      _id: string;
+      _type: "page";
+      name: string | null;
+      slug: Slug | null;
+    } | null;
     projectLinkText?: string;
     viewAllLinkText?: string;
-    selectedProjects?: Array<{
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      _key: string;
-      [internalGroqTypeReferenceTo]?: "project";
-    }>;
+    selectedProjects: Array<{
+      _id: string;
+      _type: "project";
+      name: string | null;
+      slug: Slug | null;
+      date: string | null;
+      previewImages: Array<{
+        asset: {
+          _id: string;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          originalFilename?: string;
+          label?: string;
+          title?: string;
+          description?: string;
+          altText?: string;
+          sha1hash?: string;
+          extension?: string;
+          mimeType?: string;
+          size?: number;
+          assetId?: string;
+          uploadId?: string;
+          path?: string;
+          url?: string;
+          metadata?: SanityImageMetadata;
+          source?: SanityAssetSourceData;
+        } | null;
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        isFeatured: boolean | null;
+        showOnMobile: boolean | null;
+        isFeaturedMobile: boolean | null;
+        _type: "image";
+        _key: string;
+      }> | null;
+    }> | null;
     _type: "projectsSection";
     _key: string;
     images: null;
     logo: null;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
   } | {
     title?: string;
     content?: Markdown;
@@ -1865,6 +2035,13 @@ export type HOME_QUERY_FRResult = {
     _key: string;
     images: null;
     logo: null;
+    backgroundImage: null;
+    contactUsImage: null;
+    mainImage: null;
+    previewImages: null;
+    gallery: null;
+    selectedProjects: null;
+    projectsPageLink: null;
   }> | null;
 } | null;
 
@@ -1935,8 +2112,8 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "*[\n  _type == \"page\" \n  && name == $pageName \n  && language == \"fr\"\n][0]{\n  name,\n  language,\n  components[]{\n    ...,\n    images[]{\n      ...\n    },\n    logo{\n      ...\n    }\n  }\n}": PAGE_QUERY_FRResult;
     "*[\n  _type == \"page\" \n  && name == $pageName \n  && language == \"en\"\n][0]{\n  name,\n  language,\n  components[]{\n    _type,\n    _key,\n    ...\n  }\n}": PAGE_QUERY_EN_SLUGResult;
-    "*[\n  _type == \"page\" \n  && name == \"Home\" \n  && language == \"en\"\n][0]{\n  ...,\n  components[]{\n    ...,\n    \"images\": images[]{..., asset->},\n    \"logo\": logo{..., asset->},\n    \"backgroundImage\": backgroundImage{..., asset->},\n    \"contactUsImage\": contactUsImage{..., asset->},\n    \"mainImage\": mainImage{..., asset->},\n    \"previewImages\": previewImages[]{..., asset->},\n    \"gallery\": gallery[]{..., asset->},\n    \"selectedProjects\": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      date,\n      \"previewImages\": previewImages[]{..., asset->}\n    },\n    \"projectsPageLink\": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    }\n  }\n}": HOME_QUERY_EN_FRONTENDResult;
-    "*[\n  _type == \"page\" \n  && name == \"Home\" \n  && language == \"fr\"\n][0]{\n  name,\n  language,\n  components[]{\n    ...,\n    images[]{\n      ...\n    },\n    logo{\n      ...\n    }\n  }\n}": HOME_QUERY_FRResult;
+    "*[\n  _type == \"page\" \n  && name == \"Home\" \n  && language == \"en\"\n][0]{\n  ...,\n  components[]{\n    ...,\n    \"images\": images[]{..., asset->},\n    \"logo\": logo{..., asset->},\n    \"backgroundImage\": backgroundImage{..., asset->},\n    \"contactUsImage\": contactUsImage{..., asset->},\n    \"mainImage\": mainImage{..., asset->},\n    \"previewImages\": previewImages[]{..., asset->},\n    \"gallery\": gallery[]{..., asset->},\n    \"selectedProjects\": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      \"previewImages\": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    \"projectsPageLink\": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    }\n  }\n}": HOME_QUERY_EN_FRONTENDResult;
+    "*[\n  _type == \"page\" \n  && name == \"Home\" \n  && language == \"fr\"\n][0]{\n  ...,\n  components[]{\n    ...,\n    \"images\": images[]{..., asset->},\n    \"logo\": logo{..., asset->},\n    \"backgroundImage\": backgroundImage{..., asset->},\n    \"contactUsImage\": contactUsImage{..., asset->},\n    \"mainImage\": mainImage{..., asset->},\n    \"previewImages\": previewImages[]{..., asset->},\n    \"gallery\": gallery[]{..., asset->},\n    \"selectedProjects\": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      \"previewImages\": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    \"projectsPageLink\": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    }\n  }\n}": HOME_QUERY_FRResult;
     "*[_type == \"navbar\"][0]{\n  navbarStructure {\n    brandText,\n    logo,\n    menuItems {\n      menuItemsEN[] {\n        page-> {\n          name,\n          slug,\n          language\n        },\n        mobileImage\n      },\n      menuItemsFR[] {\n        page-> {\n          name,\n          slug,\n          language  \n        },\n        mobileImage\n      }\n    }\n  }\n}": NAVBAR_QUERYResult;
   }
 }
