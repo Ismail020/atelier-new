@@ -35,9 +35,7 @@ function renderHeadlineContent(headline: Headline[]): React.ReactNode {
       <span key={block._key}>
         {block.children.map((child) => {
           if (child.marks && child.marks.length > 0) {
-            const markDef = block.markDefs?.find((def) =>
-              child.marks.includes(def._key)
-            );
+            const markDef = block.markDefs?.find((def) => child.marks.includes(def._key));
             if (markDef && markDef._type === "highlight") {
               return (
                 <span key={child._key} className="text-[#CECECE]">
@@ -54,15 +52,11 @@ function renderHeadlineContent(headline: Headline[]): React.ReactNode {
   });
 }
 
-export default function HeadlineSection({
-  data,
-}: {
-  data: HeadlineSectionData;
-}) {
+export default function HeadlineSection({ data }: { data: HeadlineSectionData }) {
   return (
-    <section className="px-5 pt-44 pb-[50px] max-w-[970px]">
+    <section className="max-w-[970px] px-5 pt-44 pb-[50px]">
       <div className="">
-        <h2 className="h2-display text-[#140D01] indent-[2em]">
+        <h2 className="h2-display indent-[2em] text-[#140D01]">
           {renderHeadlineContent(data.headline)}
         </h2>
       </div>

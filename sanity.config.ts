@@ -56,16 +56,14 @@ export default defineConfig({
     visionTool({ defaultApiVersion: apiVersion }),
     documentInternationalization({
       // fetch locales from Content Lake or load from your locale file
-      supportedLanguages: (client) =>
-        client.fetch(`*[_type == "locale"]{"id": tag, "title":name}`),
+      supportedLanguages: (client) => client.fetch(`*[_type == "locale"]{"id": tag, "title":name}`),
       // define schema types using document level localization
       schemaTypes: ["page"],
     }),
     media(),
     internationalizedArray({
       // Use client to fetch locales or import from local locale file
-      languages: (client) =>
-        client.fetch(`*[_type == "locale"]{"id": tag, "title":name}`),
+      languages: (client) => client.fetch(`*[_type == "locale"]{"id": tag, "title":name}`),
       // Define field types to localize as-needed
       fieldTypes: ["string"],
     }),

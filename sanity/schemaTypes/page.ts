@@ -62,9 +62,7 @@ export const pageType = defineType({
     prepare({ title, language }) {
       return {
         title: title || "Untitled Page",
-        subtitle: language
-          ? `Language: ${language.toUpperCase()}`
-          : "No language set",
+        subtitle: language ? `Language: ${language.toUpperCase()}` : "No language set",
       };
     },
   },

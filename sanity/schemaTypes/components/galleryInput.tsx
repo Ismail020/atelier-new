@@ -71,7 +71,7 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
     for (const img of images || []) {
       const assetRef = img?.asset?._ref;
       if (!assetRef) continue;
-      
+
       const asset = assetData[assetRef];
       const dims = asset?.metadata?.dimensions;
       if (!dims) continue;
@@ -89,9 +89,9 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
     // Add _key properties to each item in the layout array
     const layoutWithKeys: GalleryLayout = layout.map((item, index) => ({
       ...item,
-      _key: item._key || `row-${Date.now()}-${index}`
+      _key: item._key || `row-${Date.now()}-${index}`,
     }));
-    
+
     // Use Sanity's set function to properly save the array
     props.onChange(set(layoutWithKeys));
   }
@@ -232,11 +232,7 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
     };
 
     return (
-      <Stack
-        key={row.images.join("-")}
-        space={2}
-        style={{ marginBottom: "16px" }}
-      >
+      <Stack key={row.images.join("-")} space={2} style={{ marginBottom: "16px" }}>
         {/* --- ROW LABEL --- */}
         <Text size={1} muted>
           <strong>{row.type}</strong> — {LABELS[row.type]}
@@ -257,8 +253,7 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
             // Oriëntatie label
             let ratioLabel = "";
             if (aspect > 1.25 && aspect < 1.4) ratioLabel = "liggend (4:3)";
-            else if (aspect > 0.7 && aspect < 0.8)
-              ratioLabel = "staand (0.74:1)";
+            else if (aspect > 0.7 && aspect < 0.8) ratioLabel = "staand (0.74:1)";
             else ratioLabel = "onbekend";
 
             return (
@@ -312,11 +307,7 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
           </Card>
 
           {/* GENERATE BUTTON */}
-          <Button
-            text="Genereer Random Layout"
-            tone="primary"
-            onClick={generateRandomLayout}
-          />
+          <Button text="Genereer Random Layout" tone="primary" onClick={generateRandomLayout} />
 
           {/* EXISTING LAYOUT */}
           {existingLayout.length > 0 && (

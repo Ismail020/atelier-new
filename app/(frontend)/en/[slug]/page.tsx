@@ -47,7 +47,7 @@ export default async function EnglishPage({ params }: PageProps) {
 export async function generateStaticParams() {
   // Fetch English pages only, excluding "Home" page (handled by root route)
   const allPages = await client.fetch(
-    `*[_type == "page" && defined(name) && name != "Home" && language == "en"]{ name }`
+    `*[_type == "page" && defined(name) && name != "Home" && language == "en"]{ name }`,
   );
 
   return (

@@ -41,7 +41,7 @@ export default function HeroSection({ images, logo }: HeroSectionProps) {
   const { w, h } = getHeroDimensions();
 
   return (
-    <div className="relative w-full h-[calc(100svh-62px)]">
+    <div className="relative h-[calc(100svh-62px)] w-full">
       <div className="absolute inset-0">
         {images.map((image, index) => (
           <div
@@ -55,7 +55,7 @@ export default function HeroSection({ images, logo }: HeroSectionProps) {
               alt={`Hero image ${index + 1}`}
               width={w}
               height={h}
-              className="absolute inset-0 w-full h-full object-cover object-center"
+              className="absolute inset-0 h-full w-full object-cover object-center"
               priority={index === 0}
               fetchPriority={index === 0 ? "high" : "low"}
               unoptimized
@@ -71,7 +71,7 @@ export default function HeroSection({ images, logo }: HeroSectionProps) {
         ))}
       </div>
 
-      <div className="absolute inset-0 hero-overlay" />
+      <div className="hero-overlay absolute inset-0" />
 
       {logo && logo.asset?.metadata?.dimensions && (
         <Image
@@ -82,7 +82,7 @@ export default function HeroSection({ images, logo }: HeroSectionProps) {
           alt="Logo"
           width={logo.asset.metadata.dimensions.width}
           height={logo.asset.metadata.dimensions.height}
-          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform"
           fetchPriority={"high"}
           unoptimized
         />

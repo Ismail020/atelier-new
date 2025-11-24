@@ -3,7 +3,7 @@ import { CogIcon } from "@sanity/icons";
 
 export const settingsType = defineType({
   name: "settings",
-  title: "Site Settings", 
+  title: "Site Settings",
   type: "document",
   icon: CogIcon,
   fields: [
@@ -31,7 +31,7 @@ export const settingsType = defineType({
             }),
             defineField({
               name: "phone",
-              title: "Phone Number", 
+              title: "Phone Number",
               type: "string",
               validation: (rule) => rule.required(),
             }),
@@ -74,12 +74,12 @@ export const settingsType = defineType({
               type: "string",
               options: {
                 list: [
-                  { title: "Facebook", value: "facebook" },
-                  { title: "Instagram", value: "instagram" },
-                  { title: "Twitter", value: "twitter" },
-                  { title: "LinkedIn", value: "linkedin" },
-                  { title: "YouTube", value: "youtube" },
-                  { title: "TikTok", value: "tiktok" },
+                  { title: "Facebook", value: "Facebook" },
+                  { title: "Instagram", value: "Instagram" },
+                  { title: "Twitter", value: "Twitter" },
+                  { title: "LinkedIn", value: "Linkedin" },
+                  { title: "YouTube", value: "Youtube" },
+                  { title: "TikTok", value: "Tiktok" },
                 ],
               },
               validation: (rule) => rule.required(),
@@ -99,7 +99,7 @@ export const settingsType = defineType({
             prepare({ platform, url }) {
               const icons: { [key: string]: string } = {
                 facebook: "📘",
-                instagram: "📷", 
+                instagram: "📷",
                 twitter: "🐦",
                 linkedin: "💼",
                 youtube: "🎥",
@@ -107,7 +107,9 @@ export const settingsType = defineType({
               };
 
               return {
-                title: platform ? `${icons[platform]} ${platform.charAt(0).toUpperCase() + platform.slice(1)}` : "Social Link",
+                title: platform
+                  ? `${icons[platform]} ${platform.charAt(0).toUpperCase() + platform.slice(1)}`
+                  : "Social Link",
                 subtitle: url,
               };
             },
@@ -140,17 +142,17 @@ export const settingsType = defineType({
               type: "reference",
               to: [{ type: "page" }],
               options: {
-                filter: 'language == "en"'
+                filter: 'language == "en"',
               },
               validation: (rule) => rule.required(),
             }),
             defineField({
               name: "french",
-              title: "French Contact Page", 
+              title: "French Contact Page",
               type: "reference",
               to: [{ type: "page" }],
               options: {
-                filter: 'language == "fr"'
+                filter: 'language == "fr"',
               },
               validation: (rule) => rule.required(),
             }),

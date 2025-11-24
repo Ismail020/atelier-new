@@ -16,10 +16,7 @@ interface PreviewImage {
   isFeaturedMobile?: boolean;
 }
 
-function getImageUrl(
-  client: ReturnType<typeof useClient>,
-  source: PreviewImage
-) {
+function getImageUrl(client: ReturnType<typeof useClient>, source: PreviewImage) {
   if (!source.asset) return null;
   const builder = imageUrlBuilder(client);
   return builder.image(source).width(200).height(150).url();
@@ -31,7 +28,7 @@ export function PreviewImagesInput(props: ArrayOfObjectsInputProps) {
   const client = useClient({ apiVersion: "2023-05-03" });
 
   const handleFeaturedClick = (imageKey: string, isMobile = false) => {
-    const fieldName = isMobile ? 'isFeaturedMobile' : 'isFeatured';
+    const fieldName = isMobile ? "isFeaturedMobile" : "isFeatured";
     const updatedImages = images.map((img) => ({
       ...img,
       [fieldName]: img._key === imageKey ? !img[fieldName] : false, // Only one can be featured
@@ -49,45 +46,43 @@ export function PreviewImagesInput(props: ArrayOfObjectsInputProps) {
 
   const renderGrid = (isMobile: boolean) => {
     const gridClass = isMobile ? "grid-cols-3" : "grid-cols-5";
-    
+
     // For mobile, filter images that should be shown on mobile
-    const displayImages = isMobile 
-      ? images.filter(img => img.showOnMobile !== false).slice(0, 3)
+    const displayImages = isMobile
+      ? images.filter((img) => img.showOnMobile !== false).slice(0, 3)
       : images.slice(0, 4);
 
     return (
       <div className="mb-4">
-        <h4 className="text-sm font-medium mb-2">
-          {isMobile ? `Mobile Preview (${displayImages.length}/3 selected)` : "Desktop Preview (4 images)"}
+        <h4 className="mb-2 text-sm font-medium">
+          {isMobile
+            ? `Mobile Preview (${displayImages.length}/3 selected)`
+            : "Desktop Preview (4 images)"}
         </h4>
-        <div
-          className={`grid ${gridClass} gap-1.5 p-4 border rounded-lg bg-gray-50`}
-        >
+        <div className={`grid ${gridClass} gap-1.5 rounded-lg border bg-gray-50 p-4`}>
           {displayImages.map((image) => {
             const isFeatured = isMobile ? image.isFeaturedMobile : image.isFeatured;
             return (
               <div
                 key={`${isMobile ? "mobile" : "desktop"}-${image._key}`}
                 onClick={() => handleFeaturedClick(image._key, isMobile)}
-                className={`relative overflow-hidden cursor-pointer hover:ring-2 hover:ring-blue-400 transition-all ${
-                  isFeatured
-                    ? "col-span-2 ring-2 ring-yellow-400"
-                    : "col-span-1 aspect-[0.740]"
-                } bg-gray-200 rounded-sm min-h-20`}
+                className={`relative cursor-pointer overflow-hidden transition-all hover:ring-2 hover:ring-blue-400 ${
+                  isFeatured ? "col-span-2 ring-2 ring-yellow-400" : "col-span-1 aspect-[0.740]"
+                } min-h-20 rounded-sm bg-gray-200`}
               >
                 {image.asset ? (
-                  <div className="w-full h-full relative">
+                  <div className="relative h-full w-full">
                     {(() => {
                       const imageUrl = getImageUrl(client, image);
                       return imageUrl ? (
                         <div
-                          className="w-full h-full bg-cover bg-center rounded-sm"
+                          className="h-full w-full rounded-sm bg-cover bg-center"
                           style={{ backgroundImage: `url(${imageUrl})` }}
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-gray-200">
+                        <div className="flex h-full w-full items-center justify-center bg-gray-200">
                           <svg
-                            className="w-6 h-6 text-gray-400"
+                            className="h-6 w-6 text-gray-400"
                             fill="currentColor"
                             viewBox="0 0 20 20"
                           >
@@ -101,16 +96,14 @@ export function PreviewImagesInput(props: ArrayOfObjectsInputProps) {
                       );
                     })()}
                     {isFeatured && (
-                      <div className="absolute top-1 right-1 bg-yellow-400 rounded-full p-1">
-                        <StarIcon className="w-3 h-3 text-white" />
+                      <div className="absolute top-1 right-1 rounded-full bg-yellow-400 p-1">
+                        <StarIcon className="h-3 w-3 text-white" />
                       </div>
                     )}
                   </div>
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <div className="text-xs text-gray-400 text-center">
-                      No image
-                    </div>
+                  <div className="flex h-full w-full items-center justify-center">
+                    <div className="text-center text-xs text-gray-400">No image</div>
                   </div>
                 )}
               </div>
@@ -125,21 +118,26 @@ export function PreviewImagesInput(props: ArrayOfObjectsInputProps) {
     <div>
       <div className="space-y-4">{renderDefault(props)}</div>
 
-      <div className="mb-6 mt-2">
+      <div className="mt-2 mb-6">
         {/* Mobile Grid Preview */}
         {renderGrid(true)}
         {/* Desktop Grid Preview */}
         {renderGrid(false)}
-        
+
         {/* Mobile Selection Controls */}
         {images.length > 0 && (
-          <div className="mt-4 p-4 border rounded-lg space-y-4">
+          <div className="mt-4 space-y-4 rounded-lg border p-4">
             <h4 className="text-sm font-medium">Mobile Settings</h4>
-            
+
             <div className="space-y-2">
-              <p className="text-xs text-gray-600">Select which images to show on mobile (max 3):</p>
+              <p className="text-xs text-gray-600">
+                Select which images to show on mobile (max 3):
+              </p>
               {images.map((image, index) => (
-                <label key={`mobile-${image._key}`} className="flex items-center space-x-2 cursor-pointer">
+                <label
+                  key={`mobile-${image._key}`}
+                  className="flex cursor-pointer items-center space-x-2"
+                >
                   <input
                     type="checkbox"
                     checked={image.showOnMobile !== false}
@@ -153,27 +151,35 @@ export function PreviewImagesInput(props: ArrayOfObjectsInputProps) {
 
             <div className="space-y-2">
               <p className="text-xs text-gray-600">Featured image on mobile:</p>
-              {images.filter(img => img.showOnMobile !== false).map((image) => (
-                <label key={`mobile-featured-${image._key}`} className="flex items-center space-x-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    name="featured-mobile"
-                    checked={image.isFeaturedMobile || false}
-                    onChange={() => handleFeaturedClick(image._key, true)}
-                    className="form-radio"
-                  />
-                  <span className="text-sm">
-                    Image {images.indexOf(image) + 1} {image.isFeaturedMobile ? "⭐" : ""}
-                  </span>
-                </label>
-              ))}
-              <label className="flex items-center space-x-2 cursor-pointer">
+              {images
+                .filter((img) => img.showOnMobile !== false)
+                .map((image) => (
+                  <label
+                    key={`mobile-featured-${image._key}`}
+                    className="flex cursor-pointer items-center space-x-2"
+                  >
+                    <input
+                      type="radio"
+                      name="featured-mobile"
+                      checked={image.isFeaturedMobile || false}
+                      onChange={() => handleFeaturedClick(image._key, true)}
+                      className="form-radio"
+                    />
+                    <span className="text-sm">
+                      Image {images.indexOf(image) + 1} {image.isFeaturedMobile ? "⭐" : ""}
+                    </span>
+                  </label>
+                ))}
+              <label className="flex cursor-pointer items-center space-x-2">
                 <input
                   type="radio"
                   name="featured-mobile"
-                  checked={!images.some(img => img.isFeaturedMobile)}
+                  checked={!images.some((img) => img.isFeaturedMobile)}
                   onChange={() => {
-                    const updatedImages = images.map(img => ({ ...img, isFeaturedMobile: false }));
+                    const updatedImages = images.map((img) => ({
+                      ...img,
+                      isFeaturedMobile: false,
+                    }));
                     onChange(set(updatedImages));
                   }}
                   className="form-radio"

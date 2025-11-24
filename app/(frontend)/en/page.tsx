@@ -48,20 +48,16 @@ export default async function EnglishHome() {
 
   if (!page) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <p className="text-lg text-gray-600">
-          No English homepage found. Create one in Sanity Studio with name
-          &quot;Home&quot; and language &quot;en&quot;.
+          No English homepage found. Create one in Sanity Studio with name &quot;Home&quot; and
+          language &quot;en&quot;.
         </p>
       </div>
     );
   }
 
   return (
-    <ComponentRenderer
-      components={page.components || []}
-      isHomePage={true}
-      currentLanguage="en"
-    />
+    <ComponentRenderer components={page.components || []} isHomePage={true} currentLanguage="en" />
   );
 }

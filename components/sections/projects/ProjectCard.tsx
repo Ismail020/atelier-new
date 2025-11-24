@@ -24,11 +24,8 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   return (
     <div className="flex flex-col gap-2">
-      <ProjectImageGrid
-        images={project.previewImages} 
-        projectName={project.name} 
-      />
-      
+      <ProjectImageGrid images={project.previewImages} projectName={project.name} />
+
       <div className="grid grid-cols-5">
         <h3 className="infos text-[#140D01]">{project.name}</h3>
         <p className="infos text-[#CECECE]">

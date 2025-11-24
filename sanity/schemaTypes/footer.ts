@@ -18,7 +18,7 @@ export const footerType = defineType({
     defineField({
       name: "logoMobile",
       title: "Logo Mobile",
-      type: "image", 
+      type: "image",
       options: { hotspot: true },
       description: "Logo for mobile view",
       validation: (rule) => rule.required(),

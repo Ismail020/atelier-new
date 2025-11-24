@@ -26,7 +26,7 @@ export const contactSection = {
       description: "Image for the 'Contact Us' visual element",
       validation: (rule) => rule.required(),
     }),
-    
+
     // Column 1: Head of Design
     defineField({
       name: "column1Title",
@@ -44,11 +44,11 @@ export const contactSection = {
       description: "Name, phone & email from Settings -> Contact Info -> Head of Design",
     }),
 
-    // Column 2: Other Related Questions  
+    // Column 2: Other Related Questions
     defineField({
       name: "column2Title",
       title: "Column 2 Title (Other Questions)",
-      type: "string", 
+      type: "string",
       validation: (rule) => rule.required(),
       placeholder: "Other Related Questions",
     }),
@@ -63,7 +63,7 @@ export const contactSection = {
 
     // Column 3: Socials
     defineField({
-      name: "column3Title", 
+      name: "column3Title",
       title: "Column 3 Title (Socials)",
       type: "string",
       validation: (rule) => rule.required(),
@@ -71,7 +71,7 @@ export const contactSection = {
     }),
     defineField({
       name: "column3Info",
-      title: "Column 3 Info Source", 
+      title: "Column 3 Info Source",
       type: "boolean",
       readOnly: true,
       initialValue: true,
@@ -82,17 +82,22 @@ export const contactSection = {
     select: {
       title: "title",
       column1Title: "column1Title",
-      column2Title: "column2Title", 
+      column2Title: "column2Title",
       column3Title: "column3Title",
     },
-    prepare({ title, column1Title, column2Title, column3Title }: { 
-      title?: string; 
+    prepare({
+      title,
+      column1Title,
+      column2Title,
+      column3Title,
+    }: {
+      title?: string;
       column1Title?: string;
       column2Title?: string;
       column3Title?: string;
     }) {
       const columns = [column1Title, column2Title, column3Title].filter(Boolean).join(" | ");
-      
+
       return {
         title: "Contact Section",
         subtitle: `${title || "No title"} - ${columns || "No column titles"}`,

@@ -21,19 +21,17 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
   return (
     <nav className="sticky top-0 z-50 bg-[#F9F7F6]">
       <div className="mx-auto px-5">
-        <div className="flex justify-between items-center h-[62px]">
-          <Link href="/" className="flex items-center">
-            <span className="nav text-[#140D01]">
-              {data.navbarStructure.brandText}
-            </span>
+        <div className="flex h-[62px] items-center justify-between">
+          <Link className="flex items-center" href={`/${currentLanguage === "en" ? "en" : ""}`}>
+            <span className="nav text-[#140D01]">{data.navbarStructure.brandText}</span>
           </Link>
 
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden items-center gap-4 md:flex">
             {menuItems?.map((item, index) => (
               <Link
                 key={index}
                 href={`/${currentLanguage === "en" ? "en/" : ""}${item.page?.name?.toLowerCase().replace(/\s+/g, "-") || "page"}`}
-                className="nav text-opacity-50	text-[#140D01]/20 hover:text-[#140D01]"
+                className="nav text-opacity-50 text-[#140D01]/20 hover:text-[#140D01]"
               >
                 {item.page?.name || "Page"}
               </Link>

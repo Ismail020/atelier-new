@@ -30,7 +30,7 @@ export const projectsSection = {
     }),
     defineField({
       name: "viewAllLinkText",
-      title: "View All Link Text", 
+      title: "View All Link Text",
       type: "string",
       description: "Text for the projects page link (e.g. 'View All Projects')",
       validation: (rule) => rule.required(),
@@ -41,13 +41,11 @@ export const projectsSection = {
       title: "Selected Projects",
       type: "array",
       description: "Select exactly 4 projects to display",
-      validation: (rule) => 
-        rule.required().min(4).max(4).error("Please select exactly 4 projects"),
+      validation: (rule) => rule.required().min(4).max(4).error("Please select exactly 4 projects"),
       of: [
         {
           type: "reference",
           to: [{ type: "project" }],
-
         },
       ],
     }),
@@ -59,7 +57,7 @@ export const projectsSection = {
     },
     prepare({ title, selectedProjects }: { title?: string; selectedProjects?: Array<unknown> }) {
       const projectCount = selectedProjects?.length || 0;
-      
+
       return {
         title: "Projects Section",
         subtitle: `${title || "No title"} - ${projectCount}/4 projects selected`,

@@ -8,9 +8,7 @@ interface ConditionalNavbarProps {
   navbarData: NAVBAR_QUERYResult | null;
 }
 
-export default function ConditionalNavbar({
-  navbarData,
-}: ConditionalNavbarProps) {
+export default function ConditionalNavbar({ navbarData }: ConditionalNavbarProps) {
   const pathname = usePathname();
 
   // Check if we're on the home page

@@ -29,7 +29,7 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentTypeList("page")
                     .title("English Pages")
-                    .filter('_type == "page" && language == "en"')
+                    .filter('_type == "page" && language == "en"'),
                 ),
 
               S.listItem()
@@ -38,7 +38,7 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentTypeList("page")
                     .title("French Pages")
-                    .filter('_type == "page" && language == "fr"')
+                    .filter('_type == "page" && language == "fr"'),
                 ),
 
               S.listItem()
@@ -47,9 +47,9 @@ export const structure: StructureResolver = (S) =>
                 .child(
                   S.documentTypeList("page")
                     .title("Pages without language")
-                    .filter('_type == "page" && !defined(language)')
+                    .filter('_type == "page" && !defined(language)'),
                 ),
-            ])
+            ]),
         ),
 
       // projects
@@ -95,15 +95,10 @@ export const structure: StructureResolver = (S) =>
               S.listItem()
                 .title("Settings")
                 .id("settings")
-                .child(
-                  S.document().schemaType("settings").documentId("settings")
-                )
+                .child(S.document().schemaType("settings").documentId("settings"))
                 .icon(CogIcon),
 
-              S.listItem()
-                .title("Locales")
-                .child(S.documentTypeList("locale"))
-                .icon(TranslateIcon),
-            ])
+              S.listItem().title("Locales").child(S.documentTypeList("locale")).icon(TranslateIcon),
+            ]),
         ),
     ]);

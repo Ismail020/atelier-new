@@ -51,15 +51,20 @@ export const headlineSection = {
     select: {
       headline: "headline",
     },
-    prepare({ headline }: { headline?: Array<{ _type: string; children?: Array<{ text?: string }> }> }) {
+    prepare({
+      headline,
+    }: {
+      headline?: Array<{ _type: string; children?: Array<{ text?: string }> }>;
+    }) {
       // Extract plain text from block content for preview
-      const plainText = headline
-        ?.map((block) => 
-          block._type === "block" && block.children
-            ? block.children.map((child) => child.text || "").join("")
-            : ""
-        )
-        .join(" ") || "No headline";
+      const plainText =
+        headline
+          ?.map((block) =>
+            block._type === "block" && block.children
+              ? block.children.map((child) => child.text || "").join("")
+              : "",
+          )
+          .join(" ") || "No headline";
 
       return {
         title: "Headline Section",

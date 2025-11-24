@@ -45,12 +45,7 @@ export const createMenuItemsForLanguage = (language: "en" | "fr") =>
 
             const displayText = pageName || "No page selected";
 
-            const languageFlag =
-              pageLanguage === "en"
-                ? "🇺🇸"
-                : pageLanguage === "fr"
-                  ? "🇫🇷"
-                  : "🌐";
+            const languageFlag = pageLanguage === "en" ? "🇺🇸" : pageLanguage === "fr" ? "🇫🇷" : "🌐";
 
             return {
               title: displayText,

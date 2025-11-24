@@ -6,12 +6,7 @@ export const createButtonsArray = (options?: {
   title?: string;
   name?: string;
 }) => {
-  const {
-    group,
-    maxButtons = 2,
-    title = "Buttons",
-    name = "buttons",
-  } = options || {};
+  const { group, maxButtons = 2, title = "Buttons", name = "buttons" } = options || {};
 
   return defineField({
     name,
@@ -61,8 +56,7 @@ export const createButtonsArray = (options?: {
             name: "anchorLink",
             type: "string",
             title: "Anchor Link",
-            description:
-              "Enter the anchor ID (without #). Example: 'about-section'",
+            description: "Enter the anchor ID (without #). Example: 'about-section'",
             placeholder: "about-section",
             hidden: ({ parent }) => parent?.linkType !== "anchor",
           }),
@@ -99,15 +93,8 @@ export const createButtonsArray = (options?: {
             buttonStyle: "buttonStyle",
           },
           prepare(selection) {
-            const {
-              title,
-              linkType,
-              pageName,
-              customUrl,
-              anchorLink,
-              email,
-              buttonStyle,
-            } = selection;
+            const { title, linkType, pageName, customUrl, anchorLink, email, buttonStyle } =
+              selection;
             let subtitle = "";
 
             if (linkType === "page" && pageName) {
@@ -133,8 +120,7 @@ export const createButtonsArray = (options?: {
       },
     ],
     ...(group && { group }),
-    validation: (rule) =>
-      rule.max(maxButtons).error(`Maximum ${maxButtons} buttons allowed`),
+    validation: (rule) => rule.max(maxButtons).error(`Maximum ${maxButtons} buttons allowed`),
   });
 };
 

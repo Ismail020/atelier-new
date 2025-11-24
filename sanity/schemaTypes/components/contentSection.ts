@@ -11,8 +11,7 @@ export const contentSection = {
       title: "Section Images",
       type: "array",
       description: "Add exactly 5 images for this section",
-      validation: (rule) => 
-        rule.required().min(5).max(5).error("Please add exactly 5 images"),
+      validation: (rule) => rule.required().min(5).max(5).error("Please add exactly 5 images"),
       of: [
         {
           type: "image",
@@ -60,8 +59,7 @@ export const contentSection = {
           title: "Items",
           type: "array",
           description: "Add exactly 4 items",
-          validation: (rule) => 
-            rule.required().min(4).max(4).error("Please add exactly 4 items"),
+          validation: (rule) => rule.required().min(4).max(4).error("Please add exactly 4 items"),
           of: [
             {
               type: "object",
@@ -90,7 +88,11 @@ export const contentSection = {
                 prepare({ title, body }: { title?: string; body?: string }) {
                   return {
                     title: title || "No title",
-                    subtitle: body ? (body.length > 50 ? body.substring(0, 50) + "..." : body) : "No body",
+                    subtitle: body
+                      ? body.length > 50
+                        ? body.substring(0, 50) + "..."
+                        : body
+                      : "No body",
                   };
                 },
               },
@@ -196,7 +198,11 @@ export const contentSection = {
                 prepare({ body, person }: { body?: string; person?: string }) {
                   return {
                     title: person || "No person",
-                    subtitle: body ? (body.length > 50 ? body.substring(0, 50) + "..." : body) : "No review",
+                    subtitle: body
+                      ? body.length > 50
+                        ? body.substring(0, 50) + "..."
+                        : body
+                      : "No review",
                   };
                 },
               },
@@ -213,7 +219,7 @@ export const contentSection = {
     },
     prepare({ section1Title, images }: { section1Title?: string; images?: Array<unknown> }) {
       const imageCount = images?.length || 0;
-      
+
       return {
         title: "Content Section",
         subtitle: `${section1Title || "No title"} - ${imageCount}/5 images`,

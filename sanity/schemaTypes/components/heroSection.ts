@@ -10,8 +10,7 @@ export const heroSection = {
       title: "Hero Images",
       type: "array",
       description: "Add exactly 4 images that will loop/rotate",
-      validation: (rule) =>
-        rule.required().length(4).error("Please add exactly 4 images"),
+      validation: (rule) => rule.required().length(4).error("Please add exactly 4 images"),
       of: [
         {
           type: "image",

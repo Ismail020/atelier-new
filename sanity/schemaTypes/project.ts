@@ -41,8 +41,7 @@ export const projectType = defineType({
       title: "Short Description",
       type: "string",
       group: "details",
-      description:
-        "Brief description for cards, previews, etc. (1-2 sentences)",
+      description: "Brief description for cards, previews, etc. (1-2 sentences)",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -95,10 +94,7 @@ export const projectType = defineType({
 
             const featuredCount = images.filter(
               (img) =>
-                img &&
-                typeof img === "object" &&
-                "isFeatured" in img &&
-                img.isFeatured === true
+                img && typeof img === "object" && "isFeatured" in img && img.isFeatured === true,
             ).length;
 
             const mobileCount = images.filter(
@@ -106,7 +102,7 @@ export const projectType = defineType({
                 img &&
                 typeof img === "object" &&
                 "showOnMobile" in img &&
-                img.showOnMobile === true
+                img.showOnMobile === true,
             ).length;
 
             const featuredMobileCount = images.filter(
@@ -114,13 +110,13 @@ export const projectType = defineType({
                 img &&
                 typeof img === "object" &&
                 "isFeaturedMobile" in img &&
-                img.isFeaturedMobile === true
+                img.isFeaturedMobile === true,
             ).length;
 
             if (featuredCount === 0) {
               return "At least 1 image must be marked as featured for desktop layout";
             }
-            
+
             if (featuredCount > 1) {
               return "Only 1 image can be marked as featured for desktop";
             }

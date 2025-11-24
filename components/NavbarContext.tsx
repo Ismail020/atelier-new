@@ -12,11 +12,7 @@ export function NavbarProvider({
   children: React.ReactNode;
   navbarData: NAVBAR_QUERYResult | null;
 }) {
-  return (
-    <NavbarContext.Provider value={navbarData}>
-      {children}
-    </NavbarContext.Provider>
-  );
+  return <NavbarContext.Provider value={navbarData}>{children}</NavbarContext.Provider>;
 }
 
 export function useNavbar() {

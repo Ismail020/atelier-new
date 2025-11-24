@@ -10,8 +10,7 @@ export const localeType = defineType({
     defineField({
       name: "name",
       type: "string",
-      description:
-        "The name of the language/locale, in the specified language.",
+      description: "The name of the language/locale, in the specified language.",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -25,11 +24,9 @@ export const localeType = defineType({
             {
               name: "IANA language tag",
               invert: false,
-            }
+            },
           )
-          .error(
-            "Must be a valid IANA language tag (e.g., en, en-US, zh-Hant-TW)"
-          ),
+          .error("Must be a valid IANA language tag (e.g., en, en-US, zh-Hant-TW)"),
     }),
     defineField({
       name: "fallback",
@@ -51,7 +48,7 @@ export const localeType = defineType({
 
           const existingDefault = await client.fetch(
             `*[_type == "locale" && default == true && _id != $id][0]`,
-            { id: context?.document?._id }
+            { id: context?.document?._id },
           );
 
           return existingDefault

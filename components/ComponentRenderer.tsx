@@ -3,9 +3,7 @@
 import HeroSection from "./sections/HeroSection";
 import Navbar from "./Navbar";
 import { useNavbar } from "./NavbarContext";
-import HeadlineSection, {
-  HeadlineSectionData,
-} from "./sections/HeadlineSection";
+import HeadlineSection, { HeadlineSectionData } from "./sections/HeadlineSection";
 import ProjectsSection from "./sections/ProjectsSection";
 
 interface PageComponent {
@@ -41,7 +39,7 @@ export default function ComponentRenderer({
               key={component._key || index}
               images={component.images}
               logo={component.logo}
-            />
+            />,
           );
           break;
         case "headlineSection":
@@ -49,35 +47,29 @@ export default function ComponentRenderer({
             <HeadlineSection
               key={component._key || index}
               data={component as HeadlineSectionData}
-            />
+            />,
           );
           break;
         case "projectsSection":
           elements.push(
             <ProjectsSection
               key={component._key || index}
-              data={component as Extract<PageComponent, { _type: 'projectsSection' }>}
+              data={component as Extract<PageComponent, { _type: "projectsSection" }>}
               currentLanguage={currentLanguage}
-            />
+            />,
           );
           break;
         default:
           elements.push(
             <div key={component._key || index} className="h-screen bg-red-600">
               {component._type} Component
-            </div>
+            </div>,
           );
           break;
       }
 
       if (isHomePage && index === 0 && navbarData) {
-        elements.push(
-          <Navbar
-            key="navbar"
-            data={navbarData}
-            currentLanguage={currentLanguage}
-          />
-        );
+        elements.push(<Navbar key="navbar" data={navbarData} currentLanguage={currentLanguage} />);
       }
     });
 
