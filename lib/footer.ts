@@ -1,5 +1,6 @@
 import { defineQuery } from "next-sanity";
 import { sanityFetch } from "@/sanity/lib/live";
+import type { FOOTER_QUERYResult } from "@/sanity/types";
 
 const FOOTER_QUERY = defineQuery(`*[_type == "footer"][0]{
   logoDesktop {
@@ -55,61 +56,9 @@ const FOOTER_QUERY = defineQuery(`*[_type == "footer"][0]{
   },
 }`);
 
-export type FooterData = {
-  logoDesktop?: {
-    asset?: {
-      _id: string;
-      url: string;
-      metadata?: {
-        dimensions?: {
-          width: number;
-          height: number;
-        };
-      };
-    };
-    alt?: string;
-  };
-  logoMobile?: {
-    asset?: {
-      _id: string;
-      url: string;
-      metadata?: {
-        dimensions?: {
-          width: number;
-          height: number;
-        };
-      };
-    };
-    alt?: string;
-  };
-  column1?: {
-    showLanguageSwitch?: boolean;
-    termsPageEN?: {
-      name: string;
-      slug: { current: string };
-    };
-    termsPageFR?: {
-      name: string;
-      slug: { current: string };
-    };
-  };
-  settingsContact?: {
-    headOfDesign?: {
-      name: string;
-      phone: string;
-      email: string;
-    };
-    generalInquiries?: {
-      email: string;
-    };
-  };
-  settingsSocial?: Array<{
-    platform: string;
-    url: string;
-  }>;
-};
+export type FooterData = FOOTER_QUERYResult;
 
-export async function getFooterData(): Promise<FooterData | null> {
+export async function getFooterData(): Promise<FOOTER_QUERYResult | null> {
   const { data } = await sanityFetch({ query: FOOTER_QUERY });
   return data;
 }

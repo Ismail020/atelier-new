@@ -3,10 +3,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { usePathname } from "next/navigation";
-import type { FooterData } from "@/lib/footer";
+import type { FOOTER_QUERYResult } from "@/sanity/types";
 
 interface FooterProps {
-  data: FooterData | null;
+  data: FOOTER_QUERYResult | null;
 }
 
 export default function Footer({ data }: FooterProps) {
@@ -20,15 +20,19 @@ export default function Footer({ data }: FooterProps) {
   const termsPage =
     currentLanguage === "en" ? data.column1?.termsPageEN : data.column1?.termsPageFR;
 
+  const logo = currentLanguage === "en" ? data.logoDesktop : data.logoMobile;
+  
   return (
     <footer className="mt-[140px] flex flex-col bg-[#140D01] px-5 text-[#F9F7F6]">
-      <Image
-        src={urlFor(data.logoDesktop).url()}
-        alt="Footer Logo"
-        width={data.logoDesktop.asset.metadata.dimensions.width}
-        height={data.logoDesktop.asset.metadata.dimensions.height}
-        className="mt-9 mb-[52px] h-auto w-full object-contain"
-      />
+      {logo?.asset && (
+        <Image
+          src={urlFor(logo).url()}
+          alt={logo.alt || "Footer Logo"}
+          width={logo.asset.metadata?.dimensions?.width || 150}
+          height={logo.asset.metadata?.dimensions?.height || 50}
+          className="mt-9 mb-[52px] h-auto w-full object-contain"
+        />
+      )}
 
       <div className="flex justify-between">
         <div className="flex flex-col gap-1">
@@ -41,7 +45,7 @@ export default function Footer({ data }: FooterProps) {
             </Link>
           )}
 
-          {termsPage && (
+          {termsPage && termsPage.slug?.current && (
             <Link
               href={`/${currentLanguage === "en" ? "en/" : ""}${termsPage.slug.current}`}
               className="infos"
@@ -63,17 +67,19 @@ export default function Footer({ data }: FooterProps) {
         )}
 
         <div className="flex flex-col gap-1">
-          {data.settingsSocial?.map((social) => (
-            <Link
-              key={social.platform}
-              href={social.url}
-              className="infos"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {social.platform}
-            </Link>
-          ))}
+          {data.settingsSocial?.map((social) => 
+            social.url ? (
+              <Link
+                key={social.platform}
+                href={social.url}
+                className="infos"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {social.platform}
+              </Link>
+            ) : null
+          )}
         </div>
       </div>
 

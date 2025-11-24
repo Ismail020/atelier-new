@@ -1963,27 +1963,27 @@
                   "of": [
                     {
                       "type": "string",
-                      "value": "facebook"
+                      "value": "Facebook"
                     },
                     {
                       "type": "string",
-                      "value": "instagram"
+                      "value": "Instagram"
                     },
                     {
                       "type": "string",
-                      "value": "twitter"
+                      "value": "Twitter"
                     },
                     {
                       "type": "string",
-                      "value": "linkedin"
+                      "value": "Linkedin"
                     },
                     {
                       "type": "string",
-                      "value": "youtube"
+                      "value": "Youtube"
                     },
                     {
                       "type": "string",
-                      "value": "tiktok"
+                      "value": "Tiktok"
                     }
                   ]
                 },

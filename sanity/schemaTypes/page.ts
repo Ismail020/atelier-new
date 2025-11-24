@@ -29,6 +29,7 @@ export const pageType = defineType({
       options: {
         source: "name",
         maxLength: 96,
+        isUnique: () => true,
       },
       validation: (rule) => rule.required(),
     }),

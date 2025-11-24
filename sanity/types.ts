@@ -335,7 +335,7 @@ export type Settings = {
     };
   };
   socialMedia?: Array<{
-    platform?: "facebook" | "instagram" | "twitter" | "linkedin" | "youtube" | "tiktok";
+    platform?: "Facebook" | "Instagram" | "Twitter" | "Linkedin" | "Youtube" | "Tiktok";
     url?: string;
     _type: "socialLink";
     _key: string;
@@ -2126,6 +2126,63 @@ export type HOME_QUERY_FRResult = {
   > | null;
 } | null;
 
+// Source: lib/footer.ts
+// Variable: FOOTER_QUERY
+// Query: *[_type == "footer"][0]{  logoDesktop {    asset->{      _id,      url,      metadata {        dimensions {          width,          height        }      }    },    alt  },  logoMobile {    asset->{      _id,      url,      metadata {        dimensions {          width,          height        }      }    },    alt  },  column1 {    showLanguageSwitch,    termsPageEN->{      name,      slug    },    termsPageFR->{      name,        slug    }  },  "settingsContact": *[_type == "settings"][0].contactInfo {    headOfDesign {      name,      phone,      email    },    generalInquiries {      email    }  },  "settingsSocial": *[_type == "settings"][0].socialMedia[] {    platform,    url  },}
+export type FOOTER_QUERYResult = {
+  logoDesktop: {
+    asset: {
+      _id: string;
+      url: string | null;
+      metadata: {
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    alt: null;
+  } | null;
+  logoMobile: {
+    asset: {
+      _id: string;
+      url: string | null;
+      metadata: {
+        dimensions: {
+          width: number | null;
+          height: number | null;
+        } | null;
+      } | null;
+    } | null;
+    alt: null;
+  } | null;
+  column1: {
+    showLanguageSwitch: boolean | null;
+    termsPageEN: {
+      name: string | null;
+      slug: Slug | null;
+    } | null;
+    termsPageFR: {
+      name: string | null;
+      slug: Slug | null;
+    } | null;
+  } | null;
+  settingsContact: {
+    headOfDesign: {
+      name: string | null;
+      phone: string | null;
+      email: string | null;
+    } | null;
+    generalInquiries: {
+      email: string | null;
+    } | null;
+  } | null;
+  settingsSocial: Array<{
+    platform: "Facebook" | "Instagram" | "Linkedin" | "Tiktok" | "Twitter" | "Youtube" | null;
+    url: string | null;
+  }> | null;
+} | null;
+
 // Source: lib/navbar.ts
 // Variable: NAVBAR_QUERY
 // Query: *[_type == "navbar"][0]{  navbarStructure {    brandText,    logo,    menuItems {      menuItemsEN[] {        page-> {          name,          slug,          language        },        mobileImage      },      menuItemsFR[] {        page-> {          name,          slug,          language          },        mobileImage      }    }  }}
@@ -2195,6 +2252,7 @@ declare module "@sanity/client" {
     '*[\n  _type == "page" \n  && name == $pageName \n  && language == "en"\n][0]{\n  name,\n  language,\n  components[]{\n    _type,\n    _key,\n    ...\n  }\n}': PAGE_QUERY_EN_SLUGResult;
     '*[\n  _type == "page" \n  && name == "Home" \n  && language == "en"\n][0]{\n  ...,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    }\n  }\n}': HOME_QUERY_EN_FRONTENDResult;
     '*[\n  _type == "page" \n  && name == "Home" \n  && language == "fr"\n][0]{\n  ...,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    }\n  }\n}': HOME_QUERY_FRResult;
+    '*[_type == "footer"][0]{\n  logoDesktop {\n    asset->{\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  logoMobile {\n    asset->{\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  column1 {\n    showLanguageSwitch,\n    termsPageEN->{\n      name,\n      slug\n    },\n    termsPageFR->{\n      name,  \n      slug\n    }\n  },\n  "settingsContact": *[_type == "settings"][0].contactInfo {\n    headOfDesign {\n      name,\n      phone,\n      email\n    },\n    generalInquiries {\n      email\n    }\n  },\n  "settingsSocial": *[_type == "settings"][0].socialMedia[] {\n    platform,\n    url\n  },\n}': FOOTER_QUERYResult;
     '*[_type == "navbar"][0]{\n  navbarStructure {\n    brandText,\n    logo,\n    menuItems {\n      menuItemsEN[] {\n        page-> {\n          name,\n          slug,\n          language\n        },\n        mobileImage\n      },\n      menuItemsFR[] {\n        page-> {\n          name,\n          slug,\n          language  \n        },\n        mobileImage\n      }\n    }\n  }\n}': NAVBAR_QUERYResult;
   }
 }
