@@ -20,22 +20,35 @@ export default function Footer({ data }: FooterProps) {
   const termsPage =
     currentLanguage === "en" ? data.column1?.termsPageEN : data.column1?.termsPageFR;
 
-  const logo = currentLanguage === "en" ? data.logoDesktop : data.logoMobile;
-  
+  const logo = data.logoDesktop;
+  const mobileLogo = data.logoMobile;
+
   return (
-    <footer className="mt-[140px] flex flex-col bg-[#140D01] px-5 text-[#F9F7F6]">
-      {logo?.asset && (
-        <Image
-          src={urlFor(logo).url()}
-          alt={logo.alt || "Footer Logo"}
-          width={logo.asset.metadata?.dimensions?.width || 150}
-          height={logo.asset.metadata?.dimensions?.height || 50}
-          className="mt-9 mb-[52px] h-auto w-full object-contain"
-        />
+    <footer className="mt-[140px] flex flex-col bg-[#140D01] px-2.5 text-[#F9F7F6] md:px-5">
+      {logo?.asset && mobileLogo?.asset && (
+        <>
+          <Image
+            src={urlFor(logo).url()}
+            alt={logo.alt || "Footer Logo"}
+            width={logo.asset.metadata?.dimensions?.width || 150}
+            height={logo.asset.metadata?.dimensions?.height || 50}
+            className="mt-9 mb-[52px] hidden h-auto w-full object-contain sm:block"
+            unoptimized
+          />
+
+          <Image
+            src={urlFor(mobileLogo).url()}
+            alt={mobileLogo.alt || "Footer Logo"}
+            width={mobileLogo.asset.metadata?.dimensions?.width || 150}
+            height={mobileLogo.asset.metadata?.dimensions?.height || 50}
+            className="opbject-contain mt-5 mb-[70px] block h-auto w-full sm:hidden"
+            unoptimized
+          />
+        </>
       )}
 
-      <div className="flex justify-between">
-        <div className="flex flex-col gap-1">
+      <div className="flex flex-wrap justify-between gap-x-24">
+        <div className="flex w-[255px] flex-col gap-1">
           {data.column1?.showLanguageSwitch && (
             <Link href={currentLanguage === "en" ? "/" : "/en"} className="infos">
               Switch to{" "}
@@ -55,31 +68,33 @@ export default function Footer({ data }: FooterProps) {
           )}
         </div>
 
-        {data.settingsContact?.headOfDesign && (
-          <div className="flex flex-col gap-1">
-            <a href={`mailto:${data.settingsContact.headOfDesign.email}`} className="infos">
-              {data.settingsContact.headOfDesign.email}
-            </a>
-            <a href={`tel:${data.settingsContact.headOfDesign.phone}`} className="infos">
-              {data.settingsContact.headOfDesign.phone}
-            </a>
-          </div>
-        )}
-
-        <div className="flex flex-col gap-1">
-          {data.settingsSocial?.map((social) => 
-            social.url ? (
-              <Link
-                key={social.platform}
-                href={social.url}
-                className="infos"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {social.platform}
-              </Link>
-            ) : null
+        <div className="flex gap-24">
+          {data.settingsContact?.headOfDesign && (
+            <div className="flex w-[255px] flex-col gap-1">
+              <a href={`mailto:${data.settingsContact.headOfDesign.email}`} className="infos">
+                {data.settingsContact.headOfDesign.email}
+              </a>
+              <a href={`tel:${data.settingsContact.headOfDesign.phone}`} className="infos">
+                {data.settingsContact.headOfDesign.phone}
+              </a>
+            </div>
           )}
+
+          <div className="flex w-[255px] flex-col gap-1">
+            {data.settingsSocial?.map((social) =>
+              social.url ? (
+                <Link
+                  key={social.platform}
+                  href={social.url}
+                  className="infos"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {social.platform}
+                </Link>
+              ) : null,
+            )}
+          </div>
         </div>
       </div>
 

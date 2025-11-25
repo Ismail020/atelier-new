@@ -4,7 +4,19 @@ import { sanityFetch } from "@/sanity/lib/live";
 const NAVBAR_QUERY = defineQuery(`*[_type == "navbar"][0]{
   navbarStructure {
     brandText,
-    logo,
+    logo {
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      },
+      alt
+    },
     menuItems {
       menuItemsEN[] {
         page-> {

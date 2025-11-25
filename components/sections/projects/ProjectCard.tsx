@@ -26,7 +26,7 @@ export default function ProjectCard({
     <div className="flex flex-col gap-2">
       <ProjectImageGrid images={project.previewImages} projectName={project.name} />
 
-      <div className="grid grid-cols-5">
+      <div className="grid grid-cols-3 md:grid-cols-5">
         <h3 className="infos text-[#140D01]">{project.name}</h3>
         <p className="infos text-[#CECECE]">
           {new Date(project.date).toLocaleDateString("de-DE", {
@@ -36,12 +36,12 @@ export default function ProjectCard({
           })}
         </p>
 
-        <div className="col-span-3 flex justify-end">
+        <div className="flex justify-end md:col-span-3">
           <Link
             className="buttons flex items-center gap-3"
             href={`/${currentLanguage}/${projectsPageSlug}/${project.slug.current}`}
           >
-            {projectLinkText}
+            <span className="hidden md:block">{projectLinkText}</span>
             <NavArrow />
           </Link>
         </div>

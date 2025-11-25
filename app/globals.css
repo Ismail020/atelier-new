@@ -20,19 +20,33 @@ body {
 
 .h2-display {
   font-family: Poppins;
-  font-size: 60px;
+  font-size: 36px;
   font-style: normal;
   font-weight: 300;
-  line-height: 120%;
-  letter-spacing: -1.8px;
+  line-height: 130%;
+  letter-spacing: -1.08px;
+}
+
+@media (min-width: 768px) {
+  .h2-display {
+    font-size: 60px;
+    line-height: 120%;
+    letter-spacing: -1.8px;
+  }
 }
 
 .h2 {
   font-family: Poppins;
-  font-size: 20px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: 130%;
+}
+
+@media (min-width: 768px) {
+  .h2 {
+    font-size: 20px;
+  }
 }
 
 .infos {
@@ -40,16 +54,22 @@ body {
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 130%;
+  line-height: 130%; /* 18.2px */
   letter-spacing: -0.14px;
 }
 
 .buttons {
   font-family: Poppins;
-  font-size: 14px;
+  font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 130%;
+}
+
+@media (min-width: 768px) {
+  .buttons {
+    font-size: 14px;
+  }
 }
 
 .tiny {
@@ -57,6 +77,12 @@ body {
   font-size: 12px;
   font-style: normal;
   font-weight: 300;
-  line-height: 150%;
+  line-height: 180%;
   letter-spacing: -0.36px;
+}
+
+@media (min-width: 768px) {
+  .tiny {
+    line-height: 150%;
+  }
 }

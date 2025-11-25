@@ -35,7 +35,7 @@ export default function ProjectsSection({
   currentLanguage?: "en" | "fr";
 }) {
   return (
-    <div className="flex flex-col gap-5 px-5">
+    <div className="flex flex-col gap-4 px-2.5 md:gap-5 md:px-5">
       <ProjectsSectionHeader
         title={data.title}
         viewAllLinkText={data.viewAllLinkText}
@@ -43,7 +43,7 @@ export default function ProjectsSection({
         currentLanguage={currentLanguage}
       />
 
-      <div className="flex flex-col gap-5">
+      <div className="flex flex-col gap-4 md:gap-5">
         {data.selectedProjects?.map((project, index) => (
           <ProjectCard
             key={`${project._id}-${index}`}

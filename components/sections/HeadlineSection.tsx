@@ -54,7 +54,7 @@ function renderHeadlineContent(headline: Headline[]): React.ReactNode {
 
 export default function HeadlineSection({ data }: { data: HeadlineSectionData }) {
   return (
-    <section className="max-w-[970px] px-5 pt-44 pb-[50px]">
+    <section className="max-w-[970px] px-2.5 md:px-5 pt-44 pb-[50px]">
       <div className="">
         <h2 className="h2-display indent-[2em] text-[#140D01]">
           {renderHeadlineContent(data.headline)}
