@@ -17,8 +17,11 @@ interface NavbarProps {
 
 export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
   const [showLogo, setShowLogo] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
   const brandTextRef = useRef<HTMLSpanElement>(null);
   const logoRef = useRef<HTMLImageElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
     const heroHeight = window.innerHeight - 62;
@@ -36,11 +39,56 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
     });
   }, []);
 
+  // Menu opening animation
+  useGSAP(() => {
+    if (!menuRef.current || !isMenuOpen) return;
+
+    const menuItems = menuRef.current.children;
+
+    // Set initial state for all items
+    gsap.set(menuItems, {
+      opacity: 0,
+      x: 30,
+    });
+
+    // Animate each item in with stagger
+    gsap.to(menuItems, {
+      opacity: 1,
+      x: 0,
+      duration: 0.4,
+      ease: "power2.out",
+      stagger: 0.1, // Delay between each item
+    });
+  }, [isMenuOpen]);
+
+  const toggleMenu = () => {
+    if (isMenuOpen && !isClosing) {
+      // Start closing sequence
+      setIsClosing(true);
+      if (menuRef.current) {
+        const menuItems = menuRef.current.children;
+        gsap.to(menuItems, {
+          opacity: 0,
+          x: 30,
+          duration: 0.3,
+          ease: "power2.in",
+          stagger: 0.05,
+          onComplete: () => {
+            setIsMenuOpen(false);
+            setIsClosing(false);
+          }
+        });
+      }
+    } else if (!isMenuOpen) {
+      // If opening, show immediately
+      setIsMenuOpen(true);
+      setIsClosing(false);
+    }
+  };
+  
   if (!data?.navbarStructure) {
     return null;
-  }
-
-  const menuItems =
+  }  const menuItems =
     currentLanguage === "en"
       ? data.navbarStructure.menuItems?.menuItemsEN
       : data.navbarStructure.menuItems?.menuItemsFR;
@@ -73,16 +121,26 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
           </Link>
 
           <div className="hidden items-center gap-4 md:flex">
-            {menuItems?.map((item, index) => (
-              <Link
-                key={index}
-                href={`/${currentLanguage === "en" ? "en/" : ""}${item.page?.name?.toLowerCase().replace(/\s+/g, "-") || "page"}`}
-                className="nav text-opacity-50 text-[#140D01]/20 hover:text-[#140D01]"
-              >
-                {item.page?.name || "Page"}
-              </Link>
-            ))}
-            <p className="nav text-[#140D01]">Close</p>
+            {isMenuOpen && (
+              <div ref={menuRef} className="flex items-center gap-4">
+                {menuItems?.map((item, index) => (
+                  <Link
+                    key={index}
+                    href={`/${currentLanguage === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
+                    className="nav text-opacity-50 text-[#140D01]/20 hover:text-[#140D01]"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.page?.name || "Page"}
+                  </Link>
+                ))}
+              </div>
+            )}
+            <button
+              onClick={toggleMenu}
+              className="nav text-[#140D01] cursor-pointer hover:opacity-70 transition-opacity"
+            >
+              {(isMenuOpen && !isClosing) ? "Close" : "Menu"}
+            </button>
           </div>
         </div>
       </div>
