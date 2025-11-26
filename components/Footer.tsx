@@ -48,8 +48,8 @@ export default function Footer({ data }: FooterProps) {
         </>
       )}
 
-      <div className="flex flex-wrap justify-between gap-x-24">
-        <div className="flex w-[255px] flex-col gap-1">
+      <div className="flex justify-between md:flex-wrap lg:gap-x-24">
+        <div className="flex w-1/2 flex-col justify-between gap-1 md:w-[255px]">
           {data.column1?.showLanguageSwitch && (
             <TransitionLink href={currentLanguage === "en" ? "/" : "/en"} className="infos">
               Switch to{" "}
@@ -69,7 +69,23 @@ export default function Footer({ data }: FooterProps) {
           )}
         </div>
 
-        <div className="flex flex-wrap gap-24">
+        <div className="flex w-1/2 flex-col gap-1 lg:hidden lg:w-[255px]">
+          {data.settingsSocial?.map((social) =>
+            social.url ? (
+              <Link
+                key={social.platform}
+                href={social.url}
+                className="infos"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {social.platform}
+              </Link>
+            ) : null,
+          )}
+        </div>
+
+        <div className="hidden flex-wrap gap-24 lg:flex">
           {data.settingsContact?.headOfDesign && (
             <div className="flex w-[255px] flex-col gap-1">
               <a href={`mailto:${data.settingsContact.headOfDesign.email}`} className="infos">
@@ -99,7 +115,18 @@ export default function Footer({ data }: FooterProps) {
         </div>
       </div>
 
-      <div className="mt-[200px] flex flex-col gap-2">
+      {data.settingsContact?.headOfDesign && (
+        <div className="mt-[170px] flex flex-col gap-3.5 lg:hidden">
+          <a href={`mailto:${data.settingsContact.headOfDesign.email}`} className="infos">
+            {data.settingsContact.headOfDesign.email}
+          </a>
+          <a href={`tel:${data.settingsContact.headOfDesign.phone}`} className="infos">
+            {data.settingsContact.headOfDesign.phone}
+          </a>
+        </div>
+      )}
+
+      <div className="mt-[26px] flex flex-col gap-2 lg:mt-[200px]">
         <div
           className="h-px w-full"
           style={{
