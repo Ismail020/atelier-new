@@ -127,6 +127,7 @@ export default function HeroSection({ images, logo }: HeroSectionProps) {
             src={urlFor(logo)
               .width(logo.asset.metadata.dimensions.width)
               .height(logo.asset.metadata.dimensions.height)
+              .quality(100)
               .url()}
             alt="Logo"
             width={logo.asset.metadata.dimensions.width}

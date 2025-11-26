@@ -4,6 +4,7 @@ import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
 import { usePathname } from "next/navigation";
 import type { FOOTER_QUERYResult } from "@/sanity/types";
+import TransitionLink from "./utils/TransitionLink";
 
 interface FooterProps {
   data: FOOTER_QUERYResult | null;
@@ -50,12 +51,12 @@ export default function Footer({ data }: FooterProps) {
       <div className="flex flex-wrap justify-between gap-x-24">
         <div className="flex w-[255px] flex-col gap-1">
           {data.column1?.showLanguageSwitch && (
-            <Link href={currentLanguage === "en" ? "/" : "/en"} className="infos">
+            <TransitionLink href={currentLanguage === "en" ? "/" : "/en"} className="infos">
               Switch to{" "}
               <span className="text-[#ffffff70]">
                 {currentLanguage === "en" ? "Français" : "English"}
               </span>
-            </Link>
+            </TransitionLink>
           )}
 
           {termsPage && termsPage.slug?.current && (
@@ -68,7 +69,7 @@ export default function Footer({ data }: FooterProps) {
           )}
         </div>
 
-        <div className="flex gap-24">
+        <div className="flex flex-wrap gap-24">
           {data.settingsContact?.headOfDesign && (
             <div className="flex w-[255px] flex-col gap-1">
               <a href={`mailto:${data.settingsContact.headOfDesign.email}`} className="infos">

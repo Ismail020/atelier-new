@@ -17,6 +17,19 @@ const NAVBAR_QUERY = defineQuery(`*[_type == "navbar"][0]{
       },
       alt
     },
+    logoWhite {
+      asset->{
+        _id,
+        url,
+        metadata {
+          dimensions {
+            width,
+            height
+          }
+        }
+      },
+      alt
+    },
     menuItems {
       menuItemsEN[] {
         page-> {
@@ -24,7 +37,19 @@ const NAVBAR_QUERY = defineQuery(`*[_type == "navbar"][0]{
           slug,
           language
         },
-        mobileImage
+        mobileImage {
+          asset->{
+            _id,
+            url,
+            metadata {
+              dimensions {
+                width,
+                height
+              }
+            }
+          },
+          alt
+        }
       },
       menuItemsFR[] {
         page-> {
@@ -32,8 +57,42 @@ const NAVBAR_QUERY = defineQuery(`*[_type == "navbar"][0]{
           slug,
           language  
         },
-        mobileImage
+        mobileImage {
+          asset->{
+            _id,
+            url,
+            metadata {
+              dimensions {
+                width,
+                height
+              }
+            }
+          },
+          alt
+        }
       }
+    }
+  },
+  "settingsSocial": *[_type == "settings"][0].socialMedia[] {
+    platform,
+    url
+  },
+  "termsPageEN": *[_type == "page" && language == "en" && name match "*Terms*" || name match "*Conditions*"][0] {
+    name,
+    slug
+  },
+  "termsPageFR": *[_type == "page" && language == "fr" && name match "*Terms*" || name match "*Conditions*"][0] {
+    name,
+    slug
+  },
+  "settingsContact": *[_type == "settings"][0].contactInfo {
+    headOfDesign {
+      name,
+      phone,
+      email
+    },
+    generalInquiries {
+      email
     }
   }
 }`);

@@ -433,6 +433,18 @@ export type Navbar = {
       crop?: SanityImageCrop;
       _type: "image";
     };
+    logoWhite?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
     menuItems?: {
       menuItemsEN?: Array<{
         page?: {
@@ -2185,11 +2197,24 @@ export type FOOTER_QUERYResult = {
 
 // Source: lib/navbar.ts
 // Variable: NAVBAR_QUERY
-// Query: *[_type == "navbar"][0]{  navbarStructure {    brandText,    logo {      asset->{        _id,        url,        metadata {          dimensions {            width,            height          }        }      },      alt    },    menuItems {      menuItemsEN[] {        page-> {          name,          slug,          language        },        mobileImage      },      menuItemsFR[] {        page-> {          name,          slug,          language          },        mobileImage      }    }  }}
+// Query: *[_type == "navbar"][0]{  navbarStructure {    brandText,    logo {      asset->{        _id,        url,        metadata {          dimensions {            width,            height          }        }      },      alt    },    logoWhite {      asset->{        _id,        url,        metadata {          dimensions {            width,            height          }        }      },      alt    },    menuItems {      menuItemsEN[] {        page-> {          name,          slug,          language        },        mobileImage {          asset->{            _id,            url,            metadata {              dimensions {                width,                height              }            }          },          alt        }      },      menuItemsFR[] {        page-> {          name,          slug,          language          },        mobileImage {          asset->{            _id,            url,            metadata {              dimensions {                width,                height              }            }          },          alt        }      }    }  },  "settingsSocial": *[_type == "settings"][0].socialMedia[] {    platform,    url  },  "termsPageEN": *[_type == "page" && language == "en" && name match "*Terms*" || name match "*Conditions*"][0] {    name,    slug  },  "termsPageFR": *[_type == "page" && language == "fr" && name match "*Terms*" || name match "*Conditions*"][0] {    name,    slug  },  "settingsContact": *[_type == "settings"][0].contactInfo {    headOfDesign {      name,      phone,      email    },    generalInquiries {      email    }  }}
 export type NAVBAR_QUERYResult = {
   navbarStructure: {
     brandText: string | null;
     logo: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: null;
+    } | null;
+    logoWhite: {
       asset: {
         _id: string;
         url: string | null;
@@ -2210,16 +2235,17 @@ export type NAVBAR_QUERYResult = {
           language: string | null;
         } | null;
         mobileImage: {
-          asset?: {
-            _ref: string;
-            _type: "reference";
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-          };
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
+          asset: {
+            _id: string;
+            url: string | null;
+            metadata: {
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          alt: null;
         } | null;
       }> | null;
       menuItemsFR: Array<{
@@ -2229,18 +2255,53 @@ export type NAVBAR_QUERYResult = {
           language: string | null;
         } | null;
         mobileImage: {
-          asset?: {
-            _ref: string;
-            _type: "reference";
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-          };
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
+          asset: {
+            _id: string;
+            url: string | null;
+            metadata: {
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+          alt: null;
         } | null;
       }> | null;
+    } | null;
+  } | null;
+  settingsSocial: Array<{
+    platform: "Facebook" | "Instagram" | "Linkedin" | "Tiktok" | "Twitter" | "Youtube" | null;
+    url: string | null;
+  }> | null;
+  termsPageEN:
+    | {
+        name: string | null;
+        slug: null;
+      }
+    | {
+        name: string | null;
+        slug: Slug | null;
+      }
+    | null;
+  termsPageFR:
+    | {
+        name: string | null;
+        slug: null;
+      }
+    | {
+        name: string | null;
+        slug: Slug | null;
+      }
+    | null;
+  settingsContact: {
+    headOfDesign: {
+      name: string | null;
+      phone: string | null;
+      email: string | null;
+    } | null;
+    generalInquiries: {
+      email: string | null;
     } | null;
   } | null;
 } | null;
@@ -2254,6 +2315,6 @@ declare module "@sanity/client" {
     '*[\n  _type == "page" \n  && name == "Home" \n  && language == "en"\n][0]{\n  ...,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    }\n  }\n}': HOME_QUERY_EN_FRONTENDResult;
     '*[\n  _type == "page" \n  && name == "Home" \n  && language == "fr"\n][0]{\n  ...,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    }\n  }\n}': HOME_QUERY_FRResult;
     '*[_type == "footer"][0]{\n  logoDesktop {\n    asset->{\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  logoMobile {\n    asset->{\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  column1 {\n    showLanguageSwitch,\n    termsPageEN->{\n      name,\n      slug\n    },\n    termsPageFR->{\n      name,  \n      slug\n    }\n  },\n  "settingsContact": *[_type == "settings"][0].contactInfo {\n    headOfDesign {\n      name,\n      phone,\n      email\n    },\n    generalInquiries {\n      email\n    }\n  },\n  "settingsSocial": *[_type == "settings"][0].socialMedia[] {\n    platform,\n    url\n  },\n}': FOOTER_QUERYResult;
-    '*[_type == "navbar"][0]{\n  navbarStructure {\n    brandText,\n    logo {\n      asset->{\n        _id,\n        url,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt\n    },\n    menuItems {\n      menuItemsEN[] {\n        page-> {\n          name,\n          slug,\n          language\n        },\n        mobileImage\n      },\n      menuItemsFR[] {\n        page-> {\n          name,\n          slug,\n          language  \n        },\n        mobileImage\n      }\n    }\n  }\n}': NAVBAR_QUERYResult;
+    '*[_type == "navbar"][0]{\n  navbarStructure {\n    brandText,\n    logo {\n      asset->{\n        _id,\n        url,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt\n    },\n    logoWhite {\n      asset->{\n        _id,\n        url,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt\n    },\n    menuItems {\n      menuItemsEN[] {\n        page-> {\n          name,\n          slug,\n          language\n        },\n        mobileImage {\n          asset->{\n            _id,\n            url,\n            metadata {\n              dimensions {\n                width,\n                height\n              }\n            }\n          },\n          alt\n        }\n      },\n      menuItemsFR[] {\n        page-> {\n          name,\n          slug,\n          language  \n        },\n        mobileImage {\n          asset->{\n            _id,\n            url,\n            metadata {\n              dimensions {\n                width,\n                height\n              }\n            }\n          },\n          alt\n        }\n      }\n    }\n  },\n  "settingsSocial": *[_type == "settings"][0].socialMedia[] {\n    platform,\n    url\n  },\n  "termsPageEN": *[_type == "page" && language == "en" && name match "*Terms*" || name match "*Conditions*"][0] {\n    name,\n    slug\n  },\n  "termsPageFR": *[_type == "page" && language == "fr" && name match "*Terms*" || name match "*Conditions*"][0] {\n    name,\n    slug\n  },\n  "settingsContact": *[_type == "settings"][0].contactInfo {\n    headOfDesign {\n      name,\n      phone,\n      email\n    },\n    generalInquiries {\n      email\n    }\n  }\n}': NAVBAR_QUERYResult;
   }
 }
