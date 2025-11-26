@@ -176,7 +176,11 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
             {data.navbarStructure.logo && data.navbarStructure.logo.asset && (
               <Image
                 ref={logoRef}
-                src={urlFor(data.navbarStructure.logo).height(40).url()}
+                src={urlFor(data.navbarStructure.logo)
+                  .width(data.navbarStructure.logo.asset.metadata?.dimensions?.width || 150)
+                  .height(data.navbarStructure.logo.asset.metadata?.dimensions?.height || 50)
+                  .quality(100)
+                  .url()}
                 alt={data.navbarStructure.logo.alt || "Logo"}
                 width={data.navbarStructure.logo.asset.metadata?.dimensions?.width || 150}
                 height={data.navbarStructure.logo.asset.metadata?.dimensions?.height || 50}
