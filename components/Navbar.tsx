@@ -106,13 +106,13 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
       x: 30,
     });
 
-    // Animate each item in with stagger
+    // Animate each item in with stagger (from last to first)
     gsap.to(menuItems, {
       opacity: 1,
       x: 0,
       duration: 0.4,
       ease: "power2.out",
-      stagger: 0.1, // Delay between each item
+      stagger: -0.1, // Negative stagger starts from the last item
     });
   }, [isDesktopMenuOpen]);
 
