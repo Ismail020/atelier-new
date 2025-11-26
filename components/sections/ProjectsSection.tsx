@@ -1,5 +1,7 @@
 import ProjectsSectionHeader from "./projects/ProjectsSectionHeader";
 import ProjectCard from "./projects/ProjectCard";
+import { Link } from "next-view-transitions";
+import { NavArrow } from "../Icons";
 
 interface ProjectsSectionData {
   title: string;
@@ -54,6 +56,14 @@ export default function ProjectsSection({
           />
         ))}
       </div>
+
+      <Link
+        className="nav flex items-center justify-end gap-3 md:hidden"
+        href={`/${currentLanguage}/${data.projectsPageLink.slug.current}`}
+      >
+        {data.viewAllLinkText}
+        <NavArrow />
+      </Link>
     </div>
   );
 }

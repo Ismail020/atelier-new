@@ -117,11 +117,11 @@ export default function Footer({ data }: FooterProps) {
 
       {data.settingsContact?.headOfDesign && (
         <div className="mt-[170px] flex flex-col gap-3.5 lg:hidden">
-          <a href={`mailto:${data.settingsContact.headOfDesign.email}`} className="infos">
-            {data.settingsContact.headOfDesign.email}
-          </a>
           <a href={`tel:${data.settingsContact.headOfDesign.phone}`} className="infos">
             {data.settingsContact.headOfDesign.phone}
+          </a>
+          <a href={`mailto:${data.settingsContact.headOfDesign.email}`} className="infos">
+            {data.settingsContact.headOfDesign.email}
           </a>
         </div>
       )}

@@ -18,7 +18,7 @@ export default function ProjectsSectionHeader({
     <div className="flex items-center justify-between">
       <h2 className="h2 text-[#140D01]">{title}</h2>
       <Link
-        className="nav flex items-center gap-3"
+        className="nav hidden items-center gap-3 md:flex"
         href={`/${currentLanguage}/${projectsPageSlug}`}
       >
         {viewAllLinkText}
