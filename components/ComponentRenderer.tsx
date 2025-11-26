@@ -5,7 +5,7 @@ import Navbar from "./Navbar";
 import { useNavbar } from "./NavbarContext";
 import HeadlineSection, { HeadlineSectionData } from "./sections/HeadlineSection";
 import ProjectsSection from "./sections/ProjectsSection";
-import AllProjectsSection, { AllProjectsSectionData } from "./sections/allProjectsSection";
+import AllProjectsSection, { AllProjectsSectionData } from "./sections/AllProjectsSection";
 
 interface PageComponent {
   _type: string;

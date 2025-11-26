@@ -6,7 +6,7 @@ import ComponentRenderer from "@/components/ComponentRenderer";
 
 const PAGE_QUERY_FR = defineQuery(`*[
   _type == "page" 
-  && name == $pageName 
+  && slug.current == $pageName 
   && language == "fr"
 ][0]{
   name,
@@ -78,7 +78,7 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  return <ComponentRenderer components={page.components || []} />;
+  return <ComponentRenderer components={page.components || []} currentLanguage="fr" />;
 }
 
 export async function generateStaticParams() {

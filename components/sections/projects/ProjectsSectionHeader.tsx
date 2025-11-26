@@ -20,7 +20,7 @@ export default function ProjectsSectionHeader({
       <h2 className="h2 text-[#140D01]">{title}</h2>
       <TransitionLink
         className="nav hidden items-center gap-3 md:flex"
-        href={`/${currentLanguage}/${projectsPageSlug}`}
+        href={`/${currentLanguage === "en" ? "en/" : ""}${projectsPageSlug}`}
       >
         {viewAllLinkText}
         <NavArrow />

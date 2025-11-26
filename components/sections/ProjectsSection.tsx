@@ -60,7 +60,7 @@ export default function ProjectsSection({
 
       <TransitionLink
         className="nav flex items-center justify-end gap-3 md:hidden"
-        href={`/${currentLanguage}/${data.projectsPageLink.slug.current}`}
+        href={`/${currentLanguage === "en" ? "en/" : ""}${data.projectsPageLink.slug.current}`}
       >
         {data.viewAllLinkText}
         <NavArrow />

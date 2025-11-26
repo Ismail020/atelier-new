@@ -78,7 +78,7 @@ export default async function EnglishPage({ params }: PageProps) {
     notFound();
   }
 
-  return <ComponentRenderer components={page.components || []} />;
+  return <ComponentRenderer components={page.components || []} currentLanguage="en" />;
 }
 
 export async function generateStaticParams() {

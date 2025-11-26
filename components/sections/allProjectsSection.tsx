@@ -7,9 +7,12 @@ import ProjectCard from "./projects/ProjectCard";
 export interface AllProjectsSectionData {
   _key: string;
   _type: string;
-  headline: HeadlineSectionData['headline'];
+  headline: HeadlineSectionData["headline"];
   projectLinkText: string;
   projectsSource: boolean;
+  projectsPageLink: {
+    slug: { current: string };
+  };
 }
 
 interface Project {
@@ -45,7 +48,6 @@ export default function AllProjectsSection({
   data: AllProjectsSectionData;
   currentLanguage?: "en" | "fr";
 }) {
-  
   const [projectsData, setProjectsData] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -78,7 +80,7 @@ export default function AllProjectsSection({
   if (isLoading) {
     return (
       <div>
-        <HeadlineSection data={{...data, _key: data._key, _type: 'headlineSection'}} />
+        <HeadlineSection data={{ ...data, _key: data._key, _type: "headlineSection" }} />
         <div className="flex justify-center py-8">
           <p>Loading projects...</p>
         </div>
@@ -89,7 +91,7 @@ export default function AllProjectsSection({
   if (error) {
     return (
       <div>
-        <HeadlineSection data={{...data, _key: data._key, _type: 'headlineSection'}} />
+        <HeadlineSection data={{ ...data, _key: data._key, _type: "headlineSection" }} />
         <div className="flex justify-center py-8">
           <p className="text-red-600">Error: {error}</p>
         </div>
@@ -99,7 +101,7 @@ export default function AllProjectsSection({
 
   return (
     <div>
-      <HeadlineSection data={{...data, _key: data._key, _type: 'headlineSection'}} />
+      <HeadlineSection data={{ ...data, _key: data._key, _type: "headlineSection" }} />
 
       <div className="flex flex-col gap-4 px-2.5 md:gap-5 md:px-5">
         {projectsData?.map((project, index) => (
@@ -107,8 +109,8 @@ export default function AllProjectsSection({
             key={`${project._id}-${index}`}
             project={project}
             projectLinkText={data.projectLinkText}
-            projectsPageSlug={""} // Not needed for all projects section
-            currentLanguage={currentLanguage}
+            projectsPageSlug={data.projectsPageLink.slug.current}
+            currentLanguage={currentLanguage || "fr"}
           />
         ))}
       </div>

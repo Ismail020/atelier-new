@@ -40,7 +40,7 @@ export default function ProjectCard({
         <div className="flex justify-end md:col-span-3">
           <TransitionLink
             className="buttons flex items-center gap-3"
-            href={`/${currentLanguage}/${projectsPageSlug}/${project.slug.current}`}
+            href={`/${currentLanguage === "en" ? "en/" : ""}${projectsPageSlug}/${project.slug.current}`}
           >
             <span className="hidden md:block">{projectLinkText}</span>
             <NavArrow />

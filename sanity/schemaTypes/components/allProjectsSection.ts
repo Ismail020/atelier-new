@@ -65,6 +65,14 @@ export const allProjectsSection = {
       placeholder: "View Project",
     }),
     defineField({
+      name: "projectsPageLink",
+      title: "Projects Page Link",
+      type: "reference",
+      to: [{ type: "page" }],
+      description: "Link to the main projects page for individual project URLs",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "projectsSource",
       title: "Projects Source",
       type: "boolean",
