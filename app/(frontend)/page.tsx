@@ -36,6 +36,18 @@ const HOME_QUERY_FR = defineQuery(`*[
       _type,
       name,
       slug
+    },
+    headline[]{
+      ...,
+      markDefs[]{
+        ...,
+        "linkToPage": linkToPage->{
+          _id,
+          _type,
+          name,
+          slug
+        }
+      }
     }
   }
 }`);

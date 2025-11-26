@@ -5,6 +5,7 @@ import Navbar from "./Navbar";
 import { useNavbar } from "./NavbarContext";
 import HeadlineSection, { HeadlineSectionData } from "./sections/HeadlineSection";
 import ProjectsSection from "./sections/ProjectsSection";
+import AllProjectsSection, { AllProjectsSectionData } from "./sections/allProjectsSection";
 
 interface PageComponent {
   _type: string;
@@ -59,6 +60,16 @@ export default function ComponentRenderer({
             />,
           );
           break;
+        case "allProjectsSection":
+          elements.push(
+            <AllProjectsSection
+              key={component._key || index}
+              data={component as AllProjectsSectionData}
+              currentLanguage={currentLanguage}
+            />,
+          );
+          break;
+
         default:
           elements.push(
             <div key={component._key || index} className="h-screen bg-red-600">

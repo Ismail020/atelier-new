@@ -39,6 +39,16 @@ export const allProjectsSection = {
                     description: "This text will be wrapped in a span for custom frontend styling",
                     initialValue: true,
                   },
+                  {
+                    name: "linkToPage",
+                    type: "reference",
+                    title: "Link to Page",
+                    description: "Optional: Link this highlighted text to a page",
+                    to: [{ type: "page" }],
+                    options: {
+                      filter: '_id in path("drafts.**") == false',
+                    },
+                  },
                 ],
               },
             ],

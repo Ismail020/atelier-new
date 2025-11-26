@@ -8,6 +8,7 @@ import { createPortal } from "react-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import TransitionLink from "./utils/TransitionLink";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -163,7 +164,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
     <nav className="sticky top-0 z-50 bg-[#F9F7F6]">
       <div className="mx-auto px-2.5 md:px-5">
         <div className="flex h-[62px] items-center justify-between">
-          <Link
+          <TransitionLink
             className="relative flex items-center"
             href={`/${currentLanguage === "en" ? "en" : ""}`}
           >
@@ -188,26 +189,30 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                 unoptimized
               />
             )}
-          </Link>
+          </TransitionLink>
 
           {/* Desktop Menu */}
           <div className="hidden items-center gap-4 md:flex">
             {isDesktopMenuOpen && (
               <div ref={menuRef} className="flex items-center gap-4">
                 {menuItems?.map((item, index) => (
-                  <Link
+                  <TransitionLink
                     key={index}
                     href={`/${currentLanguage === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
                     className="nav text-opacity-50 text-[#140D01]/20 hover:text-[#140D01]"
-                    onClick={() => setIsDesktopMenuOpen(false)}
+                    onNavigationStart={() => setIsDesktopMenuOpen(false)}
                   >
                     {item.page?.name || "Page"}
-                  </Link>
+                  </TransitionLink>
                 ))}
               </div>
             )}
             <button onClick={toggleDesktopMenu} className="nav w-fit cursor-pointer text-[#140D01]">
-              {isDesktopMenuOpen && !isDesktopMenuClosing ? (currentLanguage === "en" ? "Close" : "Fermer") : "Menu"}
+              {isDesktopMenuOpen && !isDesktopMenuClosing
+                ? currentLanguage === "en"
+                  ? "Close"
+                  : "Fermer"
+                : "Menu"}
             </button>
           </div>
 
@@ -216,7 +221,11 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
             onClick={toggleMobileMenu}
             className="nav w-fit cursor-pointer text-[#140D01] md:hidden"
           >
-            {isMobileMenuOpen && !isMobileMenuClosing ? (currentLanguage === "en" ? "Close" : "Fermer") : "Menu"}
+            {isMobileMenuOpen && !isMobileMenuClosing
+              ? currentLanguage === "en"
+                ? "Close"
+                : "Fermer"
+              : "Menu"}
           </button>
         </div>
       </div>
@@ -232,7 +241,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
             {/* Menu Content */}
             <div ref={menuContentRef} className="flex h-full w-full flex-col justify-between">
               <div className="flex justify-between">
-                <Link
+                <TransitionLink
                   href={`/${currentLanguage === "en" ? "en" : ""}`}
                   className="flex items-center text-[#F9F7F6]"
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -302,17 +311,19 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                   ) : (
                     <span className="nav text-[#F9F7F6]">{data.navbarStructure.brandText}</span>
                   )}
-                </Link>
+                </TransitionLink>
 
                 {/* Close button */}
                 <button onClick={() => setIsMobileMenuOpen(false)} className="flex items-center">
-                  <p className="nav text-[#F9F7F6] select-none">{currentLanguage === "en" ? "Close" : "Fermer"}</p>
+                  <p className="nav text-[#F9F7F6] select-none">
+                    {currentLanguage === "en" ? "Close" : "Fermer"}
+                  </p>
                 </button>
               </div>
 
               <div className="flex flex-col gap-[22px]">
                 {menuItems?.map((item, index) => (
-                  <Link
+                  <TransitionLink
                     key={index}
                     href={`/${currentLanguage === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
                     className="w-fit"
@@ -358,7 +369,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                     ) : (
                       <span className="h2-display text-[#F9F7F6]">{item.page?.name || "Page"}</span>
                     )}
-                  </Link>
+                  </TransitionLink>
                 ))}
               </div>
 
@@ -394,7 +405,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                     termsPageFR?: { slug: { current: string } };
                   }
                 ).termsPageFR ? (
-                  <Link
+                  <TransitionLink
                     href={`/${currentLanguage === "en" ? "en/" : ""}${
                       currentLanguage === "en"
                         ? (data as { termsPageEN?: { slug: { current: string } } }).termsPageEN
@@ -406,7 +417,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {currentLanguage === "en" ? "Terms of Service" : "Conditions Générales"}
-                  </Link>
+                  </TransitionLink>
                 ) : null}
               </div>
 
@@ -449,13 +460,13 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                 </div>
 
                 {/* Language Switcher */}
-                <Link
+                <TransitionLink
                   href={currentLanguage === "en" ? "/" : "/en"}
                   className="infos w-fit text-[#F9F7F6]/70 transition-colors hover:text-[#F9F7F6]"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {currentLanguage === "en" ? "Français" : "English"}
-                </Link>
+                </TransitionLink>
               </div>
             </div>
           </div>,

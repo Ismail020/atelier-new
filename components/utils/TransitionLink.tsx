@@ -8,13 +8,15 @@ interface TransitionLinkProps extends LinkProps {
   children: ReactNode;
   href: string;
   className?: string;
+  onNavigationStart?: () => void;
 }
 
-export default function TransitionLink({ children, href, ...props }: TransitionLinkProps) {
+export default function TransitionLink({ children, href, onNavigationStart, ...props }: TransitionLinkProps) {
   const router = useTransitionRouter();
 
   const handleTransition = async (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     e.preventDefault();
+    onNavigationStart?.();
     router.push(href, {
       onTransitionReady: pageAnimation,
     });

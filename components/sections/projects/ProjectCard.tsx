@@ -2,6 +2,7 @@ import Link from "next/link";
 import { NavArrow } from "../../Icons";
 import { SanityImageArray } from "@/types/sanity";
 import ProjectImageGrid from "./ProjectImageGrid";
+import TransitionLink from "@/components/utils/TransitionLink";
 
 interface ProjectCardProps {
   project: {
@@ -37,13 +38,13 @@ export default function ProjectCard({
         </p>
 
         <div className="flex justify-end md:col-span-3">
-          <Link
+          <TransitionLink
             className="buttons flex items-center gap-3"
             href={`/${currentLanguage}/${projectsPageSlug}/${project.slug.current}`}
           >
             <span className="hidden md:block">{projectLinkText}</span>
             <NavArrow />
-          </Link>
+          </TransitionLink>
         </div>
       </div>
     </div>

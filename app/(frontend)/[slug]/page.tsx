@@ -13,11 +13,44 @@ const PAGE_QUERY_FR = defineQuery(`*[
   language,
   components[]{
     ...,
-    images[]{
-      ...
+    "images": images[]{..., asset->},
+    "logo": logo{..., asset->},
+    "backgroundImage": backgroundImage{..., asset->},
+    "contactUsImage": contactUsImage{..., asset->},
+    "mainImage": mainImage{..., asset->},
+    "previewImages": previewImages[]{..., asset->},
+    "gallery": gallery[]{..., asset->},
+    "selectedProjects": selectedProjects[]-> {
+      _id,
+      _type,
+      name,
+      slug,
+      date,
+      "previewImages": previewImages[]{
+        ..., 
+        asset->,
+        isFeatured,
+        showOnMobile,
+        isFeaturedMobile
+      },
     },
-    logo{
-      ...
+    "projectsPageLink": projectsPageLink->{
+      _id,
+      _type,
+      name,
+      slug
+    },
+    headline[]{
+      ...,
+      markDefs[]{
+        ...,
+        "linkToPage": linkToPage->{
+          _id,
+          _type,
+          name,
+          slug
+        }
+      }
     }
   }
 }`);

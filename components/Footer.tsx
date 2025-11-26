@@ -60,12 +60,12 @@ export default function Footer({ data }: FooterProps) {
           )}
 
           {termsPage && termsPage.slug?.current && (
-            <Link
+            <TransitionLink
               href={`/${currentLanguage === "en" ? "en/" : ""}${termsPage.slug.current}`}
               className="infos"
             >
               {currentLanguage === "en" ? "Terms of Service" : "Conditions Générales"}
-            </Link>
+            </TransitionLink>
           )}
         </div>
 

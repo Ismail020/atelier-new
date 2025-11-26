@@ -6,15 +6,52 @@ import ComponentRenderer from "@/components/ComponentRenderer";
 
 const PAGE_QUERY_EN_SLUG = defineQuery(`*[
   _type == "page" 
-  && name == $pageName 
+  && slug.current == $pageName 
   && language == "en"
 ][0]{
   name,
   language,
   components[]{
-    _type,
-    _key,
-    ...
+    ...,
+    "images": images[]{..., asset->},
+    "logo": logo{..., asset->},
+    "backgroundImage": backgroundImage{..., asset->},
+    "contactUsImage": contactUsImage{..., asset->},
+    "mainImage": mainImage{..., asset->},
+    "previewImages": previewImages[]{..., asset->},
+    "gallery": gallery[]{..., asset->},
+    "selectedProjects": selectedProjects[]-> {
+      _id,
+      _type,
+      name,
+      slug,
+      date,
+      "previewImages": previewImages[]{
+        ..., 
+        asset->,
+        isFeatured,
+        showOnMobile,
+        isFeaturedMobile
+      },
+    },
+    "projectsPageLink": projectsPageLink->{
+      _id,
+      _type,
+      name,
+      slug
+    },
+    headline[]{
+      ...,
+      markDefs[]{
+        ...,
+        "linkToPage": linkToPage->{
+          _id,
+          _type,
+          name,
+          slug
+        }
+      }
+    }
   }
 }`);
 

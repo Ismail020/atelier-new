@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NavArrow } from "../../Icons";
+import TransitionLink from "@/components/utils/TransitionLink";
 
 interface ProjectsSectionHeaderProps {
   title: string;
@@ -17,13 +18,13 @@ export default function ProjectsSectionHeader({
   return (
     <div className="flex items-center justify-between">
       <h2 className="h2 text-[#140D01]">{title}</h2>
-      <Link
+      <TransitionLink
         className="nav hidden items-center gap-3 md:flex"
         href={`/${currentLanguage}/${projectsPageSlug}`}
       >
         {viewAllLinkText}
         <NavArrow />
-      </Link>
+      </TransitionLink>
     </div>
   );
 }
