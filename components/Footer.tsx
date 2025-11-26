@@ -29,7 +29,7 @@ export default function Footer({ data }: FooterProps) {
       {logo?.asset && mobileLogo?.asset && (
         <>
           <Image
-            src={urlFor(logo).url()}
+            src={urlFor(logo).quality(100).url()}
             alt={logo.alt || "Footer Logo"}
             width={logo.asset.metadata?.dimensions?.width || 150}
             height={logo.asset.metadata?.dimensions?.height || 50}
@@ -38,7 +38,7 @@ export default function Footer({ data }: FooterProps) {
           />
 
           <Image
-            src={urlFor(mobileLogo).url()}
+            src={urlFor(mobileLogo).quality(100).url()}
             alt={mobileLogo.alt || "Footer Logo"}
             width={mobileLogo.asset.metadata?.dimensions?.width || 150}
             height={mobileLogo.asset.metadata?.dimensions?.height || 50}
