@@ -160,311 +160,303 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
       : data.navbarStructure.menuItems?.menuItemsFR;
 
   return (
-    <>
-      <nav className="standalone:pt-16 sticky top-0 z-50 bg-[#F9F7F6]">
-        <div className="mx-auto px-2.5 md:px-5">
-          <div className="flex h-[62px] items-center justify-between">
-            <Link
-              className="relative flex items-center"
-              href={`/${currentLanguage === "en" ? "en" : ""}`}
+    <nav className="sticky top-0 z-50 bg-[#F9F7F6]">
+      <div className="mx-auto px-2.5 md:px-5">
+        <div className="flex h-[62px] items-center justify-between">
+          <Link
+            className="relative flex items-center"
+            href={`/${currentLanguage === "en" ? "en" : ""}`}
+          >
+            <span
+              ref={brandTextRef}
+              className={`nav text-[#140D01] transition-opacity duration-300 ${showLogo ? "opacity-0" : "opacity-100"}`}
             >
-              <span
-                ref={brandTextRef}
-                className={`nav text-[#140D01] transition-opacity duration-300 ${showLogo ? "opacity-0" : "opacity-100"}`}
-              >
-                {data.navbarStructure.brandText}
-              </span>
-              {data.navbarStructure.logo && data.navbarStructure.logo.asset && (
-                <Image
-                  ref={logoRef}
-                  src={urlFor(data.navbarStructure.logo).height(40).url()}
-                  alt={data.navbarStructure.logo.alt || "Logo"}
-                  width={data.navbarStructure.logo.asset.metadata?.dimensions?.width || 150}
-                  height={data.navbarStructure.logo.asset.metadata?.dimensions?.height || 50}
-                  className={`absolute left-0 object-contain transition-opacity duration-300 ${showLogo ? "opacity-100" : "opacity-0"}`}
-                  unoptimized
-                />
-              )}
-            </Link>
+              {data.navbarStructure.brandText}
+            </span>
+            {data.navbarStructure.logo && data.navbarStructure.logo.asset && (
+              <Image
+                ref={logoRef}
+                src={urlFor(data.navbarStructure.logo).height(40).url()}
+                alt={data.navbarStructure.logo.alt || "Logo"}
+                width={data.navbarStructure.logo.asset.metadata?.dimensions?.width || 150}
+                height={data.navbarStructure.logo.asset.metadata?.dimensions?.height || 50}
+                className={`absolute left-0 object-contain transition-opacity duration-300 ${showLogo ? "opacity-100" : "opacity-0"}`}
+                unoptimized
+              />
+            )}
+          </Link>
 
-            {/* Desktop Menu */}
-            <div className="hidden items-center gap-4 md:flex">
-              {isDesktopMenuOpen && (
-                <div ref={menuRef} className="flex items-center gap-4">
-                  {menuItems?.map((item, index) => (
-                    <Link
-                      key={index}
-                      href={`/${currentLanguage === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
-                      className="nav text-opacity-50 text-[#140D01]/20 hover:text-[#140D01]"
-                      onClick={() => setIsDesktopMenuOpen(false)}
-                    >
-                      {item.page?.name || "Page"}
-                    </Link>
-                  ))}
-                </div>
-              )}
-              <button
-                onClick={toggleDesktopMenu}
-                className="nav w-fit cursor-pointer text-[#140D01]"
-              >
-                {isDesktopMenuOpen && !isDesktopMenuClosing ? "Close" : "Menu"}
-              </button>
-            </div>
-
-            {/* Mobile Menu Button */}
-            <button
-              onClick={toggleMobileMenu}
-              className="nav w-fit cursor-pointer text-[#140D01] md:hidden"
-            >
-              {isMobileMenuOpen && !isMobileMenuClosing ? "Close" : "Menu"}
+          {/* Desktop Menu */}
+          <div className="hidden items-center gap-4 md:flex">
+            {isDesktopMenuOpen && (
+              <div ref={menuRef} className="flex items-center gap-4">
+                {menuItems?.map((item, index) => (
+                  <Link
+                    key={index}
+                    href={`/${currentLanguage === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
+                    className="nav text-opacity-50 text-[#140D01]/20 hover:text-[#140D01]"
+                    onClick={() => setIsDesktopMenuOpen(false)}
+                  >
+                    {item.page?.name || "Page"}
+                  </Link>
+                ))}
+              </div>
+            )}
+            <button onClick={toggleDesktopMenu} className="nav w-fit cursor-pointer text-[#140D01]">
+              {isDesktopMenuOpen && !isDesktopMenuClosing ? "Close" : "Menu"}
             </button>
           </div>
-        </div>
 
-        {/* Mobile Fullscreen Menu Portal */}
-        {isMounted &&
-          createPortal(
-            <div
-              ref={overlayRef}
-              className="fixed inset-0 z-50 hidden flex-col bg-[#140D01] px-2.5 py-4 md:hidden"
-              style={{ display: "none" }}
-            >
-              {/* Menu Content */}
-              <div ref={menuContentRef} className="flex h-full w-full flex-col justify-between">
-                <div className="flex justify-between">
-                  <Link
-                    href={`/${currentLanguage === "en" ? "en" : ""}`}
-                    className="flex items-center text-[#F9F7F6]"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {(
-                      data.navbarStructure as unknown as {
-                        logoWhite?: {
-                          asset?: {
-                            metadata?: { dimensions?: { width?: number; height?: number } };
-                          };
-                          alt?: string;
+          {/* Mobile Menu Button */}
+          <button
+            onClick={toggleMobileMenu}
+            className="nav w-fit cursor-pointer text-[#140D01] md:hidden"
+          >
+            {isMobileMenuOpen && !isMobileMenuClosing ? "Close" : "Menu"}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Fullscreen Menu Portal */}
+      {isMounted &&
+        createPortal(
+          <div
+            ref={overlayRef}
+            className="fixed inset-0 z-50 hidden flex-col bg-[#140D01] px-2.5 py-4 md:hidden"
+            style={{ display: "none" }}
+          >
+            {/* Menu Content */}
+            <div ref={menuContentRef} className="flex h-full w-full flex-col justify-between">
+              <div className="flex justify-between">
+                <Link
+                  href={`/${currentLanguage === "en" ? "en" : ""}`}
+                  className="flex items-center text-[#F9F7F6]"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {(
+                    data.navbarStructure as unknown as {
+                      logoWhite?: {
+                        asset?: {
+                          metadata?: { dimensions?: { width?: number; height?: number } };
                         };
-                      }
-                    ).logoWhite?.asset ? (
-                      <Image
-                        src={urlFor(
-                          (
-                            data.navbarStructure as unknown as {
-                              logoWhite: { asset: { _id: string; url: string } };
-                            }
-                          ).logoWhite,
-                        )
-                          .height(
-                            (
-                              data.navbarStructure as unknown as {
-                                logoWhite: {
-                                  asset: { metadata?: { dimensions?: { height?: number } } };
-                                };
-                              }
-                            ).logoWhite.asset.metadata?.dimensions?.height || 50,
-                          )
-                          .width(
-                            (
-                              data.navbarStructure as unknown as {
-                                logoWhite: {
-                                  asset: { metadata?: { dimensions?: { width?: number } } };
-                                };
-                              }
-                            ).logoWhite.asset.metadata?.dimensions?.width || 150,
-                          )
-                          .url()}
-                        alt={
-                          (data.navbarStructure as unknown as { logoWhite: { alt?: string } })
-                            .logoWhite.alt || "Logo"
-                        }
-                        width={
-                          (
-                            data.navbarStructure as unknown as {
-                              logoWhite: {
-                                asset: { metadata?: { dimensions?: { width?: number } } };
-                              };
-                            }
-                          ).logoWhite.asset.metadata?.dimensions?.width || 150
-                        }
-                        height={
+                        alt?: string;
+                      };
+                    }
+                  ).logoWhite?.asset ? (
+                    <Image
+                      src={urlFor(
+                        (
+                          data.navbarStructure as unknown as {
+                            logoWhite: { asset: { _id: string; url: string } };
+                          }
+                        ).logoWhite,
+                      )
+                        .height(
                           (
                             data.navbarStructure as unknown as {
                               logoWhite: {
                                 asset: { metadata?: { dimensions?: { height?: number } } };
                               };
                             }
-                          ).logoWhite.asset.metadata?.dimensions?.height || 50
+                          ).logoWhite.asset.metadata?.dimensions?.height || 50,
+                        )
+                        .width(
+                          (
+                            data.navbarStructure as unknown as {
+                              logoWhite: {
+                                asset: { metadata?: { dimensions?: { width?: number } } };
+                              };
+                            }
+                          ).logoWhite.asset.metadata?.dimensions?.width || 150,
+                        )
+                        .url()}
+                      alt={
+                        (data.navbarStructure as unknown as { logoWhite: { alt?: string } })
+                          .logoWhite.alt || "Logo"
+                      }
+                      width={
+                        (
+                          data.navbarStructure as unknown as {
+                            logoWhite: {
+                              asset: { metadata?: { dimensions?: { width?: number } } };
+                            };
+                          }
+                        ).logoWhite.asset.metadata?.dimensions?.width || 150
+                      }
+                      height={
+                        (
+                          data.navbarStructure as unknown as {
+                            logoWhite: {
+                              asset: { metadata?: { dimensions?: { height?: number } } };
+                            };
+                          }
+                        ).logoWhite.asset.metadata?.dimensions?.height || 50
+                      }
+                      className="object-contain"
+                      unoptimized
+                    />
+                  ) : (
+                    <span className="nav text-[#F9F7F6]">{data.navbarStructure.brandText}</span>
+                  )}
+                </Link>
+
+                {/* Close button */}
+                <button onClick={() => setIsMobileMenuOpen(false)} className="flex items-center">
+                  <p className="nav text-[#F9F7F6] select-none">Close</p>
+                </button>
+              </div>
+
+              <div className="flex flex-col gap-[22px]">
+                {menuItems?.map((item, index) => (
+                  <Link
+                    key={index}
+                    href={`/${currentLanguage === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
+                    className="w-fit"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.mobileImage && item.mobileImage.asset ? (
+                      <Image
+                        src={urlFor(item.mobileImage)
+                          .height(
+                            (
+                              item.mobileImage.asset as unknown as {
+                                metadata?: { dimensions?: { height?: number } };
+                              }
+                            ).metadata?.dimensions?.height || 50,
+                          )
+                          .width(
+                            (
+                              item.mobileImage.asset as unknown as {
+                                metadata?: { dimensions?: { width?: number } };
+                              }
+                            ).metadata?.dimensions?.width || 150,
+                          )
+                          .quality(100)
+                          .url()}
+                        alt={(item.mobileImage as unknown as { alt?: string }).alt || "Menu item"}
+                        width={
+                          (
+                            item.mobileImage.asset as unknown as {
+                              metadata?: { dimensions?: { width?: number } };
+                            }
+                          ).metadata?.dimensions?.width || 150
+                        }
+                        height={
+                          (
+                            item.mobileImage.asset as unknown as {
+                              metadata?: { dimensions?: { height?: number } };
+                            }
+                          ).metadata?.dimensions?.height || 50
                         }
                         className="object-contain"
                         unoptimized
                       />
                     ) : (
-                      <span className="nav text-[#F9F7F6]">{data.navbarStructure.brandText}</span>
+                      <span className="h2-display text-[#F9F7F6]">{item.page?.name || "Page"}</span>
                     )}
                   </Link>
+                ))}
+              </div>
 
-                  {/* Close button */}
-                  <button onClick={() => setIsMobileMenuOpen(false)} className="flex items-center">
-                    <p className="nav text-[#F9F7F6] select-none">Close</p>
-                  </button>
-                </div>
-
-                <div className="flex flex-col gap-[22px]">
-                  {menuItems?.map((item, index) => (
+              <div className="nav flex flex-col gap-2 text-[#F9F7F6]">
+                {/* Social Media Links */}
+                {(
+                  data as { settingsSocial?: Array<{ platform: string; url: string }> }
+                ).settingsSocial?.map((social) =>
+                  social.url ? (
                     <Link
-                      key={index}
-                      href={`/${currentLanguage === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
-                      className="w-fit"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                      {item.mobileImage && item.mobileImage.asset ? (
-                        <Image
-                          src={urlFor(item.mobileImage)
-                            .height(
-                              (
-                                item.mobileImage.asset as unknown as {
-                                  metadata?: { dimensions?: { height?: number } };
-                                }
-                              ).metadata?.dimensions?.height || 50,
-                            )
-                            .width(
-                              (
-                                item.mobileImage.asset as unknown as {
-                                  metadata?: { dimensions?: { width?: number } };
-                                }
-                              ).metadata?.dimensions?.width || 150,
-                            )
-                            .quality(100)
-                            .url()}
-                          alt={(item.mobileImage as unknown as { alt?: string }).alt || "Menu item"}
-                          width={
-                            (
-                              item.mobileImage.asset as unknown as {
-                                metadata?: { dimensions?: { width?: number } };
-                              }
-                            ).metadata?.dimensions?.width || 150
-                          }
-                          height={
-                            (
-                              item.mobileImage.asset as unknown as {
-                                metadata?: { dimensions?: { height?: number } };
-                              }
-                            ).metadata?.dimensions?.height || 50
-                          }
-                          className="object-contain"
-                          unoptimized
-                        />
-                      ) : (
-                        <span className="h2-display text-[#F9F7F6]">
-                          {item.page?.name || "Page"}
-                        </span>
-                      )}
-                    </Link>
-                  ))}
-                </div>
-
-                <div className="nav flex flex-col gap-2 text-[#F9F7F6]">
-                  {/* Social Media Links */}
-                  {(
-                    data as { settingsSocial?: Array<{ platform: string; url: string }> }
-                  ).settingsSocial?.map((social) =>
-                    social.url ? (
-                      <Link
-                        key={social.platform}
-                        href={social.url}
-                        className="infos w-fit text-[#F9F7F6]/70 transition-colors hover:text-[#F9F7F6]"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {social.platform}
-                      </Link>
-                    ) : null,
-                  )}
-
-                  {/* Terms/Conditions Page Link */}
-                  {(
-                    data as {
-                      termsPageEN?: { slug: { current: string } };
-                      termsPageFR?: { slug: { current: string } };
-                    }
-                  ).termsPageEN ||
-                  (
-                    data as {
-                      termsPageEN?: { slug: { current: string } };
-                      termsPageFR?: { slug: { current: string } };
-                    }
-                  ).termsPageFR ? (
-                    <Link
-                      href={`/${currentLanguage === "en" ? "en/" : ""}${
-                        currentLanguage === "en"
-                          ? (data as { termsPageEN?: { slug: { current: string } } }).termsPageEN
-                              ?.slug?.current
-                          : (data as { termsPageFR?: { slug: { current: string } } }).termsPageFR
-                              ?.slug?.current
-                      }`}
+                      key={social.platform}
+                      href={social.url}
                       className="infos w-fit text-[#F9F7F6]/70 transition-colors hover:text-[#F9F7F6]"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
-                      {currentLanguage === "en" ? "Terms of Service" : "Conditions Générales"}
+                      {social.platform}
                     </Link>
-                  ) : null}
-                </div>
+                  ) : null,
+                )}
 
-                <div className="nav flex items-end justify-between text-[#F9F7F6]">
-                  {/* Contact Info */}
-                  <div className="flex flex-col gap-1">
-                    {(
-                      data as unknown as {
-                        settingsContact?: { headOfDesign?: { email: string; phone: string } };
-                      }
-                    ).settingsContact?.headOfDesign?.email && (
-                      <a
-                        href={`mailto:${(data as unknown as { settingsContact: { headOfDesign: { email: string } } }).settingsContact.headOfDesign.email}`}
-                        className="infos w-fit text-[#F9F7F6]/70 transition-colors hover:text-[#F9F7F6]"
-                      >
-                        {
-                          (
-                            data as unknown as {
-                              settingsContact: { headOfDesign: { email: string } };
-                            }
-                          ).settingsContact.headOfDesign.email
-                        }
-                      </a>
-                    )}
-                    {(data as unknown as { settingsContact?: { headOfDesign?: { phone: string } } })
-                      .settingsContact?.headOfDesign?.phone && (
-                      <a
-                        href={`tel:${(data as unknown as { settingsContact: { headOfDesign: { phone: string } } }).settingsContact.headOfDesign.phone}`}
-                        className="infos w-fit text-[#F9F7F6]/70 transition-colors hover:text-[#F9F7F6]"
-                      >
-                        {
-                          (
-                            data as unknown as {
-                              settingsContact: { headOfDesign: { phone: string } };
-                            }
-                          ).settingsContact.headOfDesign.phone
-                        }
-                      </a>
-                    )}
-                  </div>
-
-                  {/* Language Switcher */}
+                {/* Terms/Conditions Page Link */}
+                {(
+                  data as {
+                    termsPageEN?: { slug: { current: string } };
+                    termsPageFR?: { slug: { current: string } };
+                  }
+                ).termsPageEN ||
+                (
+                  data as {
+                    termsPageEN?: { slug: { current: string } };
+                    termsPageFR?: { slug: { current: string } };
+                  }
+                ).termsPageFR ? (
                   <Link
-                    href={currentLanguage === "en" ? "/" : "/en"}
+                    href={`/${currentLanguage === "en" ? "en/" : ""}${
+                      currentLanguage === "en"
+                        ? (data as { termsPageEN?: { slug: { current: string } } }).termsPageEN
+                            ?.slug?.current
+                        : (data as { termsPageFR?: { slug: { current: string } } }).termsPageFR
+                            ?.slug?.current
+                    }`}
                     className="infos w-fit text-[#F9F7F6]/70 transition-colors hover:text-[#F9F7F6]"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    {currentLanguage === "en" ? "Français" : "English"}
+                    {currentLanguage === "en" ? "Terms of Service" : "Conditions Générales"}
                   </Link>
-                </div>
+                ) : null}
               </div>
-            </div>,
-            document.body,
-          )}
-      </nav>
-      <div className="standalone:h-[120px] h-0"></div>
-    </>
+
+              <div className="nav flex items-end justify-between text-[#F9F7F6]">
+                {/* Contact Info */}
+                <div className="flex flex-col gap-1">
+                  {(
+                    data as unknown as {
+                      settingsContact?: { headOfDesign?: { email: string; phone: string } };
+                    }
+                  ).settingsContact?.headOfDesign?.email && (
+                    <a
+                      href={`mailto:${(data as unknown as { settingsContact: { headOfDesign: { email: string } } }).settingsContact.headOfDesign.email}`}
+                      className="infos w-fit text-[#F9F7F6]/70 transition-colors hover:text-[#F9F7F6]"
+                    >
+                      {
+                        (
+                          data as unknown as {
+                            settingsContact: { headOfDesign: { email: string } };
+                          }
+                        ).settingsContact.headOfDesign.email
+                      }
+                    </a>
+                  )}
+                  {(data as unknown as { settingsContact?: { headOfDesign?: { phone: string } } })
+                    .settingsContact?.headOfDesign?.phone && (
+                    <a
+                      href={`tel:${(data as unknown as { settingsContact: { headOfDesign: { phone: string } } }).settingsContact.headOfDesign.phone}`}
+                      className="infos w-fit text-[#F9F7F6]/70 transition-colors hover:text-[#F9F7F6]"
+                    >
+                      {
+                        (
+                          data as unknown as {
+                            settingsContact: { headOfDesign: { phone: string } };
+                          }
+                        ).settingsContact.headOfDesign.phone
+                      }
+                    </a>
+                  )}
+                </div>
+
+                {/* Language Switcher */}
+                <Link
+                  href={currentLanguage === "en" ? "/" : "/en"}
+                  className="infos w-fit text-[#F9F7F6]/70 transition-colors hover:text-[#F9F7F6]"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {currentLanguage === "en" ? "Français" : "English"}
+                </Link>
+              </div>
+            </div>
+          </div>,
+          document.body,
+        )}
+    </nav>
   );
 }

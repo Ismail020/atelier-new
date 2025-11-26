@@ -86,10 +86,7 @@ export default function HeroSection({ images, logo }: HeroSectionProps) {
   const { w, h } = getHeroDimensions();
 
   return (
-    <div
-      ref={heroRef}
-      className="standalone:pt-16 relative h-[calc(100svh-62px)] w-full overflow-hidden"
-    >
+    <div ref={heroRef} className="relative h-[calc(100svh-62px)] w-full overflow-hidden">
       <div className="absolute inset-0">
         {images.map((image, index) => (
           <div
