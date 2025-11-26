@@ -136,7 +136,11 @@ export default function Footer({ data }: FooterProps) {
         ></div>
 
         <div className="flex flex-col justify-between pb-3 sm:flex-row sm:items-center md:pb-4">
-          <p className="tiny">© 2025 Atelier Philibert. All Rights Reserved.</p>
+          <p className="tiny">
+            {currentLanguage === "en" 
+              ? "© 2025 Atelier Philibert. All Rights Reserved." 
+              : "© 2025 Atelier Philibert. Tous droits réservés."}
+          </p>
 
           <p className="tiny">Website credits</p>
         </div>

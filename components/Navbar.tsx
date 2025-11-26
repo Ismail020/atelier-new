@@ -207,7 +207,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
               </div>
             )}
             <button onClick={toggleDesktopMenu} className="nav w-fit cursor-pointer text-[#140D01]">
-              {isDesktopMenuOpen && !isDesktopMenuClosing ? "Close" : "Menu"}
+              {isDesktopMenuOpen && !isDesktopMenuClosing ? (currentLanguage === "en" ? "Close" : "Fermer") : "Menu"}
             </button>
           </div>
 
@@ -216,7 +216,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
             onClick={toggleMobileMenu}
             className="nav w-fit cursor-pointer text-[#140D01] md:hidden"
           >
-            {isMobileMenuOpen && !isMobileMenuClosing ? "Close" : "Menu"}
+            {isMobileMenuOpen && !isMobileMenuClosing ? (currentLanguage === "en" ? "Close" : "Fermer") : "Menu"}
           </button>
         </div>
       </div>
@@ -306,7 +306,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
 
                 {/* Close button */}
                 <button onClick={() => setIsMobileMenuOpen(false)} className="flex items-center">
-                  <p className="nav text-[#F9F7F6] select-none">Close</p>
+                  <p className="nav text-[#F9F7F6] select-none">{currentLanguage === "en" ? "Close" : "Fermer"}</p>
                 </button>
               </div>
 
