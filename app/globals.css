@@ -111,3 +111,9 @@ body {
   z-index: 1;
   animation: none !important;
 }
+
+@custom-variant standalone {
+  @media (display-mode: standalone) {
+    @slot;
+  }
+}
