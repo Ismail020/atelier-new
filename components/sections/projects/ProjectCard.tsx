@@ -3,6 +3,7 @@ import { SanityImageArray } from "@/types/sanity";
 import ProjectImageGrid from "./ProjectImageGrid";
 import TransitionLink from "@/components/utils/TransitionLink";
 import { Language } from "@/types/TranslationsData";
+import ProjectImageGridSkeleton from "./ProjectImageGridSkeleton";
 
 interface ProjectCardProps {
   project: {

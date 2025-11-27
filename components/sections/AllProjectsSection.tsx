@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import HeadlineSection, { HeadlineSectionData } from "./HeadlineSection";
 import ProjectCard from "./projects/ProjectCard";
 import { Language } from "@/types/TranslationsData";
+import ProjectCardSkeleton from "./projects/ProjectCardSkeleton";
 
 export interface AllProjectsSectionData {
   _key: string;
@@ -81,8 +82,8 @@ export default function AllProjectsSection({ data, lng }: AllProjectsSectionProp
     return (
       <div>
         <HeadlineSection data={{ ...data, _key: data._key, _type: "headlineSection" }} lng={lng} />
-        <div className="flex justify-center py-8">
-          <p>Loading projects...</p>
+        <div className="flex flex-col gap-4 px-2.5 md:gap-5 md:px-5">
+          <ProjectCardSkeleton />
         </div>
       </div>
     );
