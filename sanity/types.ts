@@ -2804,6 +2804,112 @@ export type PROJECTS_QUERYResult = Array<{
   projectGallery: null;
 }>;
 
+// Source: lib/queries/project.ts
+// Variable: PROJECT_QUERY
+// Query: *[  _type == "project"   && slug.current == $projectSlug][0]{  _id,  name,  slug,  date,  shortDescription,  projectSummary,  projectDescription,  mainImage{    ...,    asset->  },  previewImages[]{    ...,    asset->,    isFeatured,    showOnMobile,    isFeaturedMobile  },  gallery[]{    ...,    asset->  },  galleryLayout[]{    type,    images  }}
+export type PROJECT_QUERYResult = {
+  _id: string;
+  name: string | null;
+  slug: Slug | null;
+  date: string | null;
+  shortDescription: string | null;
+  projectSummary: InternationalizedArrayString | null;
+  projectDescription: InternationalizedArrayString | null;
+  mainImage: {
+    asset: {
+      _id: string;
+      _type: "sanity.imageAsset";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+  previewImages: Array<{
+    asset: {
+      _id: string;
+      _type: "sanity.imageAsset";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    isFeatured: boolean | null;
+    showOnMobile: boolean | null;
+    isFeaturedMobile: boolean | null;
+    _type: "image";
+    _key: string;
+  }> | null;
+  gallery: Array<{
+    asset: {
+      _id: string;
+      _type: "sanity.imageAsset";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }> | null;
+  galleryLayout: Array<{
+    type: string | null;
+    images: Array<string> | null;
+  }> | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -2815,5 +2921,6 @@ declare module "@sanity/client" {
     '*[_type == "footer"][0]{\n  logoDesktop {\n    asset->{\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  logoMobile {\n    asset->{\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  column1 {\n    showLanguageSwitch,\n    termsPageEN->{\n      name,\n      slug\n    },\n    termsPageFR->{\n      name,  \n      slug\n    }\n  },\n  "settingsContact": *[_type == "settings"][0].contactInfo {\n    headOfDesign {\n      name,\n      phone,\n      email\n    },\n    generalInquiries {\n      email\n    }\n  },\n  "settingsSocial": *[_type == "settings"][0].socialMedia[] {\n    platform,\n    url\n  },\n}': FOOTER_QUERYResult;
     '*[_type == "navbar"][0]{\n  navbarStructure {\n    brandText,\n    logo {\n      asset->{\n        _id,\n        url,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt\n    },\n    logoWhite {\n      asset->{\n        _id,\n        url,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt\n    },\n    menuItems {\n      menuItemsEN[] {\n        page-> {\n          name,\n          slug,\n          language\n        },\n        mobileImage {\n          asset->{\n            _id,\n            url,\n            metadata {\n              dimensions {\n                width,\n                height\n              }\n            }\n          },\n          alt\n        }\n      },\n      menuItemsFR[] {\n        page-> {\n          name,\n          slug,\n          language  \n        },\n        mobileImage {\n          asset->{\n            _id,\n            url,\n            metadata {\n              dimensions {\n                width,\n                height\n              }\n            }\n          },\n          alt\n        }\n      }\n    }\n  },\n  "settingsSocial": *[_type == "settings"][0].socialMedia[] {\n    platform,\n    url\n  },\n  "termsPageEN": *[_type == "page" && language == "en" && name match "*Terms*" || name match "*Conditions*"][0] {\n    name,\n    slug\n  },\n  "termsPageFR": *[_type == "page" && language == "fr" && name match "*Terms*" || name match "*Conditions*"][0] {\n    name,\n    slug\n  },\n  "settingsContact": *[_type == "settings"][0].contactInfo {\n    headOfDesign {\n      name,\n      phone,\n      email\n    },\n    generalInquiries {\n      email\n    }\n  }\n}': NAVBAR_QUERYResult;
     '*[_type == "project"] | order(date desc) {\n  _id,\n  name,\n  slug,\n  shortDescription,\n  date,\n  projectSummary,\n  projectDescription,\n  mainImage {\n    asset-> {\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt,\n    hotspot,\n    crop\n  },\n  "previewImages": previewImages[]{\n    ..., \n    asset->,\n    isFeatured,\n    showOnMobile,\n    isFeaturedMobile\n  },\n  projectGallery[] {\n    asset-> {\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt,\n    hotspot,\n    crop,\n    showInGrid,\n    gridSpan\n  }\n}': PROJECTS_QUERYResult;
+    '*[\n  _type == "project" \n  && slug.current == $projectSlug\n][0]{\n  _id,\n  name,\n  slug,\n  date,\n  shortDescription,\n  projectSummary,\n  projectDescription,\n  mainImage{\n    ...,\n    asset->\n  },\n  previewImages[]{\n    ...,\n    asset->,\n    isFeatured,\n    showOnMobile,\n    isFeaturedMobile\n  },\n  gallery[]{\n    ...,\n    asset->\n  },\n  galleryLayout[]{\n    type,\n    images\n  }\n}': PROJECT_QUERYResult;
   }
 }

@@ -84,14 +84,14 @@ export default async function Page({ params }: PageProps) {
 export async function generateStaticParams() {
   // Fetch French pages only, excluding "Home" page (handled by root route)
   const allPages = await client.fetch(
-    `*[_type == "page" && defined(name) && name != "Home" && language == "fr"]{ name }`,
+    `*[_type == "page" && defined(slug.current) && name != "Home" && language == "fr"]{ slug }`,
   );
 
   return (
     allPages
-      ?.filter((page: { name: string | null }) => page.name)
-      .map((page: { name: string }) => ({
-        slug: page.name,
+      ?.filter((page: { slug: { current: string } | null }) => page.slug?.current)
+      .map((page: { slug: { current: string } }) => ({
+        slug: page.slug.current,
       })) || []
   );
 }

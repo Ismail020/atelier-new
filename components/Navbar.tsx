@@ -8,6 +8,7 @@ import { createPortal } from "react-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { usePathname } from "next/navigation";
 import TransitionLink from "./utils/TransitionLink";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -18,12 +19,16 @@ interface NavbarProps {
 }
 
 export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
+  const pathname = usePathname();
   const [showLogo, setShowLogo] = useState(false);
   const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isDesktopMenuClosing, setIsDesktopMenuClosing] = useState(false);
   const [isMobileMenuClosing, setIsMobileMenuClosing] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
+
+  const [useWhiteText, setUseWhiteText] = useState(false);
+  const [showNavbarBg, setShowNavbarBg] = useState(false);
   const brandTextRef = useRef<HTMLSpanElement>(null);
   const logoRef = useRef<HTMLImageElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -38,6 +43,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
 
   useGSAP(() => {
     const heroHeight = window.innerHeight - 62;
+    const isProjectPage = pathname.includes("/projects/") || pathname.includes("/projets/");
 
     ScrollTrigger.create({
       start: heroHeight,
@@ -45,12 +51,24 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
       onUpdate: (self) => {
         if (self.progress > 0) {
           setShowLogo(true);
+          if (isProjectPage) {
+            setUseWhiteText(false);
+            setShowNavbarBg(true);
+          }
         } else {
           setShowLogo(false);
+          if (isProjectPage) {
+            setUseWhiteText(true);
+            setShowNavbarBg(false);
+          }
         }
       },
     });
-  }, []);
+
+    if (isProjectPage) {
+      setUseWhiteText(true);
+    }
+  }, [pathname]);
 
   // Handle body scroll lock when mobile menu is open
   useEffect(() => {
@@ -155,39 +173,81 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
   if (!data?.navbarStructure) {
     return null;
   }
+
+  // Check if we're on the home page
+  const isHomePage = pathname === "/" || pathname === "/en";
+
   const menuItems =
     currentLanguage === "en"
       ? data.navbarStructure.menuItems?.menuItemsEN
       : data.navbarStructure.menuItems?.menuItemsFR;
 
+  // Check if we're on a project page
+  const isProjectPage = pathname.includes("/projects/") || pathname.includes("/projets/");
+
   return (
-    <nav className="sticky top-0 z-50 bg-[#F9F7F6]">
+    <nav className={`sticky top-0 z-50 transition-colors duration-500 ${
+      isProjectPage 
+        ? (showNavbarBg ? "bg-[#F9F7F6]" : "bg-transparent") 
+        : "bg-[#F9F7F6]"
+    }`}>
       <div className="mx-auto px-2.5 md:px-5">
         <div className="flex h-[62px] items-center justify-between">
           <TransitionLink
-            className="relative flex items-center"
+            className={`relative flex items-center ${
+              isHomePage && showLogo ? "w-auto" : ""
+            }`}
             href={`/${currentLanguage === "en" ? "en" : ""}`}
           >
-            <span
-              ref={brandTextRef}
-              className={`nav text-[#140D01] transition-opacity duration-300 ${showLogo ? "opacity-0" : "opacity-100"}`}
-            >
-              {data.navbarStructure.brandText}
-            </span>
-            {data.navbarStructure.logo && data.navbarStructure.logo.asset && (
-              <Image
-                ref={logoRef}
-                src={urlFor(data.navbarStructure.logo)
-                  .width(data.navbarStructure.logo.asset.metadata?.dimensions?.width || 150)
-                  .height(data.navbarStructure.logo.asset.metadata?.dimensions?.height || 50)
-                  .quality(100)
-                  .url()}
-                alt={data.navbarStructure.logo.alt || "Logo"}
-                width={data.navbarStructure.logo.asset.metadata?.dimensions?.width || 150}
-                height={data.navbarStructure.logo.asset.metadata?.dimensions?.height || 50}
-                className={`absolute left-0 object-contain transition-opacity duration-300 ${showLogo ? "opacity-100" : "opacity-0"}`}
-                unoptimized
-              />
+            {/* Show brand text only on home page */}
+            {isHomePage && !showLogo && (
+              <span
+                ref={brandTextRef}
+                className="nav text-[#140D01] transition-opacity duration-300"
+              >
+                {data.navbarStructure.brandText}
+              </span>
+            )}
+            {/* Show logo on all pages, with smooth transitions between black and white versions */}
+            {data.navbarStructure.logo?.asset && (
+              <div className={`relative ${isHomePage && !showLogo ? "absolute left-0 opacity-0" : ""}`}>
+                {/* Black logo */}
+                <Image
+                  ref={logoRef}
+                  src={urlFor(data.navbarStructure.logo)
+                    .width(data.navbarStructure.logo.asset.metadata?.dimensions?.width || 150)
+                    .height(data.navbarStructure.logo.asset.metadata?.dimensions?.height || 50)
+                    .quality(100)
+                    .url()}
+                  alt={data.navbarStructure.logo.alt || "Logo"}
+                  width={data.navbarStructure.logo.asset.metadata?.dimensions?.width || 150}
+                  height={data.navbarStructure.logo.asset.metadata?.dimensions?.height || 50}
+                  className={`object-contain transition-opacity duration-500 ${
+                    isHomePage 
+                      ? (showLogo ? "opacity-100" : "opacity-0") 
+                      : isProjectPage && useWhiteText && !showNavbarBg
+                        ? "opacity-0"
+                        : "opacity-100"
+                  }`}
+                />
+                
+                {/* White logo - only show if white logo exists, on project page, and when conditions are met */}
+                {(data.navbarStructure as any).logoWhite?.asset && isProjectPage && !isHomePage && (
+                  <Image
+                    src={urlFor((data.navbarStructure as any).logoWhite)
+                      .width((data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.width || 150)
+                      .height((data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.height || 50)
+                      .quality(100)
+                      .url()}
+                    alt={(data.navbarStructure as any).logoWhite.alt || "Logo"}
+                    width={(data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.width || 150}
+                    height={(data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.height || 50}
+                    className={`absolute top-0 left-0 object-contain transition-opacity duration-500 ${
+                      useWhiteText && !showNavbarBg ? "opacity-100" : "opacity-0"
+                    }`}
+                  />
+                )}
+              </div>
             )}
           </TransitionLink>
 
@@ -199,7 +259,11 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                   <TransitionLink
                     key={index}
                     href={`/${currentLanguage === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
-                    className="nav text-opacity-50 text-[#140D01]/20 hover:text-[#140D01]"
+                    className={`nav transition-colors duration-500 ${
+                      isProjectPage && useWhiteText 
+                        ? "text-white/50 hover:text-white"
+                        : "text-[#140D01]/20 hover:text-[#140D01]"
+                    }`}
                     onNavigationStart={() => setIsDesktopMenuOpen(false)}
                   >
                     {item.page?.name || "Page"}
@@ -207,7 +271,12 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                 ))}
               </div>
             )}
-            <button onClick={toggleDesktopMenu} className="nav w-fit cursor-pointer text-[#140D01]">
+            <button 
+              onClick={toggleDesktopMenu} 
+              className={`nav w-fit cursor-pointer transition-colors duration-500 ${
+                isProjectPage && useWhiteText ? "text-white" : "text-[#140D01]"
+              }`}
+            >
               {isDesktopMenuOpen && !isDesktopMenuClosing
                 ? currentLanguage === "en"
                   ? "Close"
@@ -219,7 +288,9 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
           {/* Mobile Menu Button */}
           <button
             onClick={toggleMobileMenu}
-            className="nav w-fit cursor-pointer text-[#140D01] md:hidden"
+            className={`nav w-fit cursor-pointer transition-colors duration-500 md:hidden ${
+              isProjectPage && useWhiteText ? "text-white" : "text-[#140D01]"
+            }`}
           >
             {isMobileMenuOpen && !isMobileMenuClosing
               ? currentLanguage === "en"

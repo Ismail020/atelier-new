@@ -32,7 +32,6 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
   const client = useClient({ apiVersion: "2023-10-10" });
   // Use props.value directly instead of local state for existing layout
   const existingLayout = (props.value as GalleryLayout) || [];
-  const [previewLayout, setPreviewLayout] = useState<GalleryLayout>([]);
 
   useEffect(() => {
     async function loadAssets() {
@@ -120,36 +119,35 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
     const V = verticals.length;
 
     // ---------------------------------------------------------
-    // HORIZONTAAL EXACT VERDELEN
-    // Solve: row1*1 + row3*2 = H
-    // with constraint: row1 <= 2
+    // HORIZONTAAL VERDELEN (more flexible approach)
+    // Prioritize using all horizontal images
     // ---------------------------------------------------------
-    let row1Count = 0;
-    let row3Count = 0;
-
-    for (let r1 = 0; r1 <= 2; r1++) {
-      const rest = H - r1;
-      if (rest >= 0 && rest % 2 === 0) {
-        row1Count = r1;
-        row3Count = rest / 2;
-        break;
-      }
+    let row1Count = Math.min(2, H); // Max 2 row1's
+    let row3Count = Math.floor((H - row1Count) / 2); // Use remaining for row3
+    
+    // If we have leftover horizontal images, convert some row1's to row3's
+    const remainingH = H - row1Count - (row3Count * 2);
+    if (remainingH > 0 && row1Count > 0) {
+      // Convert 1 row1 to make space for more row3's
+      row1Count = Math.max(0, row1Count - 1);
+      row3Count = Math.floor((H - row1Count) / 2);
     }
 
     // ---------------------------------------------------------
-    // VERTICAAL EXACT VERDELEN
-    // Solve: row4*2 + row2*3 = V
-    // with constraint: row4 <= 1
+    // VERTICAAL VERDELEN (more flexible approach)
+    // Prioritize using all vertical images
     // ---------------------------------------------------------
-    let row4Count = 0;
-    let row2Count = 0;
-
-    for (let r4 = 0; r4 <= 1; r4++) {
-      const rest = V - r4 * 2;
-      if (rest >= 0 && rest % 3 === 0) {
-        row4Count = r4;
-        row2Count = rest / 3;
-        break;
+    let row4Count = Math.min(1, Math.floor(V / 2)); // Max 1 row4
+    let row2Count = Math.floor((V - (row4Count * 2)) / 3); // Use remaining for row2
+    
+    // If we still have many unused verticals, add more row2's even if not perfectly divisible
+    const remainingV = V - (row4Count * 2) - (row2Count * 3);
+    if (remainingV >= 2) {
+      // We can make partial row2's or additional row4's
+      if (remainingV >= 3) {
+        row2Count += Math.floor(remainingV / 3);
+      } else if (remainingV === 2 && row4Count === 0) {
+        row4Count = 1; // Use 2 remaining for a row4
       }
     }
 
@@ -216,7 +214,12 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
     // SHUFFLE FINAL ROW ORDER for variety
     layout.sort(() => Math.random() - 0.5);
 
-    setPreviewLayout(layout);
+    // Calculate total images used
+    const totalUsed = layout.reduce((sum, row) => sum + row.images.length, 0);
+    console.log(`Layout generated: Using ${totalUsed} out of ${(images || []).length} total images`);
+    console.log(`Horizontal: ${H} available, row1: ${row1Count}, row3: ${row3Count} (using ${row1Count + row3Count * 2})`);
+    console.log(`Vertical: ${V} available, row2: ${row2Count}, row4: ${row4Count} (using ${row2Count * 3 + row4Count * 2})`);
+
     saveLayout(layout);
   }
 
@@ -309,25 +312,14 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
           {/* GENERATE BUTTON */}
           <Button text="Genereer Random Layout" tone="primary" onClick={generateRandomLayout} />
 
-          {/* EXISTING LAYOUT */}
+          {/* CURRENT LAYOUT */}
           {existingLayout.length > 0 && (
             <Card padding={3} radius={2} shadow={1} tone="positive">
               <Text weight="semibold" size={2} style={{ marginBottom: "12px" }}>
-                Current Saved Layout
+                Current Layout
               </Text>
 
               {existingLayout.map((row) => renderPreviewRow(row))}
-            </Card>
-          )}
-
-          {/* PREVIEW */}
-          {previewLayout.length > 0 && (
-            <Card padding={3} radius={2} shadow={1} tone="default">
-              <Text weight="semibold" size={2} style={{ marginBottom: "12px" }}>
-                New Layout Preview
-              </Text>
-
-              {previewLayout.map((row) => renderPreviewRow(row))}
             </Card>
           )}
         </Stack>

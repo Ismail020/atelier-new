@@ -9,6 +9,15 @@ export async function GET(request: NextRequest) {
     // Use the existing getProjectsData function
     const projects = await getProjectsData();
     
+    // Handle case where projects is null
+    if (!projects) {
+      return NextResponse.json({
+        success: true,
+        data: [],
+        count: 0
+      });
+    }
+    
     // Apply limit if provided
     let filteredProjects = projects;
     if (limit) {
