@@ -3,7 +3,6 @@ import { SanityImageArray } from "@/types/sanity";
 import ProjectImageGrid from "./ProjectImageGrid";
 import TransitionLink from "@/components/utils/TransitionLink";
 import { Language } from "@/types/TranslationsData";
-import ProjectImageGridSkeleton from "./ProjectImageGridSkeleton";
 
 interface ProjectCardProps {
   project: {
@@ -26,10 +25,19 @@ export default function ProjectCard({
 }: ProjectCardProps) {
   return (
     <div className="flex flex-col gap-2">
-      <ProjectImageGrid images={project.previewImages} projectName={project.name} />
+      <TransitionLink
+        href={`/${lng === "en" ? "en/" : ""}${projectsPageSlug}/${project.slug.current}`}
+      >
+        <ProjectImageGrid images={project.previewImages} projectName={project.name} />
+      </TransitionLink>
 
       <div className="grid grid-cols-3 md:grid-cols-5">
-        <h3 className="infos text-[#140D01]">{project.name}</h3>
+        <TransitionLink
+          className="w-fit"
+          href={`/${lng === "en" ? "en/" : ""}${projectsPageSlug}/${project.slug.current}`}
+        >
+          <h3 className="infos w-fit text-[#140D01]">{project.name}</h3>
+        </TransitionLink>
         <p className="infos text-[#CECECE]">
           {new Date(project.date).toLocaleDateString("de-DE", {
             day: "2-digit",
