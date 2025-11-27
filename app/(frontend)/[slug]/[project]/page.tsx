@@ -51,7 +51,7 @@ export async function generateStaticParams() {
     for (const project of allProjects) {
       if (project.slug?.current) {
         params.push({
-          slug: "Projets", // Only under French projects page
+          slug: "projets", // Only under French projects page
           project: project.slug.current,
         });
       }

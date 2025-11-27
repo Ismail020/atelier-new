@@ -52,7 +52,7 @@ export async function generateStaticParams() {
     for (const project of allProjects) {
       if (project.slug?.current) {
         params.push({
-          slug: "Projects", // Only under English projects page
+          slug: "projects", // Only under English projects page
           project: project.slug.current,
         });
       }
