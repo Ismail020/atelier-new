@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import HeadlineSection, { HeadlineSectionData } from "./HeadlineSection";
 import ProjectCard from "./projects/ProjectCard";
+import { Language } from "@/types/TranslationsData";
 
 export interface AllProjectsSectionData {
   _key: string;
@@ -41,13 +42,12 @@ interface Project {
   };
 }
 
-export default function AllProjectsSection({
-  data,
-  currentLanguage,
-}: {
+interface AllProjectsSectionProps {
   data: AllProjectsSectionData;
-  currentLanguage?: "en" | "fr";
-}) {
+  lng: Language;
+}
+
+export default function AllProjectsSection({ data, lng }: AllProjectsSectionProps) {
   const [projectsData, setProjectsData] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -80,7 +80,7 @@ export default function AllProjectsSection({
   if (isLoading) {
     return (
       <div>
-        <HeadlineSection data={{ ...data, _key: data._key, _type: "headlineSection" }} />
+        <HeadlineSection data={{ ...data, _key: data._key, _type: "headlineSection" }} lng={lng} />
         <div className="flex justify-center py-8">
           <p>Loading projects...</p>
         </div>
@@ -91,7 +91,7 @@ export default function AllProjectsSection({
   if (error) {
     return (
       <div>
-        <HeadlineSection data={{ ...data, _key: data._key, _type: "headlineSection" }} />
+        <HeadlineSection lng={lng} data={{ ...data, _key: data._key, _type: "headlineSection" }} />
         <div className="flex justify-center py-8">
           <p className="text-red-600">Error: {error}</p>
         </div>
@@ -101,7 +101,7 @@ export default function AllProjectsSection({
 
   return (
     <div>
-      <HeadlineSection data={{ ...data, _key: data._key, _type: "headlineSection" }} />
+      <HeadlineSection lng={lng} data={{ ...data, _key: data._key, _type: "headlineSection" }} />
 
       <div className="flex flex-col gap-4 px-2.5 md:gap-5 md:px-5">
         {projectsData?.map((project, index) => (
@@ -110,7 +110,7 @@ export default function AllProjectsSection({
             project={project}
             projectLinkText={data.projectLinkText}
             projectsPageSlug={data.projectsPageLink.slug.current}
-            currentLanguage={currentLanguage || "fr"}
+            lng={lng}
           />
         ))}
       </div>

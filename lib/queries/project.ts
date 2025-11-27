@@ -13,6 +13,7 @@ export const PROJECT_QUERY = defineQuery(`*[
   projectDescription,
   mainImage{
     ...,
+    alt,
     asset->
   },
   previewImages[]{

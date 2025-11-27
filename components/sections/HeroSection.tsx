@@ -1,5 +1,6 @@
 "use client";
-import { urlFor } from "@/sanity/lib/image";
+
+import { urlFor, getImageWidth, getImageHeight, hasImageDimensions } from "@/sanity/lib/image";
 import Image from "next/image";
 import { useEffect, useState, useRef } from "react";
 import { SanityImage, SanityImageArray } from "@/types/sanity";
@@ -9,25 +10,31 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface HeroSectionProps {
-  images?: SanityImageArray;
-  logo?: SanityImage;
+export interface HeroSectionData {
+  _type: "heroSection";
+  _key: string;
+  images: SanityImageArray;
+  logo: SanityImage;
 }
 
-export default function HeroSection({ images, logo }: HeroSectionProps) {
+interface HeroSectionProps {
+  data: HeroSectionData;
+}
+
+export default function HeroSection({ data }: HeroSectionProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const logoRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (images && images.length > 1) {
+    if (data.images && data.images.length > 1) {
       const interval = setInterval(() => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % data.images.length);
       }, 4000);
 
       return () => clearInterval(interval);
     }
-  }, [images]);
+  }, [data.images]);
 
   useGSAP(
     () => {
@@ -64,10 +71,10 @@ export default function HeroSection({ images, logo }: HeroSectionProps) {
         },
       );
     },
-    { dependencies: [logo] },
+    { dependencies: [data.logo] },
   );
 
-  if (!images || images.length === 0) {
+  if (!data.images || data.images.length === 0) {
     return null;
   }
 
@@ -88,7 +95,7 @@ export default function HeroSection({ images, logo }: HeroSectionProps) {
   return (
     <div ref={heroRef} className="relative h-[calc(100svh-62px)] w-full overflow-hidden">
       <div className="absolute inset-0">
-        {images.map((image, index) => (
+        {data.images.map((image, index) => (
           <div
             key={index}
             className={`absolute inset-0 transition-opacity duration-700 ease-out ${
@@ -118,20 +125,20 @@ export default function HeroSection({ images, logo }: HeroSectionProps) {
 
       <div className="hero-overlay absolute inset-0" />
 
-      {logo && logo.asset?.metadata?.dimensions && (
+      {data.logo && hasImageDimensions(data.logo) && (
         <div
           ref={logoRef}
           className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform"
         >
           <Image
-            src={urlFor(logo)
-              .width(logo.asset.metadata.dimensions.width)
-              .height(logo.asset.metadata.dimensions.height)
+            src={urlFor(data.logo)
+              .width(getImageWidth(data.logo)!)
+              .height(getImageHeight(data.logo)!)
               .quality(100)
               .url()}
             alt="Logo"
-            width={logo.asset.metadata.dimensions.width}
-            height={logo.asset.metadata.dimensions.height}
+            width={getImageWidth(data.logo)!}
+            height={getImageHeight(data.logo)!}
             fetchPriority={"high"}
             unoptimized
           />

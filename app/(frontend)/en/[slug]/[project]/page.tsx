@@ -2,6 +2,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { notFound } from "next/navigation";
 import { PROJECT_QUERY } from "@/lib/queries/project";
 import ProjectHero from "@/components/sections/projects/ProjectHero";
+import ProjectGallery from "@/components/sections/projects/ProjectGallery";
 import { client } from "@/sanity/lib/client";
 
 interface ProjectPageProps {
@@ -13,6 +14,7 @@ interface ProjectPageProps {
 
 export default async function ProjectPageEN({ params }: ProjectPageProps) {
   const { project } = await params;
+  const lng = "en";
 
   const { data: projectData } = await sanityFetch({
     query: PROJECT_QUERY,
@@ -23,36 +25,26 @@ export default async function ProjectPageEN({ params }: ProjectPageProps) {
     notFound();
   }
 
-  // Get the first preview image as hero image
-  const heroImage = projectData.previewImages?.find((img: any) => img.isFeatured) || projectData.previewImages?.[0];
-
   return (
-    <div>
-      {heroImage && (
-        <ProjectHero 
-          image={heroImage} 
-          projectName={projectData.name} 
-        />
-      )}
-      {/* Rest of project page content goes here */}
+    <div className="flex flex-col gap-5">
+      <ProjectHero data={projectData} lng={lng} />
+
+      <ProjectGallery gallery={projectData.gallery} galleryLayout={projectData.galleryLayout} />
     </div>
   );
 }
 
 export async function generateStaticParams() {
-  // Fetch all projects to get their slugs
-  const allProjects = await client.fetch(
-    `*[_type == "project" && defined(slug.current)]{ slug }`
-  );
+  const allProjects = await client.fetch(`*[_type == "project" && defined(slug.current)]{ slug }`);
 
   const params = [];
-  
+
   // Only generate project routes for the English "Projects" page
   if (allProjects) {
     for (const project of allProjects) {
       if (project.slug?.current) {
         params.push({
-          slug: "projects", // Only under English projects page
+          slug: "projects",
           project: project.slug.current,
         });
       }

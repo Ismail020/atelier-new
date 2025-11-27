@@ -1,86 +1,89 @@
 "use client";
 
-import HeroSection from "./sections/HeroSection";
 import Navbar from "./Navbar";
 import { useNavbar } from "./NavbarContext";
+import { Language } from "@/types/TranslationsData";
+import HeroSection, { HeroSectionData } from "./sections/HeroSection";
 import HeadlineSection, { HeadlineSectionData } from "./sections/HeadlineSection";
-import ProjectsSection from "./sections/ProjectsSection";
+import ProjectsSection, { ProjectsSectionData } from "./sections/ProjectsSection";
 import AllProjectsSection, { AllProjectsSectionData } from "./sections/AllProjectsSection";
 
-interface PageComponent {
+interface BaseComponent {
   _type: string;
   _key: string;
-  [key: string]: any;
 }
+
+type PageComponent =
+  | HeroSectionData
+  | HeadlineSectionData
+  | ProjectsSectionData
+  | AllProjectsSectionData
+  | (BaseComponent & { _type: string });
 
 interface ComponentRendererProps {
   components: PageComponent[];
   isHomePage?: boolean;
-  currentLanguage?: "en" | "fr";
+  lng: Language;
 }
 
 export default function ComponentRenderer({
   components,
   isHomePage = false,
-  currentLanguage = "fr",
+  lng,
 }: ComponentRendererProps) {
   const navbarData = useNavbar();
+
   if (!components || components.length === 0) {
     return null;
   }
 
   const renderComponents = () => {
     const elements: React.ReactElement[] = [];
-
     components.forEach((component: PageComponent, index: number) => {
       switch (component._type) {
         case "heroSection":
           elements.push(
-            <HeroSection
-              key={component._key || index}
-              images={component.images}
-              logo={component.logo}
-            />,
+            <HeroSection key={component._key || index} data={component as HeroSectionData} />,
           );
           break;
+
         case "headlineSection":
           elements.push(
             <HeadlineSection
               key={component._key || index}
               data={component as HeadlineSectionData}
+              lng={lng}
             />,
           );
           break;
+
         case "projectsSection":
           elements.push(
             <ProjectsSection
               key={component._key || index}
               data={component as Extract<PageComponent, { _type: "projectsSection" }>}
-              currentLanguage={currentLanguage}
+              lng={lng}
             />,
           );
           break;
+
         case "allProjectsSection":
           elements.push(
             <AllProjectsSection
               key={component._key || index}
               data={component as AllProjectsSectionData}
-              currentLanguage={currentLanguage}
+              lng={lng}
             />,
           );
           break;
 
         default:
-          elements.push(
-            <div key={component._key || index} className="h-screen bg-red-600">
-              {component._type} Component
-            </div>,
-          );
+          return null;
           break;
       }
 
       if (isHomePage && index === 0 && navbarData) {
-        elements.push(<Navbar key="navbar" data={navbarData} currentLanguage={currentLanguage} />);
+        elements.push(<Navbar key="navbar" data={navbarData} lng={lng} />);
       }
     });
 

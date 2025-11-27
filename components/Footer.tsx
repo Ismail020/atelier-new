@@ -2,9 +2,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { urlFor } from "@/sanity/lib/image";
-import { usePathname } from "next/navigation";
 import type { FOOTER_QUERYResult } from "@/sanity/types";
 import TransitionLink from "./utils/TransitionLink";
+import { usePathname } from "next/navigation";
 
 interface FooterProps {
   data: FOOTER_QUERYResult | null;
@@ -12,14 +12,13 @@ interface FooterProps {
 
 export default function Footer({ data }: FooterProps) {
   const pathname = usePathname();
-  const currentLanguage = pathname.startsWith("/en") ? "en" : "fr";
+  const lng = pathname.startsWith("/en") ? "en" : "fr";
 
   if (!data) {
     return null;
   }
 
-  const termsPage =
-    currentLanguage === "en" ? data.column1?.termsPageEN : data.column1?.termsPageFR;
+  const termsPage = lng === "en" ? data.column1?.termsPageEN : data.column1?.termsPageFR;
 
   const logo = data.logoDesktop;
   const mobileLogo = data.logoMobile;
@@ -51,20 +50,18 @@ export default function Footer({ data }: FooterProps) {
       <div className="flex justify-between md:flex-wrap lg:gap-x-24">
         <div className="flex w-1/2 flex-col justify-between gap-1 md:w-[255px]">
           {data.column1?.showLanguageSwitch && (
-            <TransitionLink href={currentLanguage === "en" ? "/" : "/en"} className="infos">
+            <TransitionLink href={lng === "en" ? "/" : "/en"} className="infos">
               Switch to{" "}
-              <span className="text-[#ffffff70]">
-                {currentLanguage === "en" ? "Français" : "English"}
-              </span>
+              <span className="text-[#ffffff70]">{lng === "en" ? "Français" : "English"}</span>
             </TransitionLink>
           )}
 
           {termsPage && termsPage.slug?.current && (
             <TransitionLink
-              href={`/${currentLanguage === "en" ? "en/" : ""}${termsPage.slug.current}`}
+              href={`/${lng === "en" ? "en/" : ""}${termsPage.slug.current}`}
               className="infos"
             >
-              {currentLanguage === "en" ? "Terms of Service" : "Conditions Générales"}
+              {lng === "en" ? "Terms of Service" : "Conditions Générales"}
             </TransitionLink>
           )}
         </div>
@@ -137,7 +134,7 @@ export default function Footer({ data }: FooterProps) {
 
         <div className="flex flex-col justify-between pb-3 sm:flex-row sm:items-center md:pb-4">
           <p className="tiny">
-            {currentLanguage === "en"
+            {lng === "en"
               ? "© 2025 Atelier Philibert. All Rights Reserved."
               : "© 2025 Atelier Philibert. Tous droits réservés."}
           </p>

@@ -923,1243 +923,236 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: app/(frontend)/[slug]/page.tsx
-// Variable: PAGE_QUERY_FR
-// Query: *[  _type == "page"   && slug.current == $pageName   && language == "fr"][0]{  name,  language,  components[]{    ...,    "images": images[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      "previewImages": previewImages[]{        ...,         asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    },    headline[]{      ...,      markDefs[]{        ...,        "linkToPage": linkToPage->{          _id,          _type,          name,          slug        }      }    }  }}
-export type PAGE_QUERY_FRResult = {
-  name: string | null;
-  language: string | null;
-  components: Array<
-    | {
-        headline: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "h1" | "h2" | "h3" | "normal";
-          listItem?: never;
-          markDefs: Array<{
-            markForStyling?: boolean;
-            linkToPage: {
-              _id: string;
-              _type: "page";
-              name: string | null;
-              slug: Slug | null;
-            } | null;
-            _type: "highlight";
-            _key: string;
-          }> | null;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
-        projectLinkText?: string;
-        projectsPageLink: {
-          _id: string;
-          _type: "page";
-          name: string | null;
-          slug: Slug | null;
+// Source: lib/footer.ts
+// Variable: FOOTER_QUERY
+// Query: *[_type == "footer"][0]{  logoDesktop {    asset->{      _id,      url,      metadata {        dimensions {          width,          height        }      }    },    alt  },  logoMobile {    asset->{      _id,      url,      metadata {        dimensions {          width,          height        }      }    },    alt  },  column1 {    showLanguageSwitch,    termsPageEN->{      name,      slug    },    termsPageFR->{      name,        slug    }  },  "settingsContact": *[_type == "settings"][0].contactInfo {    headOfDesign {      name,      phone,      email    },    generalInquiries {      email    }  },  "settingsSocial": *[_type == "settings"][0].socialMedia[] {    platform,    url  },}
+export type FOOTER_QUERYResult = {
+  logoDesktop: {
+    asset: {
+      _id: string;
+      url: string | null;
+      metadata: {
+        dimensions: {
+          width: number | null;
+          height: number | null;
         } | null;
-        projectsSource?: boolean;
-        _type: "allProjectsSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-      }
-    | {
-        title?: string;
-        backgroundImage: {
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
+      } | null;
+    } | null;
+    alt: null;
+  } | null;
+  logoMobile: {
+    asset: {
+      _id: string;
+      url: string | null;
+      metadata: {
+        dimensions: {
+          width: number | null;
+          height: number | null;
         } | null;
-        contactUsImage: {
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-        } | null;
-        column1Title?: string;
-        column1Info?: boolean;
-        column2Title?: string;
-        column2Info?: boolean;
-        column3Title?: string;
-        column3Info?: boolean;
-        _type: "contactSection";
-        _key: string;
-        images: null;
-        logo: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-    | {
-        images: Array<{
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-          _key: string;
-        }> | null;
-        section1?: {
-          title?: string;
-          body?: string;
-        };
-        section2?: {
-          title?: string;
-          items?: Array<{
-            title?: string;
-            body?: string;
-            _type: "item";
-            _key: string;
-          }>;
-        };
-        section3?: {
-          title?: string;
-          image?: {
-            asset?: {
-              _ref: string;
-              _type: "reference";
-              _weak?: boolean;
-              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-            };
-            media?: unknown;
-            hotspot?: SanityImageHotspot;
-            crop?: SanityImageCrop;
-            _type: "image";
-          };
-          body?: string;
-          buttonText?: string;
-          buttonLink?: {
-            _ref: string;
-            _type: "reference";
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: "page";
-          };
-        };
-        section4?: {
-          title?: string;
-          buttonText?: string;
-          reviews?: Array<{
-            body?: string;
-            person?: string;
-            _type: "review";
-            _key: string;
-          }>;
-        };
-        _type: "contentSection";
-        _key: string;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-    | {
-        headline: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "h1" | "h2" | "h3" | "normal";
-          listItem?: never;
-          markDefs: Array<{
-            markForStyling?: boolean;
-            _type: "highlight";
-            _key: string;
-            linkToPage: null;
-          }> | null;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
-        _type: "headlineSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-      }
-    | {
-        images: Array<{
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-          _key: string;
-        }> | null;
-        logo: {
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-        } | null;
-        _type: "heroSection";
-        _key: string;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-    | {
-        title?: string;
-        pressSource?: boolean;
-        _type: "pressCoverageSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-    | {
-        title?: string;
-        projectsPageLink: {
-          _id: string;
-          _type: "page";
-          name: string | null;
-          slug: Slug | null;
-        } | null;
-        projectLinkText?: string;
-        viewAllLinkText?: string;
-        selectedProjects: Array<{
-          _id: string;
-          _type: "project";
-          name: string | null;
-          slug: Slug | null;
-          date: string | null;
-          previewImages: Array<{
-            asset: {
-              _id: string;
-              _type: "sanity.imageAsset";
-              _createdAt: string;
-              _updatedAt: string;
-              _rev: string;
-              originalFilename?: string;
-              label?: string;
-              title?: string;
-              description?: string;
-              altText?: string;
-              sha1hash?: string;
-              extension?: string;
-              mimeType?: string;
-              size?: number;
-              assetId?: string;
-              uploadId?: string;
-              path?: string;
-              url?: string;
-              metadata?: SanityImageMetadata;
-              source?: SanityAssetSourceData;
-            } | null;
-            media?: unknown;
-            hotspot?: SanityImageHotspot;
-            crop?: SanityImageCrop;
-            isFeatured: boolean | null;
-            showOnMobile: boolean | null;
-            isFeaturedMobile: boolean | null;
-            _type: "image";
-            _key: string;
-          }> | null;
-        }> | null;
-        _type: "projectsSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        headline: null;
-      }
-    | {
-        title?: string;
-        content?: Markdown;
-        _type: "termsConditionsSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-  > | null;
+      } | null;
+    } | null;
+    alt: null;
+  } | null;
+  column1: {
+    showLanguageSwitch: boolean | null;
+    termsPageEN: {
+      name: string | null;
+      slug: Slug | null;
+    } | null;
+    termsPageFR: {
+      name: string | null;
+      slug: Slug | null;
+    } | null;
+  } | null;
+  settingsContact: {
+    headOfDesign: {
+      name: string | null;
+      phone: string | null;
+      email: string | null;
+    } | null;
+    generalInquiries: {
+      email: string | null;
+    } | null;
+  } | null;
+  settingsSocial: Array<{
+    platform: "Facebook" | "Instagram" | "Linkedin" | "Tiktok" | "Twitter" | "Youtube" | null;
+    url: string | null;
+  }> | null;
 } | null;
 
-// Source: app/(frontend)/en/[slug]/page.tsx
-// Variable: PAGE_QUERY_EN_SLUG
-// Query: *[  _type == "page"   && slug.current == $pageName   && language == "en"][0]{  name,  language,  components[]{    ...,    "images": images[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      "previewImages": previewImages[]{        ...,         asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    },    headline[]{      ...,      markDefs[]{        ...,        "linkToPage": linkToPage->{          _id,          _type,          name,          slug        }      }    }  }}
-export type PAGE_QUERY_EN_SLUGResult = {
-  name: string | null;
-  language: string | null;
-  components: Array<
-    | {
-        headline: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "h1" | "h2" | "h3" | "normal";
-          listItem?: never;
-          markDefs: Array<{
-            markForStyling?: boolean;
-            linkToPage: {
-              _id: string;
-              _type: "page";
-              name: string | null;
-              slug: Slug | null;
+// Source: lib/navbar.ts
+// Variable: NAVBAR_QUERY
+// Query: *[_type == "navbar"][0]{  navbarStructure {    brandText,    logo {      asset->{        _id,        url,        metadata {          dimensions {            width,            height          }        }      },      alt    },    logoWhite {      asset->{        _id,        url,        metadata {          dimensions {            width,            height          }        }      },      alt    },    menuItems {      menuItemsEN[] {        page-> {          name,          slug,          language        },        mobileImage {          asset->{            _id,            url,            metadata {              dimensions {                width,                height              }            }          },          alt        }      },      menuItemsFR[] {        page-> {          name,          slug,          language          },        mobileImage {          asset->{            _id,            url,            metadata {              dimensions {                width,                height              }            }          },          alt        }      }    }  },  "settingsSocial": *[_type == "settings"][0].socialMedia[] {    platform,    url  },  "termsPageEN": *[_type == "page" && language == "en" && name match "*Terms*" || name match "*Conditions*"][0] {    name,    slug  },  "termsPageFR": *[_type == "page" && language == "fr" && name match "*Terms*" || name match "*Conditions*"][0] {    name,    slug  },  "settingsContact": *[_type == "settings"][0].contactInfo {    headOfDesign {      name,      phone,      email    },    generalInquiries {      email    }  }}
+export type NAVBAR_QUERYResult = {
+  navbarStructure: {
+    brandText: string | null;
+    logo: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: null;
+    } | null;
+    logoWhite: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            width: number | null;
+            height: number | null;
+          } | null;
+        } | null;
+      } | null;
+      alt: null;
+    } | null;
+    menuItems: {
+      menuItemsEN: Array<{
+        page: {
+          name: string | null;
+          slug: Slug | null;
+          language: string | null;
+        } | null;
+        mobileImage: {
+          asset: {
+            _id: string;
+            url: string | null;
+            metadata: {
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
             } | null;
-            _type: "highlight";
-            _key: string;
-          }> | null;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
-        projectLinkText?: string;
-        projectsPageLink: {
-          _id: string;
-          _type: "page";
+          } | null;
+          alt: null;
+        } | null;
+      }> | null;
+      menuItemsFR: Array<{
+        page: {
           name: string | null;
           slug: Slug | null;
+          language: string | null;
         } | null;
-        projectsSource?: boolean;
-        _type: "allProjectsSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-      }
-    | {
-        title?: string;
-        backgroundImage: {
+        mobileImage: {
           asset: {
             _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-        } | null;
-        contactUsImage: {
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-        } | null;
-        column1Title?: string;
-        column1Info?: boolean;
-        column2Title?: string;
-        column2Info?: boolean;
-        column3Title?: string;
-        column3Info?: boolean;
-        _type: "contactSection";
-        _key: string;
-        images: null;
-        logo: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-    | {
-        images: Array<{
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-          _key: string;
-        }> | null;
-        section1?: {
-          title?: string;
-          body?: string;
-        };
-        section2?: {
-          title?: string;
-          items?: Array<{
-            title?: string;
-            body?: string;
-            _type: "item";
-            _key: string;
-          }>;
-        };
-        section3?: {
-          title?: string;
-          image?: {
-            asset?: {
-              _ref: string;
-              _type: "reference";
-              _weak?: boolean;
-              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-            };
-            media?: unknown;
-            hotspot?: SanityImageHotspot;
-            crop?: SanityImageCrop;
-            _type: "image";
-          };
-          body?: string;
-          buttonText?: string;
-          buttonLink?: {
-            _ref: string;
-            _type: "reference";
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: "page";
-          };
-        };
-        section4?: {
-          title?: string;
-          buttonText?: string;
-          reviews?: Array<{
-            body?: string;
-            person?: string;
-            _type: "review";
-            _key: string;
-          }>;
-        };
-        _type: "contentSection";
-        _key: string;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-    | {
-        headline: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "h1" | "h2" | "h3" | "normal";
-          listItem?: never;
-          markDefs: Array<{
-            markForStyling?: boolean;
-            _type: "highlight";
-            _key: string;
-            linkToPage: null;
-          }> | null;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
-        _type: "headlineSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-      }
-    | {
-        images: Array<{
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-          _key: string;
-        }> | null;
-        logo: {
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-        } | null;
-        _type: "heroSection";
-        _key: string;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-    | {
-        title?: string;
-        pressSource?: boolean;
-        _type: "pressCoverageSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-    | {
-        title?: string;
-        projectsPageLink: {
-          _id: string;
-          _type: "page";
-          name: string | null;
-          slug: Slug | null;
-        } | null;
-        projectLinkText?: string;
-        viewAllLinkText?: string;
-        selectedProjects: Array<{
-          _id: string;
-          _type: "project";
-          name: string | null;
-          slug: Slug | null;
-          date: string | null;
-          previewImages: Array<{
-            asset: {
-              _id: string;
-              _type: "sanity.imageAsset";
-              _createdAt: string;
-              _updatedAt: string;
-              _rev: string;
-              originalFilename?: string;
-              label?: string;
-              title?: string;
-              description?: string;
-              altText?: string;
-              sha1hash?: string;
-              extension?: string;
-              mimeType?: string;
-              size?: number;
-              assetId?: string;
-              uploadId?: string;
-              path?: string;
-              url?: string;
-              metadata?: SanityImageMetadata;
-              source?: SanityAssetSourceData;
+            url: string | null;
+            metadata: {
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
             } | null;
-            media?: unknown;
-            hotspot?: SanityImageHotspot;
-            crop?: SanityImageCrop;
-            isFeatured: boolean | null;
-            showOnMobile: boolean | null;
-            isFeaturedMobile: boolean | null;
-            _type: "image";
-            _key: string;
-          }> | null;
-        }> | null;
-        _type: "projectsSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        headline: null;
+          } | null;
+          alt: null;
+        } | null;
+      }> | null;
+    } | null;
+  } | null;
+  settingsSocial: Array<{
+    platform: "Facebook" | "Instagram" | "Linkedin" | "Tiktok" | "Twitter" | "Youtube" | null;
+    url: string | null;
+  }> | null;
+  termsPageEN:
+    | {
+        name: string | null;
+        slug: null;
       }
     | {
-        title?: string;
-        content?: Markdown;
-        _type: "termsConditionsSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
+        name: string | null;
+        slug: Slug | null;
       }
-  > | null;
+    | null;
+  termsPageFR:
+    | {
+        name: string | null;
+        slug: null;
+      }
+    | {
+        name: string | null;
+        slug: Slug | null;
+      }
+    | null;
+  settingsContact: {
+    headOfDesign: {
+      name: string | null;
+      phone: string | null;
+      email: string | null;
+    } | null;
+    generalInquiries: {
+      email: string | null;
+    } | null;
+  } | null;
 } | null;
 
-// Source: app/(frontend)/en/page.tsx
-// Variable: HOME_QUERY_EN_FRONTEND
-// Query: *[  _type == "page"   && name == "Home"   && language == "en"][0]{  ...,  components[]{    ...,    "images": images[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      "previewImages": previewImages[]{        ...,         asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    },    headline[]{      ...,      markDefs[]{        ...,        "linkToPage": linkToPage->{          _id,          _type,          name,          slug        }      }    }  }}
-export type HOME_QUERY_EN_FRONTENDResult = {
+// Source: lib/project.ts
+// Variable: PROJECTS_QUERY
+// Query: *[_type == "project"] | order(date desc) {  _id,  name,  slug,  shortDescription,  date,  projectSummary,  projectDescription,  mainImage {    asset-> {      _id,      url,      metadata {        dimensions {          width,          height        }      }    },    alt,    hotspot,    crop  },  "previewImages": previewImages[]{    ...,     asset->,    isFeatured,    showOnMobile,    isFeaturedMobile  },  projectGallery[] {    asset-> {      _id,      url,      metadata {        dimensions {          width,          height        }      }    },    alt,    hotspot,    crop,    showInGrid,    gridSpan  }}
+export type PROJECTS_QUERYResult = Array<{
   _id: string;
-  _type: "page";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  name?: string;
-  slug?: Slug;
-  language?: string;
-  components: Array<
-    | {
-        headline: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "h1" | "h2" | "h3" | "normal";
-          listItem?: never;
-          markDefs: Array<{
-            markForStyling?: boolean;
-            linkToPage: {
-              _id: string;
-              _type: "page";
-              name: string | null;
-              slug: Slug | null;
-            } | null;
-            _type: "highlight";
-            _key: string;
-          }> | null;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
-        projectLinkText?: string;
-        projectsPageLink: {
-          _id: string;
-          _type: "page";
-          name: string | null;
-          slug: Slug | null;
+  name: string | null;
+  slug: Slug | null;
+  shortDescription: string | null;
+  date: string | null;
+  projectSummary: InternationalizedArrayString | null;
+  projectDescription: InternationalizedArrayString | null;
+  mainImage: {
+    asset: {
+      _id: string;
+      url: string | null;
+      metadata: {
+        dimensions: {
+          width: number | null;
+          height: number | null;
         } | null;
-        projectsSource?: boolean;
-        _type: "allProjectsSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-      }
-    | {
-        title?: string;
-        backgroundImage: {
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-        } | null;
-        contactUsImage: {
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-        } | null;
-        column1Title?: string;
-        column1Info?: boolean;
-        column2Title?: string;
-        column2Info?: boolean;
-        column3Title?: string;
-        column3Info?: boolean;
-        _type: "contactSection";
-        _key: string;
-        images: null;
-        logo: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-    | {
-        images: Array<{
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-          _key: string;
-        }> | null;
-        section1?: {
-          title?: string;
-          body?: string;
-        };
-        section2?: {
-          title?: string;
-          items?: Array<{
-            title?: string;
-            body?: string;
-            _type: "item";
-            _key: string;
-          }>;
-        };
-        section3?: {
-          title?: string;
-          image?: {
-            asset?: {
-              _ref: string;
-              _type: "reference";
-              _weak?: boolean;
-              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-            };
-            media?: unknown;
-            hotspot?: SanityImageHotspot;
-            crop?: SanityImageCrop;
-            _type: "image";
-          };
-          body?: string;
-          buttonText?: string;
-          buttonLink?: {
-            _ref: string;
-            _type: "reference";
-            _weak?: boolean;
-            [internalGroqTypeReferenceTo]?: "page";
-          };
-        };
-        section4?: {
-          title?: string;
-          buttonText?: string;
-          reviews?: Array<{
-            body?: string;
-            person?: string;
-            _type: "review";
-            _key: string;
-          }>;
-        };
-        _type: "contentSection";
-        _key: string;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-    | {
-        headline: Array<{
-          children?: Array<{
-            marks?: Array<string>;
-            text?: string;
-            _type: "span";
-            _key: string;
-          }>;
-          style?: "h1" | "h2" | "h3" | "normal";
-          listItem?: never;
-          markDefs: Array<{
-            markForStyling?: boolean;
-            _type: "highlight";
-            _key: string;
-            linkToPage: null;
-          }> | null;
-          level?: number;
-          _type: "block";
-          _key: string;
-        }> | null;
-        _type: "headlineSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-      }
-    | {
-        images: Array<{
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-          _key: string;
-        }> | null;
-        logo: {
-          asset: {
-            _id: string;
-            _type: "sanity.imageAsset";
-            _createdAt: string;
-            _updatedAt: string;
-            _rev: string;
-            originalFilename?: string;
-            label?: string;
-            title?: string;
-            description?: string;
-            altText?: string;
-            sha1hash?: string;
-            extension?: string;
-            mimeType?: string;
-            size?: number;
-            assetId?: string;
-            uploadId?: string;
-            path?: string;
-            url?: string;
-            metadata?: SanityImageMetadata;
-            source?: SanityAssetSourceData;
-          } | null;
-          media?: unknown;
-          hotspot?: SanityImageHotspot;
-          crop?: SanityImageCrop;
-          _type: "image";
-        } | null;
-        _type: "heroSection";
-        _key: string;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-    | {
-        title?: string;
-        pressSource?: boolean;
-        _type: "pressCoverageSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-    | {
-        title?: string;
-        projectsPageLink: {
-          _id: string;
-          _type: "page";
-          name: string | null;
-          slug: Slug | null;
-        } | null;
-        projectLinkText?: string;
-        viewAllLinkText?: string;
-        selectedProjects: Array<{
-          _id: string;
-          _type: "project";
-          name: string | null;
-          slug: Slug | null;
-          date: string | null;
-          previewImages: Array<{
-            asset: {
-              _id: string;
-              _type: "sanity.imageAsset";
-              _createdAt: string;
-              _updatedAt: string;
-              _rev: string;
-              originalFilename?: string;
-              label?: string;
-              title?: string;
-              description?: string;
-              altText?: string;
-              sha1hash?: string;
-              extension?: string;
-              mimeType?: string;
-              size?: number;
-              assetId?: string;
-              uploadId?: string;
-              path?: string;
-              url?: string;
-              metadata?: SanityImageMetadata;
-              source?: SanityAssetSourceData;
-            } | null;
-            media?: unknown;
-            hotspot?: SanityImageHotspot;
-            crop?: SanityImageCrop;
-            isFeatured: boolean | null;
-            showOnMobile: boolean | null;
-            isFeaturedMobile: boolean | null;
-            _type: "image";
-            _key: string;
-          }> | null;
-        }> | null;
-        _type: "projectsSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        headline: null;
-      }
-    | {
-        title?: string;
-        content?: Markdown;
-        _type: "termsConditionsSection";
-        _key: string;
-        images: null;
-        logo: null;
-        backgroundImage: null;
-        contactUsImage: null;
-        mainImage: null;
-        previewImages: null;
-        gallery: null;
-        selectedProjects: null;
-        projectsPageLink: null;
-        headline: null;
-      }
-  > | null;
-} | null;
+      } | null;
+    } | null;
+    alt: null;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+  } | null;
+  previewImages: Array<{
+    asset: {
+      _id: string;
+      _type: "sanity.imageAsset";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    isFeatured: boolean | null;
+    showOnMobile: boolean | null;
+    isFeaturedMobile: boolean | null;
+    _type: "image";
+    _key: string;
+  }> | null;
+  projectGallery: null;
+}>;
 
-// Source: app/(frontend)/page.tsx
+// Source: lib/queries/home.ts
 // Variable: HOME_QUERY_FR
 // Query: *[  _type == "page"   && name == "Home"   && language == "fr"][0]{  ...,  components[]{    ...,    "images": images[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      "previewImages": previewImages[]{        ...,         asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    },    headline[]{      ...,      markDefs[]{        ...,        "linkToPage": linkToPage->{          _id,          _type,          name,          slug        }      }    }  }}
 export type HOME_QUERY_FRResult = {
@@ -2574,239 +1567,1242 @@ export type HOME_QUERY_FRResult = {
       }
   > | null;
 } | null;
-
-// Source: lib/footer.ts
-// Variable: FOOTER_QUERY
-// Query: *[_type == "footer"][0]{  logoDesktop {    asset->{      _id,      url,      metadata {        dimensions {          width,          height        }      }    },    alt  },  logoMobile {    asset->{      _id,      url,      metadata {        dimensions {          width,          height        }      }    },    alt  },  column1 {    showLanguageSwitch,    termsPageEN->{      name,      slug    },    termsPageFR->{      name,        slug    }  },  "settingsContact": *[_type == "settings"][0].contactInfo {    headOfDesign {      name,      phone,      email    },    generalInquiries {      email    }  },  "settingsSocial": *[_type == "settings"][0].socialMedia[] {    platform,    url  },}
-export type FOOTER_QUERYResult = {
-  logoDesktop: {
-    asset: {
-      _id: string;
-      url: string | null;
-      metadata: {
-        dimensions: {
-          width: number | null;
-          height: number | null;
-        } | null;
-      } | null;
-    } | null;
-    alt: null;
-  } | null;
-  logoMobile: {
-    asset: {
-      _id: string;
-      url: string | null;
-      metadata: {
-        dimensions: {
-          width: number | null;
-          height: number | null;
-        } | null;
-      } | null;
-    } | null;
-    alt: null;
-  } | null;
-  column1: {
-    showLanguageSwitch: boolean | null;
-    termsPageEN: {
-      name: string | null;
-      slug: Slug | null;
-    } | null;
-    termsPageFR: {
-      name: string | null;
-      slug: Slug | null;
-    } | null;
-  } | null;
-  settingsContact: {
-    headOfDesign: {
-      name: string | null;
-      phone: string | null;
-      email: string | null;
-    } | null;
-    generalInquiries: {
-      email: string | null;
-    } | null;
-  } | null;
-  settingsSocial: Array<{
-    platform: "Facebook" | "Instagram" | "Linkedin" | "Tiktok" | "Twitter" | "Youtube" | null;
-    url: string | null;
-  }> | null;
-} | null;
-
-// Source: lib/navbar.ts
-// Variable: NAVBAR_QUERY
-// Query: *[_type == "navbar"][0]{  navbarStructure {    brandText,    logo {      asset->{        _id,        url,        metadata {          dimensions {            width,            height          }        }      },      alt    },    logoWhite {      asset->{        _id,        url,        metadata {          dimensions {            width,            height          }        }      },      alt    },    menuItems {      menuItemsEN[] {        page-> {          name,          slug,          language        },        mobileImage {          asset->{            _id,            url,            metadata {              dimensions {                width,                height              }            }          },          alt        }      },      menuItemsFR[] {        page-> {          name,          slug,          language          },        mobileImage {          asset->{            _id,            url,            metadata {              dimensions {                width,                height              }            }          },          alt        }      }    }  },  "settingsSocial": *[_type == "settings"][0].socialMedia[] {    platform,    url  },  "termsPageEN": *[_type == "page" && language == "en" && name match "*Terms*" || name match "*Conditions*"][0] {    name,    slug  },  "termsPageFR": *[_type == "page" && language == "fr" && name match "*Terms*" || name match "*Conditions*"][0] {    name,    slug  },  "settingsContact": *[_type == "settings"][0].contactInfo {    headOfDesign {      name,      phone,      email    },    generalInquiries {      email    }  }}
-export type NAVBAR_QUERYResult = {
-  navbarStructure: {
-    brandText: string | null;
-    logo: {
-      asset: {
-        _id: string;
-        url: string | null;
-        metadata: {
-          dimensions: {
-            width: number | null;
-            height: number | null;
-          } | null;
-        } | null;
-      } | null;
-      alt: null;
-    } | null;
-    logoWhite: {
-      asset: {
-        _id: string;
-        url: string | null;
-        metadata: {
-          dimensions: {
-            width: number | null;
-            height: number | null;
-          } | null;
-        } | null;
-      } | null;
-      alt: null;
-    } | null;
-    menuItems: {
-      menuItemsEN: Array<{
-        page: {
-          name: string | null;
-          slug: Slug | null;
-          language: string | null;
-        } | null;
-        mobileImage: {
-          asset: {
-            _id: string;
-            url: string | null;
-            metadata: {
-              dimensions: {
-                width: number | null;
-                height: number | null;
-              } | null;
-            } | null;
-          } | null;
-          alt: null;
-        } | null;
-      }> | null;
-      menuItemsFR: Array<{
-        page: {
-          name: string | null;
-          slug: Slug | null;
-          language: string | null;
-        } | null;
-        mobileImage: {
-          asset: {
-            _id: string;
-            url: string | null;
-            metadata: {
-              dimensions: {
-                width: number | null;
-                height: number | null;
-              } | null;
-            } | null;
-          } | null;
-          alt: null;
-        } | null;
-      }> | null;
-    } | null;
-  } | null;
-  settingsSocial: Array<{
-    platform: "Facebook" | "Instagram" | "Linkedin" | "Tiktok" | "Twitter" | "Youtube" | null;
-    url: string | null;
-  }> | null;
-  termsPageEN:
-    | {
-        name: string | null;
-        slug: null;
-      }
-    | {
-        name: string | null;
-        slug: Slug | null;
-      }
-    | null;
-  termsPageFR:
-    | {
-        name: string | null;
-        slug: null;
-      }
-    | {
-        name: string | null;
-        slug: Slug | null;
-      }
-    | null;
-  settingsContact: {
-    headOfDesign: {
-      name: string | null;
-      phone: string | null;
-      email: string | null;
-    } | null;
-    generalInquiries: {
-      email: string | null;
-    } | null;
-  } | null;
-} | null;
-
-// Source: lib/project.ts
-// Variable: PROJECTS_QUERY
-// Query: *[_type == "project"] | order(date desc) {  _id,  name,  slug,  shortDescription,  date,  projectSummary,  projectDescription,  mainImage {    asset-> {      _id,      url,      metadata {        dimensions {          width,          height        }      }    },    alt,    hotspot,    crop  },  "previewImages": previewImages[]{    ...,     asset->,    isFeatured,    showOnMobile,    isFeaturedMobile  },  projectGallery[] {    asset-> {      _id,      url,      metadata {        dimensions {          width,          height        }      }    },    alt,    hotspot,    crop,    showInGrid,    gridSpan  }}
-export type PROJECTS_QUERYResult = Array<{
+// Variable: HOME_QUERY_EN
+// Query: *[  _type == "page"   && name == "Home"   && language == "en"][0]{  ...,  components[]{    ...,    "images": images[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      "previewImages": previewImages[]{        ...,         asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    },    headline[]{      ...,      markDefs[]{        ...,        "linkToPage": linkToPage->{          _id,          _type,          name,          slug        }      }    }  }}
+export type HOME_QUERY_ENResult = {
   _id: string;
-  name: string | null;
-  slug: Slug | null;
-  shortDescription: string | null;
-  date: string | null;
-  projectSummary: InternationalizedArrayString | null;
-  projectDescription: InternationalizedArrayString | null;
-  mainImage: {
-    asset: {
-      _id: string;
-      url: string | null;
-      metadata: {
-        dimensions: {
-          width: number | null;
-          height: number | null;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  slug?: Slug;
+  language?: string;
+  components: Array<
+    | {
+        headline: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "h1" | "h2" | "h3" | "normal";
+          listItem?: never;
+          markDefs: Array<{
+            markForStyling?: boolean;
+            linkToPage: {
+              _id: string;
+              _type: "page";
+              name: string | null;
+              slug: Slug | null;
+            } | null;
+            _type: "highlight";
+            _key: string;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        projectLinkText?: string;
+        projectsPageLink: {
+          _id: string;
+          _type: "page";
+          name: string | null;
+          slug: Slug | null;
         } | null;
-      } | null;
-    } | null;
-    alt: null;
-    hotspot: SanityImageHotspot | null;
-    crop: SanityImageCrop | null;
-  } | null;
-  previewImages: Array<{
-    asset: {
-      _id: string;
-      _type: "sanity.imageAsset";
-      _createdAt: string;
-      _updatedAt: string;
-      _rev: string;
-      originalFilename?: string;
-      label?: string;
-      title?: string;
-      description?: string;
-      altText?: string;
-      sha1hash?: string;
-      extension?: string;
-      mimeType?: string;
-      size?: number;
-      assetId?: string;
-      uploadId?: string;
-      path?: string;
-      url?: string;
-      metadata?: SanityImageMetadata;
-      source?: SanityAssetSourceData;
-    } | null;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    isFeatured: boolean | null;
-    showOnMobile: boolean | null;
-    isFeaturedMobile: boolean | null;
-    _type: "image";
-    _key: string;
-  }> | null;
-  projectGallery: null;
-}>;
+        projectsSource?: boolean;
+        _type: "allProjectsSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+      }
+    | {
+        title?: string;
+        backgroundImage: {
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        contactUsImage: {
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        column1Title?: string;
+        column1Info?: boolean;
+        column2Title?: string;
+        column2Info?: boolean;
+        column3Title?: string;
+        column3Info?: boolean;
+        _type: "contactSection";
+        _key: string;
+        images: null;
+        logo: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+    | {
+        images: Array<{
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+          _key: string;
+        }> | null;
+        section1?: {
+          title?: string;
+          body?: string;
+        };
+        section2?: {
+          title?: string;
+          items?: Array<{
+            title?: string;
+            body?: string;
+            _type: "item";
+            _key: string;
+          }>;
+        };
+        section3?: {
+          title?: string;
+          image?: {
+            asset?: {
+              _ref: string;
+              _type: "reference";
+              _weak?: boolean;
+              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+            };
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            _type: "image";
+          };
+          body?: string;
+          buttonText?: string;
+          buttonLink?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "page";
+          };
+        };
+        section4?: {
+          title?: string;
+          buttonText?: string;
+          reviews?: Array<{
+            body?: string;
+            person?: string;
+            _type: "review";
+            _key: string;
+          }>;
+        };
+        _type: "contentSection";
+        _key: string;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+    | {
+        headline: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "h1" | "h2" | "h3" | "normal";
+          listItem?: never;
+          markDefs: Array<{
+            markForStyling?: boolean;
+            _type: "highlight";
+            _key: string;
+            linkToPage: null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        _type: "headlineSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+      }
+    | {
+        images: Array<{
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+          _key: string;
+        }> | null;
+        logo: {
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        _type: "heroSection";
+        _key: string;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+    | {
+        title?: string;
+        pressSource?: boolean;
+        _type: "pressCoverageSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+    | {
+        title?: string;
+        projectsPageLink: {
+          _id: string;
+          _type: "page";
+          name: string | null;
+          slug: Slug | null;
+        } | null;
+        projectLinkText?: string;
+        viewAllLinkText?: string;
+        selectedProjects: Array<{
+          _id: string;
+          _type: "project";
+          name: string | null;
+          slug: Slug | null;
+          date: string | null;
+          previewImages: Array<{
+            asset: {
+              _id: string;
+              _type: "sanity.imageAsset";
+              _createdAt: string;
+              _updatedAt: string;
+              _rev: string;
+              originalFilename?: string;
+              label?: string;
+              title?: string;
+              description?: string;
+              altText?: string;
+              sha1hash?: string;
+              extension?: string;
+              mimeType?: string;
+              size?: number;
+              assetId?: string;
+              uploadId?: string;
+              path?: string;
+              url?: string;
+              metadata?: SanityImageMetadata;
+              source?: SanityAssetSourceData;
+            } | null;
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            isFeatured: boolean | null;
+            showOnMobile: boolean | null;
+            isFeaturedMobile: boolean | null;
+            _type: "image";
+            _key: string;
+          }> | null;
+        }> | null;
+        _type: "projectsSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        headline: null;
+      }
+    | {
+        title?: string;
+        content?: Markdown;
+        _type: "termsConditionsSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+  > | null;
+} | null;
+
+// Source: lib/queries/page.ts
+// Variable: PAGE_QUERY_FR
+// Query: *[  _type == "page"   && slug.current == $slug   && language == "fr"][0]{  name,  language,  components[]{    ...,    "images": images[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      "previewImages": previewImages[]{        ...,         asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    },    headline[]{      ...,      markDefs[]{        ...,        "linkToPage": linkToPage->{          _id,          _type,          name,          slug        }      }    }  }}
+export type PAGE_QUERY_FRResult = {
+  name: string | null;
+  language: string | null;
+  components: Array<
+    | {
+        headline: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "h1" | "h2" | "h3" | "normal";
+          listItem?: never;
+          markDefs: Array<{
+            markForStyling?: boolean;
+            linkToPage: {
+              _id: string;
+              _type: "page";
+              name: string | null;
+              slug: Slug | null;
+            } | null;
+            _type: "highlight";
+            _key: string;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        projectLinkText?: string;
+        projectsPageLink: {
+          _id: string;
+          _type: "page";
+          name: string | null;
+          slug: Slug | null;
+        } | null;
+        projectsSource?: boolean;
+        _type: "allProjectsSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+      }
+    | {
+        title?: string;
+        backgroundImage: {
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        contactUsImage: {
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        column1Title?: string;
+        column1Info?: boolean;
+        column2Title?: string;
+        column2Info?: boolean;
+        column3Title?: string;
+        column3Info?: boolean;
+        _type: "contactSection";
+        _key: string;
+        images: null;
+        logo: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+    | {
+        images: Array<{
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+          _key: string;
+        }> | null;
+        section1?: {
+          title?: string;
+          body?: string;
+        };
+        section2?: {
+          title?: string;
+          items?: Array<{
+            title?: string;
+            body?: string;
+            _type: "item";
+            _key: string;
+          }>;
+        };
+        section3?: {
+          title?: string;
+          image?: {
+            asset?: {
+              _ref: string;
+              _type: "reference";
+              _weak?: boolean;
+              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+            };
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            _type: "image";
+          };
+          body?: string;
+          buttonText?: string;
+          buttonLink?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "page";
+          };
+        };
+        section4?: {
+          title?: string;
+          buttonText?: string;
+          reviews?: Array<{
+            body?: string;
+            person?: string;
+            _type: "review";
+            _key: string;
+          }>;
+        };
+        _type: "contentSection";
+        _key: string;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+    | {
+        headline: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "h1" | "h2" | "h3" | "normal";
+          listItem?: never;
+          markDefs: Array<{
+            markForStyling?: boolean;
+            _type: "highlight";
+            _key: string;
+            linkToPage: null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        _type: "headlineSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+      }
+    | {
+        images: Array<{
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+          _key: string;
+        }> | null;
+        logo: {
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        _type: "heroSection";
+        _key: string;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+    | {
+        title?: string;
+        pressSource?: boolean;
+        _type: "pressCoverageSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+    | {
+        title?: string;
+        projectsPageLink: {
+          _id: string;
+          _type: "page";
+          name: string | null;
+          slug: Slug | null;
+        } | null;
+        projectLinkText?: string;
+        viewAllLinkText?: string;
+        selectedProjects: Array<{
+          _id: string;
+          _type: "project";
+          name: string | null;
+          slug: Slug | null;
+          date: string | null;
+          previewImages: Array<{
+            asset: {
+              _id: string;
+              _type: "sanity.imageAsset";
+              _createdAt: string;
+              _updatedAt: string;
+              _rev: string;
+              originalFilename?: string;
+              label?: string;
+              title?: string;
+              description?: string;
+              altText?: string;
+              sha1hash?: string;
+              extension?: string;
+              mimeType?: string;
+              size?: number;
+              assetId?: string;
+              uploadId?: string;
+              path?: string;
+              url?: string;
+              metadata?: SanityImageMetadata;
+              source?: SanityAssetSourceData;
+            } | null;
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            isFeatured: boolean | null;
+            showOnMobile: boolean | null;
+            isFeaturedMobile: boolean | null;
+            _type: "image";
+            _key: string;
+          }> | null;
+        }> | null;
+        _type: "projectsSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        headline: null;
+      }
+    | {
+        title?: string;
+        content?: Markdown;
+        _type: "termsConditionsSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+  > | null;
+} | null;
+// Variable: PAGE_QUERY_EN
+// Query: *[  _type == "page"   && slug.current == $slug   && language == "en"][0]{  name,  language,  components[]{    ...,    "images": images[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      "previewImages": previewImages[]{        ...,         asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    },    headline[]{      ...,      markDefs[]{        ...,        "linkToPage": linkToPage->{          _id,          _type,          name,          slug        }      }    }  }}
+export type PAGE_QUERY_ENResult = {
+  name: string | null;
+  language: string | null;
+  components: Array<
+    | {
+        headline: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "h1" | "h2" | "h3" | "normal";
+          listItem?: never;
+          markDefs: Array<{
+            markForStyling?: boolean;
+            linkToPage: {
+              _id: string;
+              _type: "page";
+              name: string | null;
+              slug: Slug | null;
+            } | null;
+            _type: "highlight";
+            _key: string;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        projectLinkText?: string;
+        projectsPageLink: {
+          _id: string;
+          _type: "page";
+          name: string | null;
+          slug: Slug | null;
+        } | null;
+        projectsSource?: boolean;
+        _type: "allProjectsSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+      }
+    | {
+        title?: string;
+        backgroundImage: {
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        contactUsImage: {
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        column1Title?: string;
+        column1Info?: boolean;
+        column2Title?: string;
+        column2Info?: boolean;
+        column3Title?: string;
+        column3Info?: boolean;
+        _type: "contactSection";
+        _key: string;
+        images: null;
+        logo: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+    | {
+        images: Array<{
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+          _key: string;
+        }> | null;
+        section1?: {
+          title?: string;
+          body?: string;
+        };
+        section2?: {
+          title?: string;
+          items?: Array<{
+            title?: string;
+            body?: string;
+            _type: "item";
+            _key: string;
+          }>;
+        };
+        section3?: {
+          title?: string;
+          image?: {
+            asset?: {
+              _ref: string;
+              _type: "reference";
+              _weak?: boolean;
+              [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+            };
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            _type: "image";
+          };
+          body?: string;
+          buttonText?: string;
+          buttonLink?: {
+            _ref: string;
+            _type: "reference";
+            _weak?: boolean;
+            [internalGroqTypeReferenceTo]?: "page";
+          };
+        };
+        section4?: {
+          title?: string;
+          buttonText?: string;
+          reviews?: Array<{
+            body?: string;
+            person?: string;
+            _type: "review";
+            _key: string;
+          }>;
+        };
+        _type: "contentSection";
+        _key: string;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+    | {
+        headline: Array<{
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "h1" | "h2" | "h3" | "normal";
+          listItem?: never;
+          markDefs: Array<{
+            markForStyling?: boolean;
+            _type: "highlight";
+            _key: string;
+            linkToPage: null;
+          }> | null;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }> | null;
+        _type: "headlineSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+      }
+    | {
+        images: Array<{
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+          _key: string;
+        }> | null;
+        logo: {
+          asset: {
+            _id: string;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            originalFilename?: string;
+            label?: string;
+            title?: string;
+            description?: string;
+            altText?: string;
+            sha1hash?: string;
+            extension?: string;
+            mimeType?: string;
+            size?: number;
+            assetId?: string;
+            uploadId?: string;
+            path?: string;
+            url?: string;
+            metadata?: SanityImageMetadata;
+            source?: SanityAssetSourceData;
+          } | null;
+          media?: unknown;
+          hotspot?: SanityImageHotspot;
+          crop?: SanityImageCrop;
+          _type: "image";
+        } | null;
+        _type: "heroSection";
+        _key: string;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+    | {
+        title?: string;
+        pressSource?: boolean;
+        _type: "pressCoverageSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+    | {
+        title?: string;
+        projectsPageLink: {
+          _id: string;
+          _type: "page";
+          name: string | null;
+          slug: Slug | null;
+        } | null;
+        projectLinkText?: string;
+        viewAllLinkText?: string;
+        selectedProjects: Array<{
+          _id: string;
+          _type: "project";
+          name: string | null;
+          slug: Slug | null;
+          date: string | null;
+          previewImages: Array<{
+            asset: {
+              _id: string;
+              _type: "sanity.imageAsset";
+              _createdAt: string;
+              _updatedAt: string;
+              _rev: string;
+              originalFilename?: string;
+              label?: string;
+              title?: string;
+              description?: string;
+              altText?: string;
+              sha1hash?: string;
+              extension?: string;
+              mimeType?: string;
+              size?: number;
+              assetId?: string;
+              uploadId?: string;
+              path?: string;
+              url?: string;
+              metadata?: SanityImageMetadata;
+              source?: SanityAssetSourceData;
+            } | null;
+            media?: unknown;
+            hotspot?: SanityImageHotspot;
+            crop?: SanityImageCrop;
+            isFeatured: boolean | null;
+            showOnMobile: boolean | null;
+            isFeaturedMobile: boolean | null;
+            _type: "image";
+            _key: string;
+          }> | null;
+        }> | null;
+        _type: "projectsSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        headline: null;
+      }
+    | {
+        title?: string;
+        content?: Markdown;
+        _type: "termsConditionsSection";
+        _key: string;
+        images: null;
+        logo: null;
+        backgroundImage: null;
+        contactUsImage: null;
+        mainImage: null;
+        previewImages: null;
+        gallery: null;
+        selectedProjects: null;
+        projectsPageLink: null;
+        headline: null;
+      }
+  > | null;
+} | null;
 
 // Source: lib/queries/project.ts
 // Variable: PROJECT_QUERY
-// Query: *[  _type == "project"   && slug.current == $projectSlug][0]{  _id,  name,  slug,  date,  shortDescription,  projectSummary,  projectDescription,  mainImage{    ...,    asset->  },  previewImages[]{    ...,    asset->,    isFeatured,    showOnMobile,    isFeaturedMobile  },  gallery[]{    ...,    asset->  },  galleryLayout[]{    type,    images  }}
+// Query: *[  _type == "project"   && slug.current == $projectSlug][0]{  _id,  name,  slug,  date,  shortDescription,  projectSummary,  projectDescription,  mainImage{    ...,    alt,    asset->  },  previewImages[]{    ...,    asset->,    isFeatured,    showOnMobile,    isFeaturedMobile  },  gallery[]{    ...,    asset->  },  galleryLayout[]{    type,    images  }}
 export type PROJECT_QUERYResult = {
   _id: string;
   name: string | null;
@@ -2842,6 +2838,7 @@ export type PROJECT_QUERYResult = {
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
+    alt: null;
   } | null;
   previewImages: Array<{
     asset: {
@@ -2914,13 +2911,13 @@ export type PROJECT_QUERYResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[\n  _type == "page" \n  && slug.current == $pageName \n  && language == "fr"\n][0]{\n  name,\n  language,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': PAGE_QUERY_FRResult;
-    '*[\n  _type == "page" \n  && slug.current == $pageName \n  && language == "en"\n][0]{\n  name,\n  language,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': PAGE_QUERY_EN_SLUGResult;
-    '*[\n  _type == "page" \n  && name == "Home" \n  && language == "en"\n][0]{\n  ...,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': HOME_QUERY_EN_FRONTENDResult;
-    '*[\n  _type == "page" \n  && name == "Home" \n  && language == "fr"\n][0]{\n  ...,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': HOME_QUERY_FRResult;
     '*[_type == "footer"][0]{\n  logoDesktop {\n    asset->{\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  logoMobile {\n    asset->{\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt\n  },\n  column1 {\n    showLanguageSwitch,\n    termsPageEN->{\n      name,\n      slug\n    },\n    termsPageFR->{\n      name,  \n      slug\n    }\n  },\n  "settingsContact": *[_type == "settings"][0].contactInfo {\n    headOfDesign {\n      name,\n      phone,\n      email\n    },\n    generalInquiries {\n      email\n    }\n  },\n  "settingsSocial": *[_type == "settings"][0].socialMedia[] {\n    platform,\n    url\n  },\n}': FOOTER_QUERYResult;
     '*[_type == "navbar"][0]{\n  navbarStructure {\n    brandText,\n    logo {\n      asset->{\n        _id,\n        url,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt\n    },\n    logoWhite {\n      asset->{\n        _id,\n        url,\n        metadata {\n          dimensions {\n            width,\n            height\n          }\n        }\n      },\n      alt\n    },\n    menuItems {\n      menuItemsEN[] {\n        page-> {\n          name,\n          slug,\n          language\n        },\n        mobileImage {\n          asset->{\n            _id,\n            url,\n            metadata {\n              dimensions {\n                width,\n                height\n              }\n            }\n          },\n          alt\n        }\n      },\n      menuItemsFR[] {\n        page-> {\n          name,\n          slug,\n          language  \n        },\n        mobileImage {\n          asset->{\n            _id,\n            url,\n            metadata {\n              dimensions {\n                width,\n                height\n              }\n            }\n          },\n          alt\n        }\n      }\n    }\n  },\n  "settingsSocial": *[_type == "settings"][0].socialMedia[] {\n    platform,\n    url\n  },\n  "termsPageEN": *[_type == "page" && language == "en" && name match "*Terms*" || name match "*Conditions*"][0] {\n    name,\n    slug\n  },\n  "termsPageFR": *[_type == "page" && language == "fr" && name match "*Terms*" || name match "*Conditions*"][0] {\n    name,\n    slug\n  },\n  "settingsContact": *[_type == "settings"][0].contactInfo {\n    headOfDesign {\n      name,\n      phone,\n      email\n    },\n    generalInquiries {\n      email\n    }\n  }\n}': NAVBAR_QUERYResult;
     '*[_type == "project"] | order(date desc) {\n  _id,\n  name,\n  slug,\n  shortDescription,\n  date,\n  projectSummary,\n  projectDescription,\n  mainImage {\n    asset-> {\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt,\n    hotspot,\n    crop\n  },\n  "previewImages": previewImages[]{\n    ..., \n    asset->,\n    isFeatured,\n    showOnMobile,\n    isFeaturedMobile\n  },\n  projectGallery[] {\n    asset-> {\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt,\n    hotspot,\n    crop,\n    showInGrid,\n    gridSpan\n  }\n}': PROJECTS_QUERYResult;
-    '*[\n  _type == "project" \n  && slug.current == $projectSlug\n][0]{\n  _id,\n  name,\n  slug,\n  date,\n  shortDescription,\n  projectSummary,\n  projectDescription,\n  mainImage{\n    ...,\n    asset->\n  },\n  previewImages[]{\n    ...,\n    asset->,\n    isFeatured,\n    showOnMobile,\n    isFeaturedMobile\n  },\n  gallery[]{\n    ...,\n    asset->\n  },\n  galleryLayout[]{\n    type,\n    images\n  }\n}': PROJECT_QUERYResult;
+    '*[\n  _type == "page" \n  && name == "Home" \n  && language == "fr"\n][0]{\n  ...,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': HOME_QUERY_FRResult;
+    '*[\n  _type == "page" \n  && name == "Home" \n  && language == "en"\n][0]{\n  ...,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': HOME_QUERY_ENResult;
+    '*[\n  _type == "page" \n  && slug.current == $slug \n  && language == "fr"\n][0]{\n  name,\n  language,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': PAGE_QUERY_FRResult;
+    '*[\n  _type == "page" \n  && slug.current == $slug \n  && language == "en"\n][0]{\n  name,\n  language,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': PAGE_QUERY_ENResult;
+    '*[\n  _type == "project" \n  && slug.current == $projectSlug\n][0]{\n  _id,\n  name,\n  slug,\n  date,\n  shortDescription,\n  projectSummary,\n  projectDescription,\n  mainImage{\n    ...,\n    alt,\n    asset->\n  },\n  previewImages[]{\n    ...,\n    asset->,\n    isFeatured,\n    showOnMobile,\n    isFeaturedMobile\n  },\n  gallery[]{\n    ...,\n    asset->\n  },\n  galleryLayout[]{\n    type,\n    images\n  }\n}': PROJECT_QUERYResult;
   }
 }

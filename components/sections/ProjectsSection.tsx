@@ -1,10 +1,12 @@
 import ProjectsSectionHeader from "./projects/ProjectsSectionHeader";
 import ProjectCard from "./projects/ProjectCard";
-import { Link } from "next-view-transitions";
 import { NavArrow } from "../Icons";
 import TransitionLink from "../utils/TransitionLink";
+import { Language } from "@/types/TranslationsData";
 
-interface ProjectsSectionData {
+export interface ProjectsSectionData {
+  _type: "projectsSection";
+  _key: string;
   title: string;
   viewAllLinkText: string;
   projectLinkText: string;
@@ -30,20 +32,19 @@ interface ProjectsSectionData {
   }>;
 }
 
-export default function ProjectsSection({
-  data,
-  currentLanguage = "fr",
-}: {
+interface ProjectsSectionProps {
   data: ProjectsSectionData;
-  currentLanguage?: "en" | "fr";
-}) {
+  lng: Language;
+}
+
+export default function ProjectsSection({ data, lng }: ProjectsSectionProps) {
   return (
     <div className="flex flex-col gap-4 px-2.5 md:gap-5 md:px-5">
       <ProjectsSectionHeader
         title={data.title}
         viewAllLinkText={data.viewAllLinkText}
         projectsPageSlug={data.projectsPageLink.slug.current}
-        currentLanguage={currentLanguage}
+        lng={lng}
       />
 
       <div className="flex flex-col gap-4 md:gap-5">
@@ -53,14 +54,14 @@ export default function ProjectsSection({
             project={project}
             projectLinkText={data.projectLinkText}
             projectsPageSlug={data.projectsPageLink.slug.current}
-            currentLanguage={currentLanguage}
+            lng={lng}
           />
         ))}
       </div>
 
       <TransitionLink
         className="nav flex items-center justify-end gap-3 md:hidden"
-        href={`/${currentLanguage === "en" ? "en/" : ""}${data.projectsPageLink.slug.current}`}
+        href={`/${lng === "en" ? "en/" : ""}${data.projectsPageLink.slug.current}`}
       >
         {data.viewAllLinkText}
         <NavArrow />

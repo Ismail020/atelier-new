@@ -10,16 +10,20 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { usePathname } from "next/navigation";
 import TransitionLink from "./utils/TransitionLink";
+import { Language } from "@/types/TranslationsData";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface NavbarProps {
   data: NAVBAR_QUERYResult;
-  currentLanguage?: "en" | "fr";
+  lng: Language;
 }
 
-export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
+export default function Navbar({ data, lng }: NavbarProps) {
   const pathname = usePathname();
+
+  // Determine current language based on pathname
+  const isEnglish = pathname.startsWith("/en");
   const [showLogo, setShowLogo] = useState(false);
   const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -177,27 +181,24 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
   // Check if we're on the home page
   const isHomePage = pathname === "/" || pathname === "/en";
 
-  const menuItems =
-    currentLanguage === "en"
-      ? data.navbarStructure.menuItems?.menuItemsEN
-      : data.navbarStructure.menuItems?.menuItemsFR;
+  const menuItems = isEnglish
+    ? data.navbarStructure.menuItems?.menuItemsEN
+    : data.navbarStructure.menuItems?.menuItemsFR;
 
   // Check if we're on a project page
   const isProjectPage = pathname.includes("/projects/") || pathname.includes("/projets/");
 
   return (
-    <nav className={`sticky top-0 z-50 transition-colors duration-500 ${
-      isProjectPage 
-        ? (showNavbarBg ? "bg-[#F9F7F6]" : "bg-transparent") 
-        : "bg-[#F9F7F6]"
-    }`}>
+    <nav
+      className={`sticky top-0 z-50 transition-colors duration-500 ${
+        isProjectPage ? (showNavbarBg ? "bg-[#F9F7F6]" : "bg-transparent") : "bg-[#F9F7F6]"
+      }`}
+    >
       <div className="mx-auto px-2.5 md:px-5">
         <div className="flex h-[62px] items-center justify-between">
           <TransitionLink
-            className={`relative flex items-center ${
-              isHomePage && showLogo ? "w-auto" : ""
-            }`}
-            href={`/${currentLanguage === "en" ? "en" : ""}`}
+            className={`relative flex items-center ${isHomePage && showLogo ? "w-auto" : ""}`}
+            href={`/${lng === "en" ? "en" : ""}`}
           >
             {/* Show brand text only on home page */}
             {isHomePage && !showLogo && (
@@ -210,7 +211,9 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
             )}
             {/* Show logo on all pages, with smooth transitions between black and white versions */}
             {data.navbarStructure.logo?.asset && (
-              <div className={`relative ${isHomePage && !showLogo ? "absolute left-0 opacity-0" : ""}`}>
+              <div
+                className={`relative ${isHomePage && !showLogo ? "absolute left-0 opacity-0" : ""}`}
+              >
                 {/* Black logo */}
                 <Image
                   ref={logoRef}
@@ -223,25 +226,39 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                   width={data.navbarStructure.logo.asset.metadata?.dimensions?.width || 150}
                   height={data.navbarStructure.logo.asset.metadata?.dimensions?.height || 50}
                   className={`object-contain transition-opacity duration-500 ${
-                    isHomePage 
-                      ? (showLogo ? "opacity-100" : "opacity-0") 
+                    isHomePage
+                      ? showLogo
+                        ? "opacity-100"
+                        : "opacity-0"
                       : isProjectPage && useWhiteText && !showNavbarBg
                         ? "opacity-0"
                         : "opacity-100"
                   }`}
                 />
-                
+
                 {/* White logo - only show if white logo exists, on project page, and when conditions are met */}
                 {(data.navbarStructure as any).logoWhite?.asset && isProjectPage && !isHomePage && (
                   <Image
                     src={urlFor((data.navbarStructure as any).logoWhite)
-                      .width((data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.width || 150)
-                      .height((data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.height || 50)
+                      .width(
+                        (data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.width ||
+                          150,
+                      )
+                      .height(
+                        (data.navbarStructure as any).logoWhite.asset.metadata?.dimensions
+                          ?.height || 50,
+                      )
                       .quality(100)
                       .url()}
                     alt={(data.navbarStructure as any).logoWhite.alt || "Logo"}
-                    width={(data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.width || 150}
-                    height={(data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.height || 50}
+                    width={
+                      (data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.width ||
+                      150
+                    }
+                    height={
+                      (data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.height ||
+                      50
+                    }
                     className={`absolute top-0 left-0 object-contain transition-opacity duration-500 ${
                       useWhiteText && !showNavbarBg ? "opacity-100" : "opacity-0"
                     }`}
@@ -258,9 +275,9 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                 {menuItems?.map((item, index) => (
                   <TransitionLink
                     key={index}
-                    href={`/${currentLanguage === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
+                    href={`/${lng === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
                     className={`nav transition-colors duration-500 ${
-                      isProjectPage && useWhiteText 
+                      isProjectPage && useWhiteText
                         ? "text-white/50 hover:text-white"
                         : "text-[#140D01]/20 hover:text-[#140D01]"
                     }`}
@@ -271,17 +288,13 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                 ))}
               </div>
             )}
-            <button 
-              onClick={toggleDesktopMenu} 
+            <button
+              onClick={toggleDesktopMenu}
               className={`nav w-fit cursor-pointer transition-colors duration-500 ${
                 isProjectPage && useWhiteText ? "text-white" : "text-[#140D01]"
               }`}
             >
-              {isDesktopMenuOpen && !isDesktopMenuClosing
-                ? currentLanguage === "en"
-                  ? "Close"
-                  : "Fermer"
-                : "Menu"}
+              {isDesktopMenuOpen && !isDesktopMenuClosing ? (isEnglish ? "en" : "fr") : "Menu"}
             </button>
           </div>
 
@@ -292,11 +305,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
               isProjectPage && useWhiteText ? "text-white" : "text-[#140D01]"
             }`}
           >
-            {isMobileMenuOpen && !isMobileMenuClosing
-              ? currentLanguage === "en"
-                ? "Close"
-                : "Fermer"
-              : "Menu"}
+            {isMobileMenuOpen && !isMobileMenuClosing ? (isEnglish ? "en" : "fr") : "Menu"}
           </button>
         </div>
       </div>
@@ -313,7 +322,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
             <div ref={menuContentRef} className="flex h-full w-full flex-col justify-between">
               <div className="flex justify-between">
                 <TransitionLink
-                  href={`/${currentLanguage === "en" ? "en" : ""}`}
+                  href={`/${isEnglish ? "en" : ""}`}
                   className="flex items-center text-[#F9F7F6]"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
@@ -386,9 +395,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
 
                 {/* Close button */}
                 <button onClick={() => setIsMobileMenuOpen(false)} className="flex items-center">
-                  <p className="nav text-[#F9F7F6] select-none">
-                    {currentLanguage === "en" ? "Close" : "Fermer"}
-                  </p>
+                  <p className="nav text-[#F9F7F6] select-none">{isEnglish ? "en" : "fr"}</p>
                 </button>
               </div>
 
@@ -396,7 +403,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                 {menuItems?.map((item, index) => (
                   <TransitionLink
                     key={index}
-                    href={`/${currentLanguage === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
+                    href={`/${lng === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
                     className="w-fit"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
@@ -477,8 +484,8 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                   }
                 ).termsPageFR ? (
                   <TransitionLink
-                    href={`/${currentLanguage === "en" ? "en/" : ""}${
-                      currentLanguage === "en"
+                    href={`/${isEnglish ? "en/" : ""}${
+                      isEnglish
                         ? (data as { termsPageEN?: { slug: { current: string } } }).termsPageEN
                             ?.slug?.current
                         : (data as { termsPageFR?: { slug: { current: string } } }).termsPageFR
@@ -487,7 +494,7 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
                     className="infos w-fit text-[#F9F7F6]/70 transition-colors hover:text-[#F9F7F6]"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    {currentLanguage === "en" ? "Terms of Service" : "Conditions Générales"}
+                    {isEnglish ? "Terms of Service" : "Conditions Générales"}
                   </TransitionLink>
                 ) : null}
               </div>
@@ -532,11 +539,11 @@ export default function Navbar({ data, currentLanguage = "en" }: NavbarProps) {
 
                 {/* Language Switcher */}
                 <TransitionLink
-                  href={currentLanguage === "en" ? "/" : "/en"}
+                  href={isEnglish ? "/" : "/en"}
                   className="infos w-fit text-[#F9F7F6]/70 transition-colors hover:text-[#F9F7F6]"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  {currentLanguage === "en" ? "Français" : "English"}
+                  {isEnglish ? "Français" : "English"}
                 </TransitionLink>
               </div>
             </div>

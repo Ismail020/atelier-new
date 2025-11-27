@@ -1,8 +1,8 @@
-import Link from "next/link";
 import { NavArrow } from "../../Icons";
 import { SanityImageArray } from "@/types/sanity";
 import ProjectImageGrid from "./ProjectImageGrid";
 import TransitionLink from "@/components/utils/TransitionLink";
+import { Language } from "@/types/TranslationsData";
 
 interface ProjectCardProps {
   project: {
@@ -14,14 +14,14 @@ interface ProjectCardProps {
   };
   projectLinkText: string;
   projectsPageSlug: string;
-  currentLanguage: "en" | "fr";
+  lng: Language;
 }
 
 export default function ProjectCard({
   project,
   projectLinkText,
   projectsPageSlug,
-  currentLanguage,
+  lng,
 }: ProjectCardProps) {
   return (
     <div className="flex flex-col gap-2">
@@ -40,7 +40,7 @@ export default function ProjectCard({
         <div className="flex justify-end md:col-span-3">
           <TransitionLink
             className="buttons flex items-center gap-3"
-            href={`/${currentLanguage === "en" ? "en/" : ""}${projectsPageSlug}/${project.slug.current}`}
+            href={`/${lng === "en" ? "en/" : ""}${projectsPageSlug}/${project.slug.current}`}
           >
             <span className="hidden md:block">{projectLinkText}</span>
             <NavArrow />

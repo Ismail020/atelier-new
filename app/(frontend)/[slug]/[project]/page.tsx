@@ -14,6 +14,7 @@ interface ProjectPageProps {
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
   const { project } = await params;
+  const lng = "fr";
 
   const { data: projectData } = await sanityFetch({
     query: PROJECT_QUERY,
@@ -26,12 +27,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <div className="flex flex-col gap-5">
-      <ProjectHero
-        image={projectData.mainImage}
-        projectName={projectData.name}
-        shortDescription={projectData.shortDescription}
-        projectSummary={projectData.projectSummary}
-      />
+      <ProjectHero data={projectData} lng={lng} />
 
       <ProjectGallery gallery={projectData.gallery} galleryLayout={projectData.galleryLayout} />
     </div>
@@ -39,19 +35,16 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 }
 
 export async function generateStaticParams() {
-  // Fetch all projects to get their slugs
-  const allProjects = await client.fetch(
-    `*[_type == "project" && defined(slug.current)]{ slug }`
-  );
+  const allProjects = await client.fetch(`*[_type == "project" && defined(slug.current)]{ slug }`);
 
   const params = [];
-  
+
   // Only generate project routes for the French "Projets" page
   if (allProjects) {
     for (const project of allProjects) {
       if (project.slug?.current) {
         params.push({
-          slug: "projets", // Only under French projects page
+          slug: "projets",
           project: project.slug.current,
         });
       }
