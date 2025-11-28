@@ -294,7 +294,7 @@ export default function Navbar({ data, lng }: NavbarProps) {
                 isProjectPage && useWhiteText ? "text-white" : "text-[#140D01]"
               }`}
             >
-              {isDesktopMenuOpen && !isDesktopMenuClosing ? (isEnglish ? "en" : "fr") : "Menu"}
+              {isDesktopMenuOpen && !isDesktopMenuClosing ? (isEnglish ? "Close" : "Fermer") : "Menu"}
             </button>
           </div>
 
@@ -305,7 +305,7 @@ export default function Navbar({ data, lng }: NavbarProps) {
               isProjectPage && useWhiteText ? "text-white" : "text-[#140D01]"
             }`}
           >
-            {isMobileMenuOpen && !isMobileMenuClosing ? (isEnglish ? "en" : "fr") : "Menu"}
+            {isMobileMenuOpen && !isMobileMenuClosing ? (isEnglish ? "Close" : "Fermer") : "Menu"}
           </button>
         </div>
       </div>
@@ -395,7 +395,7 @@ export default function Navbar({ data, lng }: NavbarProps) {
 
                 {/* Close button */}
                 <button onClick={() => setIsMobileMenuOpen(false)} className="flex items-center">
-                  <p className="nav text-[#F9F7F6] select-none">{isEnglish ? "en" : "fr"}</p>
+                  <p className="nav text-[#F9F7F6] select-none">{isEnglish ? "Close" : "Fermer"}</p>
                 </button>
               </div>
 
