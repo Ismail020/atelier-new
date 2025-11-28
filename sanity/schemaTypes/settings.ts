@@ -174,6 +174,20 @@ export const settingsType = defineType({
         }),
       ],
     }),
+    defineField({
+      name: "relatedProjectsTitle",
+      title: "Related Projects Title",
+      type: "internationalizedArrayString",
+      description: "Title for the related projects section on project pages",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "viewAllLinkText",
+      title: "View All Link Text",
+      type: "internationalizedArrayString",
+      description: "Text for the view all projects link",
+      validation: (rule) => rule.required(),
+    }),
   ],
   preview: {
     prepare() {

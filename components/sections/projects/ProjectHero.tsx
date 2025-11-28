@@ -31,6 +31,7 @@ export default function ProjectHero({ data, lng }: ProjectHeroProps) {
         placeholder={data.mainImage.asset?.metadata?.lqip ? "blur" : "empty"}
         blurDataURL={data.mainImage.asset?.metadata?.lqip || undefined}
         quality={95}
+        unoptimized
       />
 
       <div className="hero-overlay absolute inset-0" />

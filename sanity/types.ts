@@ -370,6 +370,8 @@ export type Settings = {
     };
     style?: "primary" | "secondary" | "outline";
   };
+  relatedProjectsTitle?: InternationalizedArrayString;
+  viewAllLinkText?: InternationalizedArrayString;
 };
 
 export type Footer = {
@@ -2906,6 +2908,60 @@ export type PROJECT_QUERYResult = {
     images: Array<string> | null;
   }> | null;
 } | null;
+// Variable: SETTINGS_QUERY
+// Query: *[_type == "settings"][0]{  contactUsButton{    text,    contactPages{      english->{slug},      french->{slug}    },    buttonStyle  },  relatedProjectsTitle,  viewAllLinkText}
+export type SETTINGS_QUERYResult = {
+  contactUsButton: {
+    text: InternationalizedArrayString | null;
+    contactPages: {
+      english: {
+        slug: Slug | null;
+      } | null;
+      french: {
+        slug: Slug | null;
+      } | null;
+    } | null;
+    buttonStyle: null;
+  } | null;
+  relatedProjectsTitle: InternationalizedArrayString | null;
+  viewAllLinkText: InternationalizedArrayString | null;
+} | null;
+// Variable: RELATED_PROJECTS_QUERY
+// Query: *[  _type == "project"   && _id != $currentProjectId  && defined(slug.current)]{  _id,  name,  slug,  date,  mainImage{    ...,    asset->  }} | order(_createdAt desc) [0...10]
+export type RELATED_PROJECTS_QUERYResult = Array<{
+  _id: string;
+  name: string | null;
+  slug: Slug | null;
+  date: string | null;
+  mainImage: {
+    asset: {
+      _id: string;
+      _type: "sanity.imageAsset";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -2919,5 +2975,7 @@ declare module "@sanity/client" {
     '*[\n  _type == "page" \n  && slug.current == $slug \n  && language == "fr"\n][0]{\n  name,\n  language,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': PAGE_QUERY_FRResult;
     '*[\n  _type == "page" \n  && slug.current == $slug \n  && language == "en"\n][0]{\n  name,\n  language,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': PAGE_QUERY_ENResult;
     '*[\n  _type == "project" \n  && slug.current == $projectSlug\n][0]{\n  _id,\n  name,\n  slug,\n  date,\n  shortDescription,\n  projectSummary,\n  projectDescription,\n  mainImage{\n    ...,\n    alt,\n    asset->\n  },\n  previewImages[]{\n    ...,\n    asset->,\n    isFeatured,\n    showOnMobile,\n    isFeaturedMobile\n  },\n  gallery[]{\n    ...,\n    asset->\n  },\n  galleryLayout[]{\n    type,\n    images\n  }\n}': PROJECT_QUERYResult;
+    '*[_type == "settings"][0]{\n  contactUsButton{\n    text,\n    contactPages{\n      english->{slug},\n      french->{slug}\n    },\n    buttonStyle\n  },\n  relatedProjectsTitle,\n  viewAllLinkText\n}': SETTINGS_QUERYResult;
+    '*[\n  _type == "project" \n  && _id != $currentProjectId\n  && defined(slug.current)\n]{\n  _id,\n  name,\n  slug,\n  date,\n  mainImage{\n    ...,\n    asset->\n  }\n} | order(_createdAt desc) [0...10]': RELATED_PROJECTS_QUERYResult;
   }
 }

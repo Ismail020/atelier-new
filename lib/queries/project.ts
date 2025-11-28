@@ -32,3 +32,31 @@ export const PROJECT_QUERY = defineQuery(`*[
     images
   }
 }`);
+
+export const SETTINGS_QUERY = defineQuery(`*[_type == "settings"][0]{
+  contactUsButton{
+    text,
+    contactPages{
+      english->{slug},
+      french->{slug}
+    },
+    buttonStyle
+  },
+  relatedProjectsTitle,
+  viewAllLinkText
+}`);
+
+export const RELATED_PROJECTS_QUERY = defineQuery(`*[
+  _type == "project" 
+  && _id != $currentProjectId
+  && defined(slug.current)
+]{
+  _id,
+  name,
+  slug,
+  date,
+  mainImage{
+    ...,
+    asset->
+  }
+} | order(_createdAt desc) [0...10]`);

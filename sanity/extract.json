@@ -2185,6 +2185,22 @@
           }
         },
         "optional": true
+      },
+      "relatedProjectsTitle": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
+      },
+      "viewAllLinkText": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "internationalizedArrayString"
+        },
+        "optional": true
       }
     }
   },

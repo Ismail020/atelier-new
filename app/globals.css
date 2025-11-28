@@ -75,6 +75,21 @@ body {
   letter-spacing: -0.14px;
 }
 
+.body {
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+@media (min-width: 768px) {
+  .body {
+    font-size: 14px;
+    line-height: 130%;
+  }
+}
+
 .buttons {
   font-family: Poppins;
   font-size: 16px;
@@ -102,6 +117,10 @@ body {
   .tiny {
     line-height: 150%;
   }
+}
+
+.button {
+  @apply w-fit rounded-sm border border-[#140D01] px-10 py-3 transition-all duration-300 ease-out hover:bg-[#140D01] hover:text-white;
 }
 
 ::view-transition-old(root),

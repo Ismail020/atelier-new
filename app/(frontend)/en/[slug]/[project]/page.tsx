@@ -1,9 +1,10 @@
 import { sanityFetch } from "@/sanity/lib/live";
 import { notFound } from "next/navigation";
-import { PROJECT_QUERY } from "@/lib/queries/project";
+import { PROJECT_QUERY, SETTINGS_QUERY } from "@/lib/queries/project";
 import ProjectHero from "@/components/sections/projects/ProjectHero";
 import ProjectGallery from "@/components/sections/projects/ProjectGallery";
 import { client } from "@/sanity/lib/client";
+import ProjectDescription from "@/components/sections/projects/ProjectDescription";
 
 interface ProjectPageProps {
   params: Promise<{
@@ -16,10 +17,15 @@ export default async function ProjectPageEN({ params }: ProjectPageProps) {
   const { project } = await params;
   const lng = "en";
 
-  const { data: projectData } = await sanityFetch({
-    query: PROJECT_QUERY,
-    params: { projectSlug: project },
-  });
+  const [{ data: projectData }, { data: settingsData }] = await Promise.all([
+    sanityFetch({
+      query: PROJECT_QUERY,
+      params: { projectSlug: project },
+    }),
+    sanityFetch({
+      query: SETTINGS_QUERY,
+    }),
+  ]);
 
   if (!projectData) {
     notFound();
@@ -30,6 +36,8 @@ export default async function ProjectPageEN({ params }: ProjectPageProps) {
       <ProjectHero data={projectData} lng={lng} />
 
       <ProjectGallery gallery={projectData.gallery} galleryLayout={projectData.galleryLayout} />
+
+      <ProjectDescription data={projectData} lng={lng} settings={settingsData} />
     </div>
   );
 }
