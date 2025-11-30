@@ -7,6 +7,7 @@ import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import Footer from "@/components/Footer";
 import { getFooterData } from "@/lib/footer";
 import { ViewTransitions } from 'next-view-transitions'
+import PageThemeWrapper from "@/components/PageThemeWrapper";
 
 export const metadata: Metadata = {
   title: "Atelier Nextshift",
@@ -19,15 +20,17 @@ export default async function FrontendLayout({ children }: { children: React.Rea
 
   return (
     <ViewTransitions>
-      <NavbarProvider navbarData={navbarData}>
-        <SmoothScrollProvider />
-        <div className="relative">
-          <ConditionalNavbar navbarData={navbarData} />
-          <main className="relative">{children}</main>
-          <Footer data={foooterData} />
-          <SanityLive />
-        </div>
-      </NavbarProvider>
+      <PageThemeWrapper>
+        <NavbarProvider navbarData={navbarData}>
+          <SmoothScrollProvider />
+          <div className="relative">
+            <ConditionalNavbar navbarData={navbarData} />
+            <main className="relative">{children}</main>
+            <Footer data={foooterData} />
+            <SanityLive />
+          </div>
+        </NavbarProvider>
+      </PageThemeWrapper>
     </ViewTransitions>
   );
 }

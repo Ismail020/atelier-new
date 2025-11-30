@@ -36,6 +36,18 @@ export const PAGE_QUERY_FR = defineQuery(`*[
       name,
       slug
     },
+    _type == "contentSection" => {
+      section3 {
+        ...,
+        "image": image{..., asset->},
+        "buttonLink": buttonLink->{
+          _id,
+          _type,
+          name,
+          slug
+        }
+      }
+    },
     headline[]{
       ...,
       markDefs[]{
@@ -86,6 +98,18 @@ export const PAGE_QUERY_EN = defineQuery(`*[
       _type,
       name,
       slug
+    },
+    _type == "contentSection" => {
+      section3 {
+        ...,
+        "image": image{..., asset->},
+        "buttonLink": buttonLink->{
+          _id,
+          _type,
+          name,
+          slug
+        }
+      }
     },
     headline[]{
       ...,

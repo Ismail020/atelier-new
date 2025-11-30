@@ -2,11 +2,13 @@
 
 import Navbar from "./Navbar";
 import { useNavbar } from "./NavbarContext";
+import { usePathname } from "next/navigation";
 import { Language } from "@/types/TranslationsData";
 import HeroSection, { HeroSectionData } from "./sections/HeroSection";
 import HeadlineSection, { HeadlineSectionData } from "./sections/HeadlineSection";
 import ProjectsSection, { ProjectsSectionData } from "./sections/ProjectsSection";
 import AllProjectsSection, { AllProjectsSectionData } from "./sections/AllProjectsSection";
+import ContentSection, { ContentSectionData } from "./sections/ContentSection";
 
 interface BaseComponent {
   _type: string;
@@ -32,6 +34,9 @@ export default function ComponentRenderer({
   lng,
 }: ComponentRendererProps) {
   const navbarData = useNavbar();
+  const pathname = usePathname();
+  const isAtelierPage = pathname === "/l-atelier" || pathname === "/en/atelier";
+  const theme = isAtelierPage ? "black" : "white";
 
   if (!components || components.length === 0) {
     return null;
@@ -77,13 +82,23 @@ export default function ComponentRenderer({
           );
           break;
 
+        case "contentSection":
+          elements.push(
+            <ContentSection
+              key={component._key || index}
+              data={component as ContentSectionData}
+              lng={lng}
+            />,
+          );
+          break;
+
         default:
           return null;
           break;
       }
 
       if (isHomePage && index === 0 && navbarData) {
-        elements.push(<Navbar key="navbar" data={navbarData} lng={lng} />);
+        elements.push(<Navbar key="navbar" data={navbarData} lng={lng} theme={theme} />);
       }
     });
 

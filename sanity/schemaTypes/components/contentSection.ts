@@ -165,6 +165,12 @@ export const contentSection = {
           placeholder: "View All Reviews",
         }),
         defineField({
+          name: "buttonLink",
+          title: "Button Link",
+          type: "url",
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
           name: "reviews",
           title: "Reviews",
           type: "array",

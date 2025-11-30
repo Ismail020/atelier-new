@@ -17,9 +17,10 @@ gsap.registerPlugin(ScrollTrigger);
 interface NavbarProps {
   data: NAVBAR_QUERYResult;
   lng: Language;
+  theme?: string;
 }
 
-export default function Navbar({ data, lng }: NavbarProps) {
+export default function Navbar({ data, lng, theme }: NavbarProps) {
   const pathname = usePathname();
 
   // Determine current language based on pathname
@@ -185,13 +186,21 @@ export default function Navbar({ data, lng }: NavbarProps) {
     ? data.navbarStructure.menuItems?.menuItemsEN
     : data.navbarStructure.menuItems?.menuItemsFR;
 
-  // Check if we're on a project page
   const isProjectPage = pathname.includes("/projects/") || pathname.includes("/projets/");
+
+  const isAtelierPage = pathname === "/l-atelier" || pathname === "/en/atelier";
+  const useBlackTheme = theme === "black" || isAtelierPage;
 
   return (
     <nav
       className={`sticky top-0 z-50 transition-colors duration-500 ${
-        isProjectPage ? (showNavbarBg ? "bg-[#F9F7F6]" : "bg-transparent") : "bg-[#F9F7F6]"
+        useBlackTheme
+          ? "bg-[#140D01]"
+          : isProjectPage
+            ? showNavbarBg
+              ? "bg-[#F9F7F6]"
+              : "bg-transparent"
+            : "bg-[#F9F7F6]"
       }`}
     >
       <div className="mx-auto px-2.5 md:px-5">
@@ -204,7 +213,9 @@ export default function Navbar({ data, lng }: NavbarProps) {
             {isHomePage && !showLogo && (
               <span
                 ref={brandTextRef}
-                className="nav text-[#140D01] transition-opacity duration-300"
+                className={`nav transition-opacity duration-300 ${
+                  useBlackTheme ? "text-white" : "text-[#140D01]"
+                }`}
               >
                 {data.navbarStructure.brandText}
               </span>
@@ -226,44 +237,49 @@ export default function Navbar({ data, lng }: NavbarProps) {
                   width={data.navbarStructure.logo.asset.metadata?.dimensions?.width || 150}
                   height={data.navbarStructure.logo.asset.metadata?.dimensions?.height || 50}
                   className={`object-contain transition-opacity duration-500 ${
-                    isHomePage
-                      ? showLogo
-                        ? "opacity-100"
-                        : "opacity-0"
-                      : isProjectPage && useWhiteText && !showNavbarBg
-                        ? "opacity-0"
-                        : "opacity-100"
+                    useBlackTheme
+                      ? "opacity-0"
+                      : isHomePage
+                        ? showLogo
+                          ? "opacity-100"
+                          : "opacity-0"
+                        : isProjectPage && useWhiteText && !showNavbarBg
+                          ? "opacity-0"
+                          : "opacity-100"
                   }`}
                 />
 
-                {/* White logo - only show if white logo exists, on project page, and when conditions are met */}
-                {(data.navbarStructure as any).logoWhite?.asset && isProjectPage && !isHomePage && (
-                  <Image
-                    src={urlFor((data.navbarStructure as any).logoWhite)
-                      .width(
+                {/* White logo - show if white logo exists and either black theme or project page conditions are met */}
+                {(data.navbarStructure as any).logoWhite?.asset &&
+                  (useBlackTheme || (isProjectPage && !isHomePage)) && (
+                    <Image
+                      src={urlFor((data.navbarStructure as any).logoWhite)
+                        .width(
+                          (data.navbarStructure as any).logoWhite.asset.metadata?.dimensions
+                            ?.width || 150,
+                        )
+                        .height(
+                          (data.navbarStructure as any).logoWhite.asset.metadata?.dimensions
+                            ?.height || 50,
+                        )
+                        .quality(100)
+                        .url()}
+                      alt={(data.navbarStructure as any).logoWhite.alt || "Logo"}
+                      width={
                         (data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.width ||
-                          150,
-                      )
-                      .height(
+                        150
+                      }
+                      height={
                         (data.navbarStructure as any).logoWhite.asset.metadata?.dimensions
-                          ?.height || 50,
-                      )
-                      .quality(100)
-                      .url()}
-                    alt={(data.navbarStructure as any).logoWhite.alt || "Logo"}
-                    width={
-                      (data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.width ||
-                      150
-                    }
-                    height={
-                      (data.navbarStructure as any).logoWhite.asset.metadata?.dimensions?.height ||
-                      50
-                    }
-                    className={`absolute top-0 left-0 object-contain transition-opacity duration-500 ${
-                      useWhiteText && !showNavbarBg ? "opacity-100" : "opacity-0"
-                    }`}
-                  />
-                )}
+                          ?.height || 50
+                      }
+                      className={`absolute top-0 left-0 object-contain transition-opacity duration-500 ${
+                        useBlackTheme || (useWhiteText && !showNavbarBg)
+                          ? "opacity-100"
+                          : "opacity-0"
+                      }`}
+                    />
+                  )}
               </div>
             )}
           </TransitionLink>
@@ -277,9 +293,11 @@ export default function Navbar({ data, lng }: NavbarProps) {
                     key={index}
                     href={`/${lng === "en" ? "en/" : ""}${item.page?.slug?.current || "page"}`}
                     className={`nav transition-colors duration-500 ${
-                      isProjectPage && useWhiteText
+                      useBlackTheme
                         ? "text-white/50 hover:text-white"
-                        : "text-[#140D01]/20 hover:text-[#140D01]"
+                        : isProjectPage && useWhiteText
+                          ? "text-white/50 hover:text-white"
+                          : "text-[#140D01]/20 hover:text-[#140D01]"
                     }`}
                     onNavigationStart={() => setIsDesktopMenuOpen(false)}
                   >
@@ -291,10 +309,18 @@ export default function Navbar({ data, lng }: NavbarProps) {
             <button
               onClick={toggleDesktopMenu}
               className={`nav w-fit cursor-pointer transition-colors duration-500 ${
-                isProjectPage && useWhiteText ? "text-white" : "text-[#140D01]"
+                useBlackTheme
+                  ? "text-white"
+                  : isProjectPage && useWhiteText
+                    ? "text-white"
+                    : "text-[#140D01]"
               }`}
             >
-              {isDesktopMenuOpen && !isDesktopMenuClosing ? (isEnglish ? "Close" : "Fermer") : "Menu"}
+              {isDesktopMenuOpen && !isDesktopMenuClosing
+                ? isEnglish
+                  ? "Close"
+                  : "Fermer"
+                : "Menu"}
             </button>
           </div>
 
@@ -302,7 +328,11 @@ export default function Navbar({ data, lng }: NavbarProps) {
           <button
             onClick={toggleMobileMenu}
             className={`nav w-fit cursor-pointer transition-colors duration-500 md:hidden ${
-              isProjectPage && useWhiteText ? "text-white" : "text-[#140D01]"
+              useBlackTheme
+                ? "text-white"
+                : isProjectPage && useWhiteText
+                  ? "text-white"
+                  : "text-[#140D01]"
             }`}
           >
             {isMobileMenuOpen && !isMobileMenuClosing ? (isEnglish ? "Close" : "Fermer") : "Menu"}
