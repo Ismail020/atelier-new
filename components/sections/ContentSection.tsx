@@ -259,7 +259,7 @@ export default function ContentSection({ data, lng }: ContentSectionProps) {
             </div>
 
             <Link
-              className="nav hidden items-center gap-3 md:flex"
+              className="nav items-center gap-3 flex"
               href={data.section4.buttonLink}
               target="_blank"
               rel="noopener noreferrer"
