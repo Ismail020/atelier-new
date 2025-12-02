@@ -28,8 +28,8 @@ export default function ProjectHero({ data, lng }: ProjectHeroProps) {
         className="object-cover transition-opacity duration-300"
         priority
         fetchPriority="high"
-        placeholder={data.mainImage.asset?.metadata?.lqip ? "blur" : "empty"}
-        blurDataURL={data.mainImage.asset?.metadata?.lqip || undefined}
+        // placeholder={data.mainImage.asset?.metadata?.lqip ? "blur" : "empty"}
+        // blurDataURL={data.mainImage.asset?.metadata?.lqip || undefined}
         quality={95}
         unoptimized
       />

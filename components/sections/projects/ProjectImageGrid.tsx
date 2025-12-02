@@ -76,8 +76,8 @@ export default function ProjectImageGrid({ images, projectName }: ProjectImageGr
             className="h-full w-full rounded-sm object-cover"
             unoptimized
             loading="lazy"
-            placeholder="blur"
-            blurDataURL={image.asset?.metadata?.lqip}
+            // placeholder="blur"
+            // blurDataURL={image.asset?.metadata?.lqip}
           />
         </div>
       );

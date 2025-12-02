@@ -116,8 +116,8 @@ export default function HeroSection({ data }: HeroSectionProps) {
                 (max-width: 1200px) 100vw,
                 100vw
               "
-              placeholder="blur"
-              blurDataURL={image.asset?.metadata?.lqip}
+              // placeholder="blur"
+              // blurDataURL={image.asset?.metadata?.lqip}
             />
           </div>
         ))}

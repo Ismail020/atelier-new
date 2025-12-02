@@ -166,8 +166,8 @@ export default function ProjectGallery({ gallery = [], galleryLayout = [] }: Pro
                         className="object-cover transition-opacity duration-300"
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         loading={rowIndex < 2 ? "eager" : "lazy"}
-                        placeholder={image.asset?.metadata?.lqip ? "blur" : "empty"}
-                        blurDataURL={image.asset?.metadata?.lqip || undefined}
+                        // placeholder={image.asset?.metadata?.lqip ? "blur" : "empty"}
+                        // blurDataURL={image.asset?.metadata?.lqip || undefined}
                         quality={95}
                         unoptimized
                       />

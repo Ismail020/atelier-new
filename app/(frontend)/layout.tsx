@@ -6,7 +6,7 @@ import { getNavbarData } from "@/lib/navbar";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
 import Footer from "@/components/Footer";
 import { getFooterData } from "@/lib/footer";
-import { ViewTransitions } from 'next-view-transitions'
+import { ViewTransitions } from "next-view-transitions";
 import PageThemeWrapper from "@/components/PageThemeWrapper";
 
 export const metadata: Metadata = {
