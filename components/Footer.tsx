@@ -24,7 +24,7 @@ export default function Footer({ data }: FooterProps) {
   const mobileLogo = data.logoMobile;
 
   return (
-    <footer className="mt-[140px] flex flex-col bg-[#140D01] px-2.5 text-[#F9F7F6] md:px-5">
+    <footer className="mt-[100px] flex flex-col bg-[#140D01] px-2.5 text-[#F9F7F6] md:mt-[140px] md:px-5">
       {logo?.asset && mobileLogo?.asset && (
         <>
           <Image

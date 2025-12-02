@@ -685,6 +685,13 @@
                 },
                 "optional": true
               },
+              "buttonLink": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                },
+                "optional": true
+              },
               "reviews": {
                 "type": "objectAttribute",
                 "value": {
@@ -4320,6 +4327,13 @@
                           "optional": true
                         },
                         "buttonText": {
+                          "type": "objectAttribute",
+                          "value": {
+                            "type": "string"
+                          },
+                          "optional": true
+                        },
+                        "buttonLink": {
                           "type": "objectAttribute",
                           "value": {
                             "type": "string"

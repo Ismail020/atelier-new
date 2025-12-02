@@ -11,6 +11,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Accordion from "../Accordion";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,6 +32,7 @@ export default function ContentSection({ data, lng }: ContentSectionProps) {
   const rightSideRef = useRef<HTMLDivElement>(null);
 
   const [parallaxY, setParallaxY] = useState("0px");
+  const [animateLeft, setAnimateLeft] = useState(false);
 
   useLayoutEffect(() => {
     function updateParallax() {
@@ -38,10 +40,7 @@ export default function ContentSection({ data, lng }: ContentSectionProps) {
 
       const leftHeight = leftSideRef.current.offsetHeight;
       const rightHeight = rightSideRef.current.offsetHeight;
-
-      // We want the right side to move up just enough so its bottom aligns with the left side's bottom
-      // when viewed through the container's viewport
-      const diff = rightHeight - leftHeight;
+      const diff = Math.abs(rightHeight - leftHeight);
 
       console.log("Left height:", leftHeight);
       console.log("Right height:", rightHeight);
@@ -49,8 +48,11 @@ export default function ContentSection({ data, lng }: ContentSectionProps) {
 
       let y = "0px";
       if (diff > 0) {
-        // Move exactly the difference so both sides end at the same visual point
         y = `${diff}px`;
+        // Determine which side should animate
+        setAnimateLeft(leftHeight > rightHeight);
+      } else {
+        setAnimateLeft(false);
       }
       setParallaxY(y);
     }
@@ -61,57 +63,103 @@ export default function ContentSection({ data, lng }: ContentSectionProps) {
   }, [data]);
 
   useGSAP(() => {
-    if (!sectionRef.current || !rightSideRef.current || parallaxY === "0px") return;
+    if (typeof window !== "undefined" && window.innerWidth < 768) {
+      ScrollTrigger.getById("left-parallax")?.kill();
+      ScrollTrigger.getById("right-parallax")?.kill();
+      return;
+    }
 
-    // Kill existing animation
+    if (!sectionRef.current || parallaxY === "0px") return;
+
+    // Kill existing animations
+    ScrollTrigger.getById("left-parallax")?.kill();
     ScrollTrigger.getById("right-parallax")?.kill();
 
+    const targetElement = animateLeft ? leftSideRef.current : rightSideRef.current;
+    const animationId = animateLeft ? "left-parallax" : "right-parallax";
+
+    if (!targetElement) return;
+
     gsap.fromTo(
-      rightSideRef.current,
+      targetElement,
       { y: 0 },
       {
         y: `-${parallaxY}`,
         ease: "none",
         scrollTrigger: {
-          id: "right-parallax",
+          id: animationId,
           trigger: sectionRef.current,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1,
-          markers: true,
+          scrub: 0,
           invalidateOnRefresh: true,
         },
       },
     );
 
     ScrollTrigger.refresh();
-  }, [parallaxY]);
+  }, [parallaxY, animateLeft]);
 
   return (
     <div
       ref={sectionRef}
       className="flex items-start gap-[60px] bg-[#140D01] px-2.5 text-[#F9F7F6] md:px-5"
       style={{
-        height: leftSideRef.current?.offsetHeight || undefined,
+        height:
+          Math.min(
+            leftSideRef.current?.offsetHeight || 0,
+            rightSideRef.current?.offsetHeight || 0,
+          ) || undefined,
         overflow: "hidden",
       }}
     >
-      <div ref={leftSideRef} className="flex w-1/2 flex-col gap-[254px]">
-        <div className="mt-20 flex flex-col gap-[280px] md:mt-[85px]">
+      <div
+        ref={leftSideRef}
+        className="flex w-full flex-col gap-[140px] md:w-1/2 md:gap-[254px]"
+        style={{ willChange: "transform" }}
+      >
+        <div className="mt-20 flex flex-col gap-[30px] md:mt-[85px] md:gap-[280px]">
           <h1 className="h1-desktop max-w-[620px]">{data.section1.title}</h1>
 
+          {data.images && data.images.length > 0 && (
+            <Image
+              src={urlFor(data.images[0])
+                .width(getImageWidth(data.images[0])!)
+                .height(getImageHeight(data.images[0])!)
+                .quality(100)
+                .url()}
+              alt={data.images[0].alt || "Section image"}
+              width={getImageWidth(data.images[0])!}
+              height={getImageHeight(data.images[0])!}
+              className="flex object-contain md:hidden"
+              unoptimized
+            />
+          )}
           <div>
-            <p className="body max-w-[330px]">
+            <p className="body text-[#8E8E8E] md:max-w-[330px]">
               <Balancer>{data.section1.body}</Balancer>
             </p>
           </div>
         </div>
 
-        <div className="flex flex-col gap-44">
-          <div className="flex flex-col gap-20">
+        <div className="flex flex-col gap-[140px] md:gap-44">
+          <div className="flex flex-col gap-8 md:gap-20">
+            {data.images && data.images.length > 0 && (
+              <Image
+                src={urlFor(data.images[1])
+                  .width(getImageWidth(data.images[1])!)
+                  .height(getImageHeight(data.images[1])!)
+                  .quality(100)
+                  .url()}
+                alt={data.images[1].alt || "Section image"}
+                width={getImageWidth(data.images[1])!}
+                height={getImageHeight(data.images[1])!}
+                className="flex object-contain md:hidden"
+                unoptimized
+              />
+            )}
             <h2 className="h1-desktop">{data.section2.title}</h2>
-
-            <div className="grid grid-cols-2 gap-x-[64px] gap-y-[70px]">
+            <div className="hidden grid-cols-2 gap-x-[64px] gap-y-[70px] md:grid">
               {data.section2.items.map((item: any, index: number) => (
                 <div key={index} className="flex w-fit flex-col gap-3">
                   <h3 className="h2-desktop">{item.title}</h3>
@@ -121,51 +169,85 @@ export default function ContentSection({ data, lng }: ContentSectionProps) {
                 </div>
               ))}
             </div>
+            <div className="md:hidden">
+              <Accordion items={data.section2.items} />
+            </div>
           </div>
 
-          <div className="flex flex-col">
-            <h2 className="h1-desktop">{data.section3.title}</h2>
-            {data.section3.image && (
-              <div className="pt-20">
-                <Image
-                  src={urlFor(data.section3.image)
-                    .width(getImageWidth(data.section3.image)!)
-                    .height(getImageHeight(data.section3.image)!)
-                    .quality(100)
-                    .url()}
-                  alt={data.section3.image.alt || "Section image"}
-                  width={getImageWidth(data.section3.image)!}
-                  height={getImageHeight(data.section3.image)!}
-                  className="object-contain"
-                  unoptimized
-                />
-              </div>
+          <div className="flex flex-col gap-8">
+            {data.images && data.images.length > 0 && (
+              <Image
+                src={urlFor(data.images[2])
+                  .width(getImageWidth(data.images[2])!)
+                  .height(getImageHeight(data.images[2])!)
+                  .quality(100)
+                  .url()}
+                alt={data.images[2].alt || "Section image"}
+                width={getImageWidth(data.images[2])!}
+                height={getImageHeight(data.images[2])!}
+                className="flex object-contain md:hidden"
+                unoptimized
+              />
             )}
+            <div className="flex flex-col">
+              <h2 className="h1-desktop">{data.section3.title}</h2>
+              {data.section3.image && (
+                <div className="pt-8 md:pt-20">
+                  <Image
+                    src={urlFor(data.section3.image)
+                      .width(getImageWidth(data.section3.image)!)
+                      .height(getImageHeight(data.section3.image)!)
+                      .quality(100)
+                      .url()}
+                    alt={data.section3.image.alt || "Section image"}
+                    width={getImageWidth(data.section3.image)!}
+                    height={getImageHeight(data.section3.image)!}
+                    className="object-contain"
+                    unoptimized
+                  />
+                </div>
+              )}
 
-            <p className="body max-w-[370px] pt-[42px] pb-8 text-[#989898]">
-              <Balancer>{data.section3.body}</Balancer>
-            </p>
+              <p className="body pt-10 pb-5 text-[#989898] md:max-w-[370px] md:pb-8">
+                <Balancer>{data.section3.body}</Balancer>
+              </p>
 
-            <TransitionLink
-              href={
-                data.section3.buttonLink?.slug?.current
-                  ? `/${lng === "en" ? "en/" : ""}${data.section3.buttonLink.slug.current}`
-                  : "#"
-              }
-              className="button-white buttons"
-            >
-              {data.section3.buttonText}
-            </TransitionLink>
+              <TransitionLink
+                href={
+                  data.section3.buttonLink?.slug?.current
+                    ? `/${lng === "en" ? "en/" : ""}${data.section3.buttonLink.slug.current}`
+                    : "#"
+                }
+                className="button-white buttons"
+              >
+                {data.section3.buttonText}
+              </TransitionLink>
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-col gap-20">
+        <div className="flex flex-col gap-8 md:gap-20">
+          {data.images && data.images.length > 0 && (
+            <Image
+              src={urlFor(data.images[3])
+                .width(getImageWidth(data.images[3])!)
+                .height(getImageHeight(data.images[3])!)
+                .quality(100)
+                .url()}
+              alt={data.images[3].alt || "Section image"}
+              width={getImageWidth(data.images[3])!}
+              height={getImageHeight(data.images[3])!}
+              className="flex object-contain md:hidden"
+              unoptimized
+            />
+          )}
+
           <h2 className="h1-desktop">{data.section4.title}</h2>
 
           <div className="flex flex-col gap-11">
             <div className="flex flex-col gap-10">
               {data.section4.reviews.map((review: any, index: number) => (
-                <div key={index} className="body flex max-w-[370px] flex-col">
+                <div key={index} className="body flex flex-col md:max-w-[370px]">
                   <p className="text-[#989898]">
                     <Balancer>{review.body}</Balancer>
                   </p>
@@ -191,7 +273,7 @@ export default function ContentSection({ data, lng }: ContentSectionProps) {
 
       <div
         ref={rightSideRef}
-        className="flex w-1/2 flex-col gap-4 self-start"
+        className="hidden w-1/2 flex-col gap-4 self-start md:flex"
         style={{ willChange: "transform" }}
       >
         {data.images.map((image: any, index: number) => (
@@ -205,7 +287,7 @@ export default function ContentSection({ data, lng }: ContentSectionProps) {
               alt={image.alt || "Section image"}
               width={getImageWidth(image)!}
               height={getImageHeight(image)!}
-              className="object-contain"
+              className="h-auto w-full object-contain"
               unoptimized
             />
           </div>
