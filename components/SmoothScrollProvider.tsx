@@ -5,7 +5,7 @@ import { LenisRef, ReactLenis } from "lenis/react";
 import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
-export default function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
+export default function SmoothScrollProvider() {
   const lenisRef = useRef<LenisRef>(null);
   const pathname = usePathname();
 
@@ -28,9 +28,5 @@ export default function SmoothScrollProvider({ children }: { children: React.Rea
     }
   }, [pathname]);
 
-  return (
-    <ReactLenis root options={{ autoRaf: false }} ref={lenisRef}>
-      {children}
-    </ReactLenis>
-  );
+  return <ReactLenis root options={{ autoRaf: false }} ref={lenisRef} />;
 }
