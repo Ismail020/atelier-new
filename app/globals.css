@@ -290,6 +290,7 @@ body {
 
 .plyr--video {
   position: relative !important;
+  width: 100% !important;
 }
 
 .plyr--full-ui.plyr--video .plyr__control--overlaid {
@@ -298,7 +299,7 @@ body {
 }
 
 .plyr__control--overlaid[data-plyr="play"]::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
