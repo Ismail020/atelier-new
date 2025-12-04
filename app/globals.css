@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "plyr/dist/plyr.css";
 
 .hero-overlay {
   background:
@@ -203,4 +204,109 @@ body {
   @media (display-mode: standalone) {
     @slot;
   }
+}
+
+/* Plyr YouTube Player Custom Styling */
+:root {
+  --plyr-color-main: #140d01;
+}
+
+.plyr__volume input[type="range"],
+.plyr__progress input[type="range"] {
+  color: white;
+}
+
+.plyr__poster {
+  background-size: cover;
+}
+
+.plyr--stopped .plyr__controls {
+  opacity: 0;
+}
+
+.plyr__controls .plyr__control {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.plyr__controls .plyr__control:hover {
+  background: #140d01;
+}
+
+.plyr__controls .plyr__control:hover svg {
+  fill: white;
+}
+
+.plyr__control--overlaid,
+.plyr__control--overlaid:hover {
+  background: white !important;
+}
+
+.plyr__control--overlaid svg {
+  fill: #140d01;
+}
+
+.plyr__control--overlaid {
+  padding: calc(var(--plyr-control-spacing, 10px) * 3.5);
+}
+
+@media all and (max-width: 767px) {
+  .plyr__control--overlaid {
+    padding: calc(var(--plyr-control-spacing, 10px) * 2);
+  }
+}
+
+.plyr__video-wrapper {
+  background: transparent;
+}
+
+.plyr__video-wrapper iframe {
+  background: transparent;
+}
+
+.plyr-instance {
+  background: transparent;
+}
+
+@media all and not (display-mode: fullscreen) {
+  .plyr iframe[id^="youtube"] {
+    top: -50%;
+    height: 200%;
+  }
+}
+
+.plyr__control .plyr__control--overlaid {
+  background-color: #f4f4f4 !important;
+}
+
+.plyr__control--overlaid svg {
+  fill: #121212 !important;
+}
+
+/* Hide default Plyr play icon and replace with our custom VideoPlayIcon */
+.plyr__control--overlaid[data-plyr="play"] svg {
+  display: none !important;
+  width: 100%;
+}
+
+.plyr--video {
+  position: relative !important;
+}
+
+.plyr--full-ui.plyr--video .plyr__control--overlaid {
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+.plyr__control--overlaid[data-plyr="play"]::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10%;
+  aspect-ratio: 1;
+  background-image: url("/VideoPlayIcon.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
 }

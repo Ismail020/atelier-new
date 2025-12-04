@@ -42,11 +42,19 @@ export const pressType = defineType({
         }),
         defineField({
           name: "video",
-          title: "Video",
-          type: "file",
-          options: {
-            accept: "video/*",
-          },
+          title: "YouTube Video URL",
+          type: "url",
+          description: "YouTube video URL (e.g., https://www.youtube.com/watch?v=...)",
+          validation: (rule) =>
+            rule.custom((url) => {
+              if (!url) return true; // Allow empty if not required
+              
+              const youtubeRegex = /^https:\/\/(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)/;
+              if (!youtubeRegex.test(url)) {
+                return "Please enter a valid YouTube URL";
+              }
+              return true;
+            }),
           hidden: ({ parent }) => parent?.type !== "video",
         }),
       ],
