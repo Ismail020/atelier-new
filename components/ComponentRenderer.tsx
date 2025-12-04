@@ -10,6 +10,7 @@ import ProjectsSection, { ProjectsSectionData } from "./sections/ProjectsSection
 import AllProjectsSection, { AllProjectsSectionData } from "./sections/AllProjectsSection";
 import ContentSection, { ContentSectionData } from "./sections/ContentSection";
 import PressCoverageSection, { PressCoverageSectionData } from "./sections/PressCoverageSection";
+import ContactSection, { ContactSectionData } from "./sections/ContactSection";
 
 interface BaseComponent {
   _type: string;
@@ -98,6 +99,16 @@ export default function ComponentRenderer({
             <PressCoverageSection
               key={component._key || index}
               data={component as PressCoverageSectionData}
+              lng={lng}
+            />,
+          );
+          break;
+
+        case "contactSection":
+          elements.push(
+            <ContactSection
+              key={component._key || index}
+              data={component as ContactSectionData}
               lng={lng}
             />,
           );
