@@ -169,7 +169,7 @@ export default function PressCoverageSection({ data, lng }: PressCoverageSection
                     rel="noopener noreferrer"
                     className="nav flex w-fit items-center gap-3 text-[#140D01]"
                   >
-                    Read the full article
+                    {lng === "fr" ? "Lire l'article complet" : "Read the full article"}
                     <NavArrow />
                   </a>
                 )}

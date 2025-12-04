@@ -51,7 +51,7 @@ export default function Footer({ data }: FooterProps) {
         <div className="flex w-1/2 flex-col justify-between gap-1 md:w-[255px]">
           {data.column1?.showLanguageSwitch && (
             <TransitionLink href={lng === "en" ? "/" : "/en"} className="infos">
-              Switch to{" "}
+              {lng === "en" ? "Passer au" : "Switch to"}{" "}
               <span className="text-[#ffffff70]">{lng === "en" ? "Français" : "English"}</span>
             </TransitionLink>
           )}
@@ -139,7 +139,88 @@ export default function Footer({ data }: FooterProps) {
               : "© 2025 Atelier Philibert. Tous droits réservés."}
           </p>
 
-          <p className="tiny">Website credits</p>
+          <div className="tiny">
+            <p className="sm:hidden">
+              {lng === "en" ? (
+                <>
+                  Website by{" "}
+                  <a
+                    href="mailto:contact@nextshift.nl"
+                    className="transition-colors hover:text-white hover:underline"
+                  >
+                    Nextshift
+                  </a>{" "}
+                  &amp; design by{" "}
+                  <a
+                    href="https://www.linkedin.com/in/korantin-grall-5094867b/"
+                    className="transition-colors hover:text-white hover:underline"
+                  >
+                    Korantin
+                  </a>
+                </>
+              ) : (
+                <>
+                  Site web par{" "}
+                  <a
+                    href="mailto:contact@nextshift.nl"
+                    className="transition-colors hover:text-white hover:underline"
+                  >
+                    Nextshift
+                  </a>{" "}
+                  &amp; design par{" "}
+                  <a
+                    href="https://www.linkedin.com/in/korantin-grall-5094867b/"
+                    className="transition-colors hover:text-white hover:underline"
+                  >
+                    Korantin
+                  </a>
+                </>
+              )}
+            </p>
+
+            <div className="group relative hidden sm:block">
+              <p className="transition-opacity duration-300 group-hover:opacity-0">
+                Website credits
+              </p>
+              <p className="absolute top-0 right-0 whitespace-nowrap opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                {lng === "en" ? (
+                  <>
+                    Website by{" "}
+                    <a
+                      href="mailto:contact@nextshift.nl"
+                      className="transition-colors hover:text-white hover:underline"
+                    >
+                      Nextshift
+                    </a>{" "}
+                    &amp; design by{" "}
+                    <a
+                      href="https://www.linkedin.com/in/korantin-grall-5094867b/"
+                      className="transition-colors hover:text-white hover:underline"
+                    >
+                      Korantin
+                    </a>
+                  </>
+                ) : (
+                  <>
+                    Site web par{" "}
+                    <a
+                      href="mailto:contact@nextshift.nl"
+                      className="transition-colors hover:text-white hover:underline"
+                    >
+                      Nextshift
+                    </a>{" "}
+                    &amp; design par{" "}
+                    <a
+                      href="https://www.linkedin.com/in/korantin-grall-5094867b/"
+                      className="transition-colors hover:text-white hover:underline"
+                    >
+                      Korantin
+                    </a>
+                  </>
+                )}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
