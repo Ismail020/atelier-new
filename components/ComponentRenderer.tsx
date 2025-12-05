@@ -11,6 +11,7 @@ import AllProjectsSection, { AllProjectsSectionData } from "./sections/AllProjec
 import ContentSection, { ContentSectionData } from "./sections/ContentSection";
 import PressCoverageSection, { PressCoverageSectionData } from "./sections/PressCoverageSection";
 import ContactSection, { ContactSectionData } from "./sections/ContactSection";
+import TermsConditionsSection, { TermsConditionsSectionData } from "./sections/TermsConditionsSection";
 
 interface BaseComponent {
   _type: string;
@@ -109,6 +110,16 @@ export default function ComponentRenderer({
             <ContactSection
               key={component._key || index}
               data={component as ContactSectionData}
+              lng={lng}
+            />,
+          );
+          break;
+
+        case "termsConditionsSection":
+          elements.push(
+            <TermsConditionsSection
+              key={component._key || index}
+              data={component as TermsConditionsSectionData}
               lng={lng}
             />,
           );

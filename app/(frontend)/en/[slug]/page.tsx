@@ -24,7 +24,11 @@ export default async function EnglishPage({ params }: PageProps) {
     notFound();
   }
 
-  return <ComponentRenderer components={page.components || []} lng="en" />;
+  return (
+    <div className="mb-[100px] md:mb-[140px]">
+      <ComponentRenderer components={page.components || []} lng="en" />
+    </div>
+  );
 }
 
 export async function generateStaticParams() {

@@ -38,7 +38,7 @@ export default async function ProjectPageEN({ params }: ProjectPageProps) {
   });
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="mb-[100px] flex flex-col gap-5 md:mb-[140px]">
       <ProjectHero data={projectData} lng={lng} />
 
       <ProjectGallery gallery={projectData.gallery} galleryLayout={projectData.galleryLayout} />

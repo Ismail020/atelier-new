@@ -12,5 +12,9 @@ export default async function Home() {
     return null;
   }
 
-  return <ComponentRenderer components={page.components || []} isHomePage={true} lng="fr" />;
+  return (
+    <div className="mb-[100px] md:mb-[140px]">
+      <ComponentRenderer components={page.components || []} isHomePage={true} lng="fr" />
+    </div>
+  );
 }
