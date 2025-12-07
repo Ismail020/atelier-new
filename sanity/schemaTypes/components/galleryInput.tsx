@@ -77,8 +77,11 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
 
       const ar = dims.width / dims.height;
 
-      if (ar > 1.25 && ar < 1.4) wide43++;
-      else if (ar > 0.7 && ar < 0.8) tall075++;
+      // Breder ranges voor aspect ratios
+      // 4:3 ratio (1.33) - landscape: 1.1 tot 1.6
+      // 0.75:1 ratio (0.75) - portrait: 0.6 tot 0.9
+      if (ar >= 1.1 && ar <= 1.6) wide43++;
+      else if (ar >= 0.6 && ar <= 0.9) tall075++;
     }
 
     return { wide43, tall075 };
@@ -112,9 +115,10 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
       if (!dims) continue;
 
       const ar = dims.width / dims.height;
-      if (ar > 1.25 && ar < 1.4 && img._key) {
+      // Zelfde ranges als in counts useMemo
+      if (ar >= 1.1 && ar <= 1.6 && img._key) {
         horizontals.push({ key: img._key, index: idx });
-      } else if (ar > 0.7 && ar < 0.8 && img._key) {
+      } else if (ar >= 0.6 && ar <= 0.9 && img._key) {
         verticals.push({ key: img._key, index: idx });
       }
     }
