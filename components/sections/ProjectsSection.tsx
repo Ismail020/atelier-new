@@ -17,6 +17,7 @@ export interface ProjectsSectionData {
     _id: string;
     name: string;
     date: string;
+    shortDescription: string;
     slug: { current: string };
     previewImages: Array<{
       _key: string;

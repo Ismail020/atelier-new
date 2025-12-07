@@ -9,6 +9,7 @@ interface ProjectCardProps {
     _id: string;
     name: string;
     date: string;
+    shortDescription: string;
     slug: { current: string };
     previewImages: SanityImageArray;
   };
@@ -38,12 +39,13 @@ export default function ProjectCard({
         >
           <h3 className="infos w-fit text-[#140D01]">{project.name}</h3>
         </TransitionLink>
-        <p className="infos text-[#CECECE]">
-          {new Date(project.date).toLocaleDateString("de-DE", {
+        <p className="infos overflow-hidden text-ellipsis whitespace-nowrap text-[#CECECE]">
+          {project.shortDescription}
+          {/* {new Date(project.date).toLocaleDateString("de-DE", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
-          })}
+          })} */}
         </p>
 
         <div className="flex justify-end md:col-span-3">

@@ -36,13 +36,13 @@ export default function ProjectHero({ data, lng }: ProjectHeroProps) {
 
       <div className="hero-overlay absolute inset-0" />
 
-      <div className="absolute bottom-8 left-3.5 flex flex-col gap-1 md:bottom-2 md:left-4">
+      <div className="absolute bottom-8 left-2.5 flex flex-col gap-1 md:bottom-2 md:left-4">
         <div className="flex gap-1.5">
           <h1 className="h2 text-[#F9F7F6]">{data.name || "Untitled Project"} -</h1>
 
           <p className="h2 text-[#F9F7F6]">{data.shortDescription || ""}</p>
         </div>
-        <div className="h1-display max-w-[900px] text-[#F9F7F6]">
+        <div className="project-hero-title h1-display max-w-[900px] text-[#F9F7F6]">
           <Balancer>{getLocalizedValue(data.projectSummary, lng)}</Balancer>
         </div>
       </div>

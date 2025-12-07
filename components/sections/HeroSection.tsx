@@ -36,6 +36,17 @@ export default function HeroSection({ data }: HeroSectionProps) {
     }
   }, [data.images]);
 
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        ScrollTrigger.getAll().forEach((trigger) => trigger.refresh());
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
   useGSAP(
     () => {
       if (!logoRef.current || !heroRef.current) return;

@@ -100,13 +100,7 @@ export default function RelatedProjectCard({
           <h3 className="infos w-fit text-[#140D01]">{project.name || ""}</h3>
         </TransitionLink>
 
-        <p className="infos text-[#CECECE]">
-          {project.date ? new Date(project.date).toLocaleDateString("de-DE", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          }) : ""}
-        </p>
+        <p className="infos text-[#CECECE]">{project.shortDescription}</p>
       </div>
     </div>
   );

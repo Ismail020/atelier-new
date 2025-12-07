@@ -55,6 +55,7 @@ export const RELATED_PROJECTS_QUERY = defineQuery(`*[
   name,
   slug,
   date,
+  shortDescription,
   mainImage{
     ...,
     asset->

@@ -99,11 +99,12 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
   // RANDOM LAYOUT GENERATOR
   // ---------------------------------------------------------
   function generateRandomLayout() {
-    const horizontals: string[] = [];
-    const verticals: string[] = [];
+    const horizontals: Array<{ key: string; index: number }> = [];
+    const verticals: Array<{ key: string; index: number }> = [];
 
-    // SPLIT
-    for (const img of images || []) {
+    // SPLIT - track both key and original index
+    for (let idx = 0; idx < (images || []).length; idx++) {
+      const img = images?.[idx];
       const ref = img?.asset?._ref;
       if (!ref) continue;
       const asset = assetData[ref];
@@ -111,48 +112,46 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
       if (!dims) continue;
 
       const ar = dims.width / dims.height;
-      if (ar > 1.25 && ar < 1.4 && img._key) horizontals.push(img._key);
-      else if (ar > 0.7 && ar < 0.8 && img._key) verticals.push(img._key);
+      if (ar > 1.25 && ar < 1.4 && img._key) {
+        horizontals.push({ key: img._key, index: idx });
+      } else if (ar > 0.7 && ar < 0.8 && img._key) {
+        verticals.push({ key: img._key, index: idx });
+      }
     }
 
     const H = horizontals.length;
     const V = verticals.length;
 
     // ---------------------------------------------------------
-    // HORIZONTAAL VERDELEN (more flexible approach)
-    // Prioritize using all horizontal images
+    // HORIZONTAAL VERDELEN
     // ---------------------------------------------------------
-    let row1Count = Math.min(2, H); // Max 2 row1's
-    let row3Count = Math.floor((H - row1Count) / 2); // Use remaining for row3
-    
-    // If we have leftover horizontal images, convert some row1's to row3's
-    const remainingH = H - row1Count - (row3Count * 2);
+    let row1Count = Math.min(2, H);
+    let row3Count = Math.floor((H - row1Count) / 2);
+
+    const remainingH = H - row1Count - row3Count * 2;
     if (remainingH > 0 && row1Count > 0) {
-      // Convert 1 row1 to make space for more row3's
       row1Count = Math.max(0, row1Count - 1);
       row3Count = Math.floor((H - row1Count) / 2);
     }
 
     // ---------------------------------------------------------
-    // VERTICAAL VERDELEN (more flexible approach)
-    // Prioritize using all vertical images
+    // VERTICAAL VERDELEN
     // ---------------------------------------------------------
-    let row4Count = Math.min(1, Math.floor(V / 2)); // Max 1 row4
-    let row2Count = Math.floor((V - (row4Count * 2)) / 3); // Use remaining for row2
-    
-    // If we still have many unused verticals, add more row2's even if not perfectly divisible
-    const remainingV = V - (row4Count * 2) - (row2Count * 3);
+    let row4Count = Math.min(1, Math.floor(V / 2));
+    let row2Count = Math.floor((V - row4Count * 2) / 3);
+
+    const remainingV = V - row4Count * 2 - row2Count * 3;
     if (remainingV >= 2) {
-      // We can make partial row2's or additional row4's
       if (remainingV >= 3) {
         row2Count += Math.floor(remainingV / 3);
       } else if (remainingV === 2 && row4Count === 0) {
-        row4Count = 1; // Use 2 remaining for a row4
+        row4Count = 1;
       }
     }
 
     // SHUFFLE
-    const shuffle = (arr: string[]) => arr.sort(() => Math.random() - 0.5);
+    const shuffle = (arr: Array<{ key: string; index: number }>) =>
+      arr.sort(() => Math.random() - 0.5);
 
     shuffle(horizontals);
     shuffle(verticals);
@@ -161,52 +160,52 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
 
     // BUILD ROW1
     for (let i = 0; i < row1Count; i++) {
-      const img = horizontals.shift();
-      if (img) {
+      const item = horizontals.shift();
+      if (item) {
         layout.push({
           _type: "galleryRow",
           type: "row1",
-          images: [img],
+          images: [item.key],
         });
       }
     }
 
     // BUILD ROW3
     for (let i = 0; i < row3Count; i++) {
-      const img1 = horizontals.shift();
-      const img2 = horizontals.shift();
-      if (img1 && img2) {
+      const item1 = horizontals.shift();
+      const item2 = horizontals.shift();
+      if (item1 && item2) {
         layout.push({
           _type: "galleryRow",
           type: "row3",
-          images: [img1, img2],
+          images: [item1.key, item2.key],
         });
       }
     }
 
     // BUILD ROW4
     for (let i = 0; i < row4Count; i++) {
-      const img1 = verticals.shift();
-      const img2 = verticals.shift();
-      if (img1 && img2) {
+      const item1 = verticals.shift();
+      const item2 = verticals.shift();
+      if (item1 && item2) {
         layout.push({
           _type: "galleryRow",
           type: "row4",
-          images: [img1, img2],
+          images: [item1.key, item2.key],
         });
       }
     }
 
     // BUILD ROW2
     for (let i = 0; i < row2Count; i++) {
-      const img1 = verticals.shift();
-      const img2 = verticals.shift();
-      const img3 = verticals.shift();
-      if (img1 && img2 && img3) {
+      const item1 = verticals.shift();
+      const item2 = verticals.shift();
+      const item3 = verticals.shift();
+      if (item1 && item2 && item3) {
         layout.push({
           _type: "galleryRow",
           type: "row2",
-          images: [img1, img2, img3],
+          images: [item1.key, item2.key, item3.key],
         });
       }
     }
@@ -216,9 +215,15 @@ export function GalleryInput(props: ArrayOfObjectsInputProps) {
 
     // Calculate total images used
     const totalUsed = layout.reduce((sum, row) => sum + row.images.length, 0);
-    console.log(`Layout generated: Using ${totalUsed} out of ${(images || []).length} total images`);
-    console.log(`Horizontal: ${H} available, row1: ${row1Count}, row3: ${row3Count} (using ${row1Count + row3Count * 2})`);
-    console.log(`Vertical: ${V} available, row2: ${row2Count}, row4: ${row4Count} (using ${row2Count * 3 + row4Count * 2})`);
+    console.log(
+      `Layout generated: Using ${totalUsed} out of ${(images || []).length} total images`,
+    );
+    console.log(
+      `Horizontal: ${H} available, row1: ${row1Count}, row3: ${row3Count} (using ${row1Count + row3Count * 2})`,
+    );
+    console.log(
+      `Vertical: ${V} available, row2: ${row2Count}, row4: ${row4Count} (using ${row2Count * 3 + row4Count * 2})`,
+    );
 
     saveLayout(layout);
   }

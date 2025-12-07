@@ -42,10 +42,6 @@ export default function ContentSection({ data, lng }: ContentSectionProps) {
       const rightHeight = rightSideRef.current.offsetHeight;
       const diff = Math.abs(rightHeight - leftHeight);
 
-      console.log("Left height:", leftHeight);
-      console.log("Right height:", rightHeight);
-      console.log("Height difference:", diff);
-
       let y = "0px";
       if (diff > 0) {
         y = `${diff}px`;

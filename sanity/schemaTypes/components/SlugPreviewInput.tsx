@@ -23,8 +23,6 @@ export function SlugPreviewInput(props: ExtendedInputProps) {
       return [`${FRONTEND_BASE_URL}/${language}`];
     }
 
-    console.log("Generating preview URLs for document type:", documentType);
-
     if (documentType === "project") {
       const nameSlug =
         name

@@ -213,7 +213,7 @@ export default function Navbar({ data, lng, theme }: NavbarProps) {
             {isHomePage && !showLogo && (
               <span
                 ref={brandTextRef}
-                className={`nav transition-opacity duration-300 ${
+                className={`nav whitespace-nowrap transition-opacity duration-300 ${
                   useBlackTheme ? "text-white" : "text-[#140D01]"
                 }`}
               >

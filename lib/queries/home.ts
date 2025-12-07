@@ -21,6 +21,7 @@ export const HOME_QUERY_FR = defineQuery(`*[
       name,
       slug,
       date,
+      shortDescription,
       "previewImages": previewImages[]{
         ..., 
         asset->,
@@ -71,6 +72,7 @@ export const HOME_QUERY_EN = defineQuery(`*[
       name,
       slug,
       date,
+      shortDescription,
       "previewImages": previewImages[]{
         ..., 
         asset->,

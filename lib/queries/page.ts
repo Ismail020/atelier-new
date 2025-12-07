@@ -22,6 +22,7 @@ export const PAGE_QUERY_FR = defineQuery(`*[
       name,
       slug,
       date,
+      shortDescription,
       "previewImages": previewImages[]{
         ..., 
         asset->,
@@ -85,6 +86,7 @@ export const PAGE_QUERY_EN = defineQuery(`*[
       name,
       slug,
       date,
+      shortDescription,
       "previewImages": previewImages[]{
         ..., 
         asset->,

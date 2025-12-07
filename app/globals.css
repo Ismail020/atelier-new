@@ -397,3 +397,9 @@ body {
     }
   }
 }
+
+@media (max-width: 768px) {
+  .project-hero-title {
+    font-size: clamp(0px, 14vw, 60px);
+  }
+}
