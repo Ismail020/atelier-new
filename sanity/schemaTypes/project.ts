@@ -2,6 +2,7 @@ import { defineField, defineType } from "sanity";
 import { SlugPreviewInput } from "./components/SlugPreviewInput";
 import { CaseIcon } from "@sanity/icons";
 import { GalleryInput } from "./components/galleryInput";
+import { ReorderPhotosInput } from "./components/ReorderPhotosInput";
 import { PreviewImagesInput } from "./components/previewImagesInput";
 
 export const projectType = defineType({
@@ -12,7 +13,9 @@ export const projectType = defineType({
   groups: [
     { name: "details", title: "Details", default: true },
     { name: "content", title: "Content & Description" },
-    { name: "media", title: "Media" },
+    { name: "hero", title: "Hero Image" },
+    { name: "preview", title: "Preview Images" },
+    { name: "gallery", title: "Gallery" },
   ],
   fields: [
     defineField({
@@ -70,7 +73,7 @@ export const projectType = defineType({
       name: "mainImage",
       title: "Main Photo",
       type: "image",
-      group: "media",
+      group: "hero",
       description: "Primary project image used as hero/featured image",
       validation: (rule) => rule.required(),
       options: {
@@ -81,7 +84,7 @@ export const projectType = defineType({
       name: "previewImages",
       title: "Preview Photos",
       type: "array",
-      group: "media",
+      group: "preview",
       description:
         "Upload 4+ photos. Select featured for desktop, and choose which ones to show on mobile.",
       validation: (rule) =>
@@ -170,8 +173,8 @@ export const projectType = defineType({
       name: "gallery",
       title: "Photo Gallery",
       type: "array",
-      group: "media",
-      description: "Complete collection of project photos",
+      group: "gallery",
+      description: "Complete collection of project photos. Order them logically - our system will auto-layout by image format.",
       of: [
         {
           type: "image",
@@ -180,12 +183,15 @@ export const projectType = defineType({
           },
         },
       ],
+      components: {
+        input: ReorderPhotosInput,
+      },
     }),
     defineField({
       name: "galleryLayout",
       title: "Gallery Layout",
       type: "array",
-      group: "media",
+      group: "gallery",
       of: [
         {
           type: "object",
