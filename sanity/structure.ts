@@ -57,7 +57,20 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .title("Projects")
         .icon(ProjectsIcon)
-        .child(S.documentTypeList("project").title("Projects")),
+        .child(
+          S.list()
+            .title("Projects")
+            .items([
+              S.listItem()
+                .title("Project Order")
+                .icon(ProjectsIcon)
+                .child(S.document().schemaType("projectsOrder").documentId("projectsOrder")),
+              S.listItem()
+                .title("All Projects")
+                .icon(ProjectsIcon)
+                .child(S.documentTypeList("project").title("Projects")),
+            ]),
+        ),
 
       // Press Coverage
       S.listItem()

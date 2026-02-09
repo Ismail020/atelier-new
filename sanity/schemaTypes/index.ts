@@ -5,6 +5,7 @@ import { navbarType } from "./navbar";
 import { footerType } from "./footer";
 import { settingsType } from "./settings";
 import { projectType } from "./project";
+import { projectsOrderType } from "./projectsOrder";
 import { pressType } from "./press";
 import { headlineSection } from "./components/headlineSection";
 import { projectsSection } from "./components/projectsSection";
@@ -22,6 +23,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     footerType,
     settingsType,
     projectType,
+    projectsOrderType,
     pressType,
     headlineSection,
     projectsSection,

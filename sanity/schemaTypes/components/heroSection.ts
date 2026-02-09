@@ -21,6 +21,21 @@ export const heroSection = {
       ],
     }),
     defineField({
+      name: "mobileImages",
+      title: "Hero Images (Mobile)",
+      type: "array",
+      description: "Optional: 4 mobile-specific images (falls back to desktop images if empty)",
+      validation: (rule) => rule.length(4).error("Please add exactly 4 mobile images"),
+      of: [
+        {
+          type: "image",
+          options: {
+            hotspot: true,
+          },
+        },
+      ],
+    }),
+    defineField({
       name: "logo",
       title: "Logo/Brand Image",
       type: "image",

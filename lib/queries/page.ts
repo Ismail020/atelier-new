@@ -10,6 +10,7 @@ export const PAGE_QUERY_FR = defineQuery(`*[
   components[]{
     ...,
     "images": images[]{..., asset->},
+    "mobileImages": mobileImages[]{..., asset->},
     "logo": logo{..., asset->},
     "backgroundImage": backgroundImage{..., asset->},
     "contactUsImage": contactUsImage{..., asset->},
@@ -74,6 +75,7 @@ export const PAGE_QUERY_EN = defineQuery(`*[
   components[]{
     ...,
     "images": images[]{..., asset->},
+    "mobileImages": mobileImages[]{..., asset->},
     "logo": logo{..., asset->},
     "backgroundImage": backgroundImage{..., asset->},
     "contactUsImage": contactUsImage{..., asset->},

@@ -14,6 +14,7 @@ export interface HeroSectionData {
   _type: "heroSection";
   _key: string;
   images: SanityImageArray;
+  mobileImages?: SanityImageArray;
   logo: SanityImage;
 }
 
@@ -23,18 +24,39 @@ interface HeroSectionProps {
 
 export default function HeroSection({ data }: HeroSectionProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const logoRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
 
+  const images = isMobile && data.mobileImages?.length ? data.mobileImages : data.images;
+
   useEffect(() => {
-    if (data.images && data.images.length > 1) {
+    if (typeof window === "undefined") return;
+
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+    const handleChange = () => setIsMobile(mediaQuery.matches);
+
+    handleChange();
+    mediaQuery.addEventListener("change", handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener("change", handleChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [images]);
+
+  useEffect(() => {
+    if (images && images.length > 1) {
       const interval = setInterval(() => {
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % data.images.length);
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
       }, 4000);
 
       return () => clearInterval(interval);
     }
-  }, [data.images]);
+  }, [images]);
 
   useEffect(() => {
     const handleVisibilityChange = () => {
@@ -85,7 +107,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
     { dependencies: [data.logo] },
   );
 
-  if (!data.images || data.images.length === 0) {
+  if (!images || images.length === 0) {
     return null;
   }
 
@@ -106,7 +128,7 @@ export default function HeroSection({ data }: HeroSectionProps) {
   return (
     <div ref={heroRef} className="relative h-[calc(100svh-62px)] w-full overflow-hidden">
       <div className="absolute inset-0">
-        {data.images.map((image, index) => (
+        {images.map((image, index) => (
           <div
             key={index}
             className={`absolute inset-0 transition-opacity duration-700 ease-out ${
