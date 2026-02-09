@@ -16,6 +16,7 @@ export const projectType = defineType({
     { name: "hero", title: "Hero Image" },
     { name: "preview", title: "Preview Images" },
     { name: "gallery", title: "Gallery" },
+    { name: "seo", title: "SEO" },
   ],
   fields: [
     defineField({
@@ -54,6 +55,41 @@ export const projectType = defineType({
       group: "details",
       description: "Date when the project was completed or published",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "seoTitle",
+      title: "SEO Title",
+      type: "string",
+      group: "seo",
+      description: "Overrides the project title for search engines",
+      validation: (rule) => rule.max(60).warning("Keep SEO titles under 60 characters"),
+    }),
+    defineField({
+      name: "seoDescription",
+      title: "SEO Description",
+      type: "internationalizedArrayString",
+      group: "seo",
+      rows: 3,
+      description: "Meta description for search results",
+      validation: (rule) => rule.max(160).warning("Keep descriptions under 160 characters"),
+    }),
+    defineField({
+      name: "seoImage",
+      title: "SEO Image",
+      type: "image",
+      group: "seo",
+      description: "Open Graph / social share image (overrides the default)",
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: "noIndex",
+      title: "No Index",
+      type: "boolean",
+      group: "seo",
+      description: "Prevent this project from being indexed",
+      initialValue: false,
     }),
     defineField({
       name: "projectSummary",

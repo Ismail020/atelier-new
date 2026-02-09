@@ -3,9 +3,52 @@ import { client } from "@/sanity/lib/client";
 import { notFound } from "next/navigation";
 import ComponentRenderer from "@/components/ComponentRenderer";
 import { PAGE_QUERY_FR } from "@/lib/queries/page";
+import type { Metadata } from "next";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  if (!slug) {
+    return {};
+  }
+
+  const { data: page } = await sanityFetch({
+    query: PAGE_QUERY_FR,
+    params: { slug },
+  });
+
+  if (!page) {
+    return {};
+  }
+
+  const title = page.seoTitle || page.name;
+  const description = page.seoDescription || undefined;
+  const imageUrl = page.seoImage?.asset?.url;
+  const siteUrl = process.env.SITE_URL || "http://localhost:3000";
+  const canonical = `${siteUrl}/${slug}`;
+
+  return {
+    title,
+    description,
+    robots: page.noIndex ? { index: false, follow: false } : undefined,
+    alternates: {
+      canonical,
+      languages: {
+        fr: canonical,
+        en: `${siteUrl}/en/${slug}`,
+        "x-default": canonical,
+      },
+    },
+    openGraph: imageUrl
+      ? {
+          images: [{ url: imageUrl }],
+        }
+      : undefined,
+  };
 }
 
 export default async function Page({ params }: PageProps) {

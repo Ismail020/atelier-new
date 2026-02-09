@@ -6,17 +6,38 @@ export const settingsType = defineType({
   title: "Site Settings",
   type: "document",
   icon: CogIcon,
+  groups: [
+    { name: "general", title: "General", default: true },
+    { name: "contact", title: "Contact" },
+    { name: "social", title: "Social" },
+    { name: "cta", title: "Buttons" },
+    { name: "labels", title: "Labels" },
+    { name: "seo", title: "SEO" },
+    { name: "structuredData", title: "Structured Data" },
+  ],
   fields: [
     defineField({
       name: "title",
       title: "Site Title",
       type: "string",
       description: "Used for SEO and browser titles",
+      group: "general",
+    }),
+    defineField({
+      name: "seoDefaultImage",
+      title: "Default SEO Image",
+      type: "image",
+      group: "seo",
+      description: "Open Graph / social share image fallback",
+      options: {
+        hotspot: true,
+      },
     }),
     defineField({
       name: "contactInfo",
       title: "Contact Information",
       type: "object",
+      group: "contact",
       fields: [
         defineField({
           name: "headOfDesign",
@@ -62,6 +83,7 @@ export const settingsType = defineType({
       name: "socialMedia",
       title: "Social Media Links",
       type: "array",
+      group: "social",
       of: [
         {
           type: "object",
@@ -122,6 +144,7 @@ export const settingsType = defineType({
       title: "Contact Us Button",
       type: "object",
       description: "Global configuration for the Contact Us button on project pages",
+      group: "cta",
       fields: [
         defineField({
           name: "text",
@@ -179,6 +202,7 @@ export const settingsType = defineType({
       title: "Related Projects Title",
       type: "internationalizedArrayString",
       description: "Title for the related projects section on project pages",
+      group: "labels",
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -186,7 +210,95 @@ export const settingsType = defineType({
       title: "View All Link Text",
       type: "internationalizedArrayString",
       description: "Text for the view all projects link",
+      group: "labels",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "structuredData",
+      title: "Structured Data",
+      type: "object",
+      group: "structuredData",
+      fields: [
+        defineField({
+          name: "localBusiness",
+          title: "Local Business",
+          type: "object",
+          fields: [
+            defineField({
+              name: "name",
+              title: "Name",
+              type: "string",
+            }),
+            defineField({
+              name: "url",
+              title: "URL",
+              type: "url",
+            }),
+            defineField({
+              name: "image",
+              title: "Image URL",
+              type: "image",
+              options: {
+                hotspot: true,
+              },
+            }),
+            defineField({
+              name: "address",
+              title: "Address",
+              type: "object",
+              fields: [
+                defineField({
+                  name: "addressCountry",
+                  title: "Country",
+                  type: "string",
+                }),
+                defineField({
+                  name: "addressLocality",
+                  title: "Locality",
+                  type: "string",
+                }),
+                defineField({
+                  name: "addressRegion",
+                  title: "Region",
+                  type: "string",
+                }),
+                defineField({
+                  name: "postalCode",
+                  title: "Postal Code",
+                  type: "string",
+                }),
+                defineField({
+                  name: "streetAddress",
+                  title: "Street Address",
+                  type: "string",
+                }),
+              ],
+            }),
+            defineField({
+              name: "telephone",
+              title: "Telephone",
+              type: "string",
+            }),
+          ],
+        }),
+        defineField({
+          name: "website",
+          title: "Website",
+          type: "object",
+          fields: [
+            defineField({
+              name: "name",
+              title: "Name",
+              type: "string",
+            }),
+            defineField({
+              name: "url",
+              title: "URL",
+              type: "url",
+            }),
+          ],
+        }),
+      ],
     }),
   ],
   preview: {

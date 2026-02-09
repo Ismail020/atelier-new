@@ -278,6 +278,21 @@ export type Project = {
   slug?: Slug;
   shortDescription?: string;
   date?: string;
+  seoTitle?: string;
+  seoDescription?: InternationalizedArrayString;
+  seoImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  noIndex?: boolean;
   projectSummary?: InternationalizedArrayString;
   projectDescription?: InternationalizedArrayString;
   mainImage?: {
@@ -343,6 +358,18 @@ export type Settings = {
   _updatedAt: string;
   _rev: string;
   title?: string;
+  seoDefaultImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
   contactInfo?: {
     headOfDesign?: {
       name?: string;
@@ -379,6 +406,36 @@ export type Settings = {
   };
   relatedProjectsTitle?: InternationalizedArrayString;
   viewAllLinkText?: InternationalizedArrayString;
+  structuredData?: {
+    localBusiness?: {
+      name?: string;
+      url?: string;
+      image?: {
+        asset?: {
+          _ref: string;
+          _type: "reference";
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+        };
+        media?: unknown;
+        hotspot?: SanityImageHotspot;
+        crop?: SanityImageCrop;
+        _type: "image";
+      };
+      address?: {
+        addressCountry?: string;
+        addressLocality?: string;
+        addressRegion?: string;
+        postalCode?: string;
+        streetAddress?: string;
+      };
+      telephone?: string;
+    };
+    website?: {
+      name?: string;
+      url?: string;
+    };
+  };
 };
 
 export type Footer = {
@@ -814,6 +871,21 @@ export type Page = {
         _key: string;
       }
   >;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  noIndex?: boolean;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -1687,6 +1759,21 @@ export type HOME_QUERY_FRResult = {
         headline: null;
       }
   > | null;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  noIndex?: boolean;
 } | null;
 // Variable: HOME_QUERY_EN
 // Query: *[  _type == "page"   && name == "Home"   && language == "en"][0]{  ...,  components[]{    ...,    "images": images[]{..., asset->},    "mobileImages": mobileImages[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      shortDescription,      "previewImages": previewImages[]{        ...,         asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    },    headline[]{      ...,      markDefs[]{        ...,        "linkToPage": linkToPage->{          _id,          _type,          name,          slug        }      }    }  }}
@@ -2139,14 +2226,37 @@ export type HOME_QUERY_ENResult = {
         headline: null;
       }
   > | null;
+  seoTitle?: string;
+  seoDescription?: string;
+  seoImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  noIndex?: boolean;
 } | null;
 
 // Source: lib/queries/page.ts
 // Variable: PAGE_QUERY_FR
-// Query: *[  _type == "page"   && slug.current == $slug   && language == "fr"][0]{  name,  language,  components[]{    ...,    "images": images[]{..., asset->},    "mobileImages": mobileImages[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      shortDescription,      "previewImages": previewImages[]{        ...,         asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    },    _type == "contentSection" => {      section3 {        ...,        "image": image{..., asset->},        "buttonLink": buttonLink->{          _id,          _type,          name,          slug        }      }    },    headline[]{      ...,      markDefs[]{        ...,        "linkToPage": linkToPage->{          _id,          _type,          name,          slug        }      }    }  }}
+// Query: *[  _type == "page"   && slug.current == $slug   && language == "fr"][0]{  name,  language,  seoTitle,  seoDescription,  noIndex,  seoImage {    asset-> {      url    }  },  components[]{    ...,    "images": images[]{..., asset->},    "mobileImages": mobileImages[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      shortDescription,      "previewImages": previewImages[]{        ...,        asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    },    _type == "contentSection" => {      section3 {        ...,        "image": image{..., asset->},        "buttonLink": buttonLink->{          _id,          _type,          name,          slug        }      }    },    headline[]{      ...,      markDefs[]{        ...,        "linkToPage": linkToPage->{          _id,          _type,          name,          slug        }      }    }  }}
 export type PAGE_QUERY_FRResult = {
   name: string | null;
   language: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  noIndex: boolean | null;
+  seoImage: {
+    asset: {
+      url: string | null;
+    } | null;
+  } | null;
   components: Array<
     | {
         headline: Array<{
@@ -2605,10 +2715,18 @@ export type PAGE_QUERY_FRResult = {
   > | null;
 } | null;
 // Variable: PAGE_QUERY_EN
-// Query: *[  _type == "page"   && slug.current == $slug   && language == "en"][0]{  name,  language,  components[]{    ...,    "images": images[]{..., asset->},    "mobileImages": mobileImages[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      shortDescription,      "previewImages": previewImages[]{        ...,         asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    },    _type == "contentSection" => {      section3 {        ...,        "image": image{..., asset->},        "buttonLink": buttonLink->{          _id,          _type,          name,          slug        }      }    },    headline[]{      ...,      markDefs[]{        ...,        "linkToPage": linkToPage->{          _id,          _type,          name,          slug        }      }    }  }}
+// Query: *[  _type == "page"   && slug.current == $slug   && language == "en"][0]{  name,  language,  seoTitle,  seoDescription,  noIndex,  seoImage {    asset-> {      url    }  },  components[]{    ...,    "images": images[]{..., asset->},    "mobileImages": mobileImages[]{..., asset->},    "logo": logo{..., asset->},    "backgroundImage": backgroundImage{..., asset->},    "contactUsImage": contactUsImage{..., asset->},    "mainImage": mainImage{..., asset->},    "previewImages": previewImages[]{..., asset->},    "gallery": gallery[]{..., asset->},    "selectedProjects": selectedProjects[]-> {      _id,      _type,      name,      slug,      date,      shortDescription,      "previewImages": previewImages[]{        ...,        asset->,        isFeatured,        showOnMobile,        isFeaturedMobile      },    },    "projectsPageLink": projectsPageLink->{      _id,      _type,      name,      slug    },    _type == "contentSection" => {      section3 {        ...,        "image": image{..., asset->},        "buttonLink": buttonLink->{          _id,          _type,          name,          slug        }      }    },    headline[]{      ...,      markDefs[]{        ...,        "linkToPage": linkToPage->{          _id,          _type,          name,          slug        }      }    }  }}
 export type PAGE_QUERY_ENResult = {
   name: string | null;
   language: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  noIndex: boolean | null;
+  seoImage: {
+    asset: {
+      url: string | null;
+    } | null;
+  } | null;
   components: Array<
     | {
         headline: Array<{
@@ -3098,13 +3216,21 @@ export type PRESS_QUERYResult = Array<{
 
 // Source: lib/queries/project.ts
 // Variable: PROJECT_QUERY
-// Query: *[  _type == "project"   && slug.current == $projectSlug][0]{  _id,  name,  slug,  date,  shortDescription,  projectSummary,  projectDescription,  mainImage{    ...,    alt,    asset->  },  previewImages[]{    ...,    asset->,    isFeatured,    showOnMobile,    isFeaturedMobile  },  gallery[]{    ...,    asset->  },  galleryLayout[]{    type,    images  }}
+// Query: *[  _type == "project"   && slug.current == $projectSlug][0]{  _id,  name,  slug,  date,  shortDescription,  seoTitle,  seoDescription,  noIndex,  seoImage{    asset-> {      url    }  },  projectSummary,  projectDescription,  mainImage{    ...,    alt,    asset->  },  previewImages[]{    ...,    asset->,    isFeatured,    showOnMobile,    isFeaturedMobile  },  gallery[]{    ...,    asset->  },  galleryLayout[]{    type,    images  }}
 export type PROJECT_QUERYResult = {
   _id: string;
   name: string | null;
   slug: Slug | null;
   date: string | null;
   shortDescription: string | null;
+  seoTitle: string | null;
+  seoDescription: InternationalizedArrayString | null;
+  noIndex: boolean | null;
+  seoImage: {
+    asset: {
+      url: string | null;
+    } | null;
+  } | null;
   projectSummary: InternationalizedArrayString | null;
   projectDescription: InternationalizedArrayString | null;
   mainImage: {
@@ -3203,7 +3329,7 @@ export type PROJECT_QUERYResult = {
   }> | null;
 } | null;
 // Variable: SETTINGS_QUERY
-// Query: *[_type == "settings"][0]{  contactUsButton{    text,    contactPages{      english->{slug},      french->{slug}    },    buttonStyle  },  relatedProjectsTitle,  viewAllLinkText}
+// Query: *[_type == "settings"][0]{  contactUsButton{    text,    contactPages{      english->{slug},      french->{slug}    },    buttonStyle  },  relatedProjectsTitle,  viewAllLinkText,  seoDefaultImage {    asset-> {      url    }  }}
 export type SETTINGS_QUERYResult = {
   contactUsButton: {
     text: InternationalizedArrayString | null;
@@ -3219,6 +3345,11 @@ export type SETTINGS_QUERYResult = {
   } | null;
   relatedProjectsTitle: InternationalizedArrayString | null;
   viewAllLinkText: InternationalizedArrayString | null;
+  seoDefaultImage: {
+    asset: {
+      url: string | null;
+    } | null;
+  } | null;
 } | null;
 // Variable: RELATED_PROJECTS_QUERY
 // Query: *[  _type == "project"   && _id != $currentProjectId  && defined(slug.current)]{  _id,  name,  slug,  date,  shortDescription,  mainImage{    ...,    asset->  }} | order(_createdAt desc) [0...10]
@@ -3268,11 +3399,11 @@ declare module "@sanity/client" {
     '*[_type == "projectsOrder"][0].orderedProjects[]-> {\n  _id,\n  name,\n  slug,\n  shortDescription,\n  date,\n  projectSummary,\n  projectDescription,\n  mainImage {\n    asset-> {\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt,\n    hotspot,\n    crop\n  },\n  "previewImages": previewImages[]{\n    ...,\n    asset->,\n    isFeatured,\n    showOnMobile,\n    isFeaturedMobile\n  },\n  projectGallery[] {\n    asset-> {\n      _id,\n      url,\n      metadata {\n        dimensions {\n          width,\n          height\n        }\n      }\n    },\n    alt,\n    hotspot,\n    crop,\n    showInGrid,\n    gridSpan\n  }\n}': PROJECTS_ORDER_QUERYResult;
     '*[\n  _type == "page" \n  && name == "Home" \n  && language == "fr"\n][0]{\n  ...,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "mobileImages": mobileImages[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      shortDescription,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': HOME_QUERY_FRResult;
     '*[\n  _type == "page" \n  && name == "Home" \n  && language == "en"\n][0]{\n  ...,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "mobileImages": mobileImages[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      shortDescription,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': HOME_QUERY_ENResult;
-    '*[\n  _type == "page" \n  && slug.current == $slug \n  && language == "fr"\n][0]{\n  name,\n  language,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "mobileImages": mobileImages[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      shortDescription,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    _type == "contentSection" => {\n      section3 {\n        ...,\n        "image": image{..., asset->},\n        "buttonLink": buttonLink->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': PAGE_QUERY_FRResult;
-    '*[\n  _type == "page" \n  && slug.current == $slug \n  && language == "en"\n][0]{\n  name,\n  language,\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "mobileImages": mobileImages[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      shortDescription,\n      "previewImages": previewImages[]{\n        ..., \n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    _type == "contentSection" => {\n      section3 {\n        ...,\n        "image": image{..., asset->},\n        "buttonLink": buttonLink->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': PAGE_QUERY_ENResult;
+    '*[\n  _type == "page" \n  && slug.current == $slug \n  && language == "fr"\n][0]{\n  name,\n  language,\n  seoTitle,\n  seoDescription,\n  noIndex,\n  seoImage {\n    asset-> {\n      url\n    }\n  },\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "mobileImages": mobileImages[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      shortDescription,\n      "previewImages": previewImages[]{\n        ...,\n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    _type == "contentSection" => {\n      section3 {\n        ...,\n        "image": image{..., asset->},\n        "buttonLink": buttonLink->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': PAGE_QUERY_FRResult;
+    '*[\n  _type == "page" \n  && slug.current == $slug \n  && language == "en"\n][0]{\n  name,\n  language,\n  seoTitle,\n  seoDescription,\n  noIndex,\n  seoImage {\n    asset-> {\n      url\n    }\n  },\n  components[]{\n    ...,\n    "images": images[]{..., asset->},\n    "mobileImages": mobileImages[]{..., asset->},\n    "logo": logo{..., asset->},\n    "backgroundImage": backgroundImage{..., asset->},\n    "contactUsImage": contactUsImage{..., asset->},\n    "mainImage": mainImage{..., asset->},\n    "previewImages": previewImages[]{..., asset->},\n    "gallery": gallery[]{..., asset->},\n    "selectedProjects": selectedProjects[]-> {\n      _id,\n      _type,\n      name,\n      slug,\n      date,\n      shortDescription,\n      "previewImages": previewImages[]{\n        ...,\n        asset->,\n        isFeatured,\n        showOnMobile,\n        isFeaturedMobile\n      },\n    },\n    "projectsPageLink": projectsPageLink->{\n      _id,\n      _type,\n      name,\n      slug\n    },\n    _type == "contentSection" => {\n      section3 {\n        ...,\n        "image": image{..., asset->},\n        "buttonLink": buttonLink->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    },\n    headline[]{\n      ...,\n      markDefs[]{\n        ...,\n        "linkToPage": linkToPage->{\n          _id,\n          _type,\n          name,\n          slug\n        }\n      }\n    }\n  }\n}': PAGE_QUERY_ENResult;
     '\n  *[_type == "press"] | order(_createdAt desc) {\n    _id,\n    magazineName,\n    media {\n      type,\n      image {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            lqip,\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n        alt\n      },\n      video\n    },\n    body,\n    externalLink,\n    _createdAt\n  }\n': PRESS_QUERYResult;
-    '*[\n  _type == "project" \n  && slug.current == $projectSlug\n][0]{\n  _id,\n  name,\n  slug,\n  date,\n  shortDescription,\n  projectSummary,\n  projectDescription,\n  mainImage{\n    ...,\n    alt,\n    asset->\n  },\n  previewImages[]{\n    ...,\n    asset->,\n    isFeatured,\n    showOnMobile,\n    isFeaturedMobile\n  },\n  gallery[]{\n    ...,\n    asset->\n  },\n  galleryLayout[]{\n    type,\n    images\n  }\n}': PROJECT_QUERYResult;
-    '*[_type == "settings"][0]{\n  contactUsButton{\n    text,\n    contactPages{\n      english->{slug},\n      french->{slug}\n    },\n    buttonStyle\n  },\n  relatedProjectsTitle,\n  viewAllLinkText\n}': SETTINGS_QUERYResult;
+    '*[\n  _type == "project" \n  && slug.current == $projectSlug\n][0]{\n  _id,\n  name,\n  slug,\n  date,\n  shortDescription,\n  seoTitle,\n  seoDescription,\n  noIndex,\n  seoImage{\n    asset-> {\n      url\n    }\n  },\n  projectSummary,\n  projectDescription,\n  mainImage{\n    ...,\n    alt,\n    asset->\n  },\n  previewImages[]{\n    ...,\n    asset->,\n    isFeatured,\n    showOnMobile,\n    isFeaturedMobile\n  },\n  gallery[]{\n    ...,\n    asset->\n  },\n  galleryLayout[]{\n    type,\n    images\n  }\n}': PROJECT_QUERYResult;
+    '*[_type == "settings"][0]{\n  contactUsButton{\n    text,\n    contactPages{\n      english->{slug},\n      french->{slug}\n    },\n    buttonStyle\n  },\n  relatedProjectsTitle,\n  viewAllLinkText,\n  seoDefaultImage {\n    asset-> {\n      url\n    }\n  }\n}': SETTINGS_QUERYResult;
     '*[\n  _type == "project" \n  && _id != $currentProjectId\n  && defined(slug.current)\n]{\n  _id,\n  name,\n  slug,\n  date,\n  shortDescription,\n  mainImage{\n    ...,\n    asset->\n  }\n} | order(_createdAt desc) [0...10]': RELATED_PROJECTS_QUERYResult;
   }
 }

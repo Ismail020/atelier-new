@@ -9,6 +9,14 @@ export const PROJECT_QUERY = defineQuery(`*[
   slug,
   date,
   shortDescription,
+  seoTitle,
+  seoDescription,
+  noIndex,
+  seoImage{
+    asset-> {
+      url
+    }
+  },
   projectSummary,
   projectDescription,
   mainImage{
@@ -43,7 +51,12 @@ export const SETTINGS_QUERY = defineQuery(`*[_type == "settings"][0]{
     buttonStyle
   },
   relatedProjectsTitle,
-  viewAllLinkText
+  viewAllLinkText,
+  seoDefaultImage {
+    asset-> {
+      url
+    }
+  }
 }`);
 
 export const RELATED_PROJECTS_QUERY = defineQuery(`*[

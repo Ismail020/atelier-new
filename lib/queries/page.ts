@@ -7,6 +7,14 @@ export const PAGE_QUERY_FR = defineQuery(`*[
 ][0]{
   name,
   language,
+  seoTitle,
+  seoDescription,
+  noIndex,
+  seoImage {
+    asset-> {
+      url
+    }
+  },
   components[]{
     ...,
     "images": images[]{..., asset->},
@@ -25,7 +33,7 @@ export const PAGE_QUERY_FR = defineQuery(`*[
       date,
       shortDescription,
       "previewImages": previewImages[]{
-        ..., 
+        ...,
         asset->,
         isFeatured,
         showOnMobile,
@@ -72,6 +80,14 @@ export const PAGE_QUERY_EN = defineQuery(`*[
 ][0]{
   name,
   language,
+  seoTitle,
+  seoDescription,
+  noIndex,
+  seoImage {
+    asset-> {
+      url
+    }
+  },
   components[]{
     ...,
     "images": images[]{..., asset->},
@@ -90,7 +106,7 @@ export const PAGE_QUERY_EN = defineQuery(`*[
       date,
       shortDescription,
       "previewImages": previewImages[]{
-        ..., 
+        ...,
         asset->,
         isFeatured,
         showOnMobile,

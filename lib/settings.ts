@@ -15,6 +15,30 @@ const SETTINGS_QUERY = defineQuery(`*[_type == "settings"][0]{
   "settingsSocial": socialMedia[] {
     platform,
     url
+  },
+  "structuredData": structuredData {
+    localBusiness {
+      name,
+      url,
+      image {
+        asset-> {
+          _id,
+          url
+        }
+      },
+      address {
+        addressCountry,
+        addressLocality,
+        addressRegion,
+        postalCode,
+        streetAddress
+      },
+      telephone
+    },
+    website {
+      name,
+      url
+    }
   }
 }`);
 
