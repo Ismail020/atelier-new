@@ -6,6 +6,14 @@ export const HOME_QUERY_FR = defineQuery(`*[
   && language == "fr"
 ][0]{
   ...,
+  seoTitle,
+  seoDescription,
+  noIndex,
+  seoImage {
+    asset-> {
+      url
+    }
+  },
   components[]{
     ...,
     "images": images[]{..., asset->},
@@ -58,6 +66,14 @@ export const HOME_QUERY_EN = defineQuery(`*[
   && language == "en"
 ][0]{
   ...,
+  seoTitle,
+  seoDescription,
+  noIndex,
+  seoImage {
+    asset-> {
+      url
+    }
+  },
   components[]{
     ...,
     "images": images[]{..., asset->},

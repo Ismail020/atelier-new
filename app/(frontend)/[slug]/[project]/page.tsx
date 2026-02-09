@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
   const canonical = `${siteUrl}/${slug}/${project}`;
 
   return {
-    title,w
+    title,
     description,
     robots: projectData.noIndex ? { index: false, follow: false } : undefined,
     alternates: {

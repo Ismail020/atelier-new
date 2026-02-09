@@ -69,7 +69,6 @@ export const projectType = defineType({
       title: "SEO Description",
       type: "internationalizedArrayString",
       group: "seo",
-      rows: 3,
       description: "Meta description for search results",
       validation: (rule) => rule.max(160).warning("Keep descriptions under 160 characters"),
     }),
