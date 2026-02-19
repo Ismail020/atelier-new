@@ -21,10 +21,8 @@ interface TranslationGroupItem {
   }>;
 }
 
-const SITE_URL = process.env.SITE_URL || "http://localhost:3000";
-
-function absoluteUrl(path: string): string {
-  return `${SITE_URL}${path}`;
+function absoluteUrl(baseUrl: string, path: string): string {
+  return `${baseUrl}${path}`;
 }
 
 function xmlEscape(value: string): string {
@@ -61,7 +59,10 @@ function renderUrl(entry: SitemapEntry): string {
     .join("\n");
 }
 
-export async function GET() {
+export async function GET(request: Request) {
+  const requestOrigin = new URL(request.url).origin;
+  const baseUrl = process.env.SITE_URL || requestOrigin;
+
   const [translationGroups, frFallbackPages, enFallbackPages, projects] = await Promise.all([
     client.fetch<TranslationGroupItem[]>(
       `*[_type == "translation.metadata" && "page" in schemaTypes]{
@@ -88,19 +89,19 @@ export async function GET() {
 
   const entries: SitemapEntry[] = [
     {
-      loc: absoluteUrl("/"),
+      loc: absoluteUrl(baseUrl, "/"),
       alternates: {
-        fr: absoluteUrl("/"),
-        en: absoluteUrl("/en"),
-        "x-default": absoluteUrl("/"),
+        fr: absoluteUrl(baseUrl, "/"),
+        en: absoluteUrl(baseUrl, "/en"),
+        "x-default": absoluteUrl(baseUrl, "/"),
       },
     },
     {
-      loc: absoluteUrl("/en"),
+      loc: absoluteUrl(baseUrl, "/en"),
       alternates: {
-        fr: absoluteUrl("/"),
-        en: absoluteUrl("/en"),
-        "x-default": absoluteUrl("/"),
+        fr: absoluteUrl(baseUrl, "/"),
+        en: absoluteUrl(baseUrl, "/en"),
+        "x-default": absoluteUrl(baseUrl, "/"),
       },
     },
   ];
@@ -124,12 +125,12 @@ export async function GET() {
     const alternates: Record<string, string> = {};
 
     if (frTranslation?.slug) {
-      alternates.fr = absoluteUrl(`/${frTranslation.slug}`);
-      alternates["x-default"] = absoluteUrl(`/${frTranslation.slug}`);
+      alternates.fr = absoluteUrl(baseUrl, `/${frTranslation.slug}`);
+      alternates["x-default"] = absoluteUrl(baseUrl, `/${frTranslation.slug}`);
     }
 
     if (enTranslation?.slug) {
-      alternates.en = absoluteUrl(`/en/${enTranslation.slug}`);
+      alternates.en = absoluteUrl(baseUrl, `/en/${enTranslation.slug}`);
     }
 
     return validTranslations.flatMap((item) => {
@@ -142,7 +143,7 @@ export async function GET() {
 
       return [
         {
-          loc: absoluteUrl(routePath),
+          loc: absoluteUrl(baseUrl, routePath),
           lastmod,
           alternates,
         },
@@ -155,11 +156,11 @@ export async function GET() {
   const frFallbackEntries: SitemapEntry[] = (frFallbackPages || [])
     .filter((page) => page.slug?.current)
     .map((page) => ({
-      loc: absoluteUrl(`/${page.slug.current}`),
+      loc: absoluteUrl(baseUrl, `/${page.slug.current}`),
       lastmod: page._updatedAt,
       alternates: {
-        fr: absoluteUrl(`/${page.slug.current}`),
-        "x-default": absoluteUrl(`/${page.slug.current}`),
+        fr: absoluteUrl(baseUrl, `/${page.slug.current}`),
+        "x-default": absoluteUrl(baseUrl, `/${page.slug.current}`),
       },
     }))
     .filter((entry) => !existingPageLocs.has(entry.loc));
@@ -167,10 +168,10 @@ export async function GET() {
   const enFallbackEntries: SitemapEntry[] = (enFallbackPages || [])
     .filter((page) => page.slug?.current)
     .map((page) => ({
-      loc: absoluteUrl(`/en/${page.slug.current}`),
+      loc: absoluteUrl(baseUrl, `/en/${page.slug.current}`),
       lastmod: page._updatedAt,
       alternates: {
-        en: absoluteUrl(`/en/${page.slug.current}`),
+        en: absoluteUrl(baseUrl, `/en/${page.slug.current}`),
       },
     }))
     .filter((entry) => !existingPageLocs.has(entry.loc));
@@ -183,21 +184,21 @@ export async function GET() {
 
       return [
         {
-          loc: absoluteUrl(frPath),
+          loc: absoluteUrl(baseUrl, frPath),
           lastmod: project._updatedAt,
           alternates: {
-            fr: absoluteUrl(frPath),
-            en: absoluteUrl(enPath),
-            "x-default": absoluteUrl(frPath),
+            fr: absoluteUrl(baseUrl, frPath),
+            en: absoluteUrl(baseUrl, enPath),
+            "x-default": absoluteUrl(baseUrl, frPath),
           },
         },
         {
-          loc: absoluteUrl(enPath),
+          loc: absoluteUrl(baseUrl, enPath),
           lastmod: project._updatedAt,
           alternates: {
-            fr: absoluteUrl(frPath),
-            en: absoluteUrl(enPath),
-            "x-default": absoluteUrl(frPath),
+            fr: absoluteUrl(baseUrl, frPath),
+            en: absoluteUrl(baseUrl, enPath),
+            "x-default": absoluteUrl(baseUrl, frPath),
           },
         },
       ];
