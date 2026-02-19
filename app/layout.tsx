@@ -1,5 +1,6 @@
-import type { Metadata, Viewport } from "next";
+import type { Viewport } from "next";
 import { headers } from "next/headers";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 
@@ -36,6 +37,7 @@ export default async function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       </head>
       <body className={`${poppins.variable} antialiased`}>{children}</body>
+      <GoogleAnalytics gaId="G-YYLWFLE0G7" />
     </html>
   );
 }
